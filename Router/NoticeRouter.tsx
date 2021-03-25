@@ -2,11 +2,12 @@ import React from 'react';
 
 import { RouteProp } from '@react-navigation/native';
 import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack';
-import { Alert, Text, TouchableHighlight } from 'react-native';
+import { StyleSheet, Alert, Text, TouchableHighlight } from 'react-native';
 
 import { NoticeScreen, NoticeEditScreen } from '../Screen';
 import { Logotitle } from '../Component';
 import NoticeIcon from '../assets/information.svg';
+import { mint } from '../StyleVariable';
 
 const Stack = createStackNavigator();
 
@@ -41,15 +42,7 @@ const NoticeRouter = ({ navigation }: Props) => {
 								title: "",
 								contents: ""
 							})}
-							style={{
-								backgroundColor: '#8bc6c7',
-								borderRadius: 100,
-								height: 40,
-								width: 40,
-								alignItems: 'center',
-								justifyContent: 'center',
-								marginRight: 10
-							}}
+							style={Notice.addBtn}
 						>
 							<Text
 								style={{
@@ -67,14 +60,7 @@ const NoticeRouter = ({ navigation }: Props) => {
 					headerRight: () => (
 						<TouchableHighlight
 							onPress={saveNotice}
-							style={{
-								backgroundColor: '#8bc6c7',
-								height: 40,
-								alignItems: 'center',
-								justifyContent: 'center',
-								marginRight: 10,
-								padding: 10
-							}}
+							style={Notice.saveBtn}
 						>
 							<Text
 								style={{
@@ -89,5 +75,25 @@ const NoticeRouter = ({ navigation }: Props) => {
 		</Stack.Navigator>
 	);
 }
+
+const Notice = StyleSheet.create({
+	addBtn : {
+		backgroundColor: mint,
+		borderRadius: 100,
+		height: 40,
+		width: 40,
+		alignItems: 'center',
+		justifyContent: 'center',
+		marginRight: 10
+	}, 
+	saveBtn: {
+		backgroundColor: mint,
+		height: 40,
+		alignItems: 'center',
+		justifyContent: 'center',
+		marginRight: 10,
+		padding: 10
+	}
+})
 
 export default NoticeRouter;

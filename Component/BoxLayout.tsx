@@ -4,6 +4,7 @@ import {
 	View,
 	Text
 } from 'react-native';
+import { borderColor } from '../StyleVariable';
 
 type Props = {};
 
@@ -15,7 +16,7 @@ const BoxLayout : React.FC<Props> = ({ children }) => {
 				borderRadius: 5,
 				borderStyle: 'solid',
 				borderWidth: 1,
-				borderColor: '#adadad',
+				borderColor: borderColor,
 				margin: '2%',
 				padding: 16
 			}}
