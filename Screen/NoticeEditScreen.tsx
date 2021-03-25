@@ -26,6 +26,7 @@ const NoticeEditScreen = ({ route } : Props) => {
 				onChangeText={setTitleState}
 				value={titleState}
 				multiline={true}
+				placeholder="제목"
 				style={{
 					fontSize: 20,
 					textDecorationLine: 'none',
@@ -38,6 +39,7 @@ const NoticeEditScreen = ({ route } : Props) => {
 				onChangeText={setContentsState}
 				value={contentsState}
 				multiline={true}
+				placeholder="내용을 입력해주세요."
 				style={{
 					marginLeft: 20,
 					marginRight: 20
