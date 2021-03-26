@@ -32,6 +32,7 @@ const SettingScreen = ({ navigation } : Props) => {
 				settingData.map((setting: settingType, index: number) => 
 					<SettingCard
 						key={setting.id}
+						index={index}
 						navigation={navigation}
 						title={setting.title}
 						position={setting.position}

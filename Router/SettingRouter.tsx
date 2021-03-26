@@ -2,11 +2,12 @@ import React from 'react';
 
 import { RouteProp } from '@react-navigation/native';
 import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack';
-import { Alert, Text, TouchableHighlight } from 'react-native';
+import { StyleSheet, Alert, Text, TouchableHighlight } from 'react-native';
 
 import { Logotitle } from '../Component';
 import { SettingScreen, SettingCreateScreen } from '../Screen';
 import SettingIcon from '../assets/squares.svg';
+import { mint } from '../StyleVariable';
 
 const Stack = createStackNavigator();
 
@@ -39,15 +40,7 @@ const SettingRouter = ( { navigation }: Props) => {
 							onPress={()=> navigation.push("SettingCreate", {
 								title: "",
 							})}
-							style={{
-								backgroundColor: '#8bc6c7',
-								borderRadius: 100,
-								height: 40,
-								width: 40,
-								alignItems: 'center',
-								justifyContent: 'center',
-								marginRight: 10
-							}}
+							style={Setting.addBtn}
 						>
 							<Text style={{ fontSize: 20, color: 'white' }}>+</Text>
 						</TouchableHighlight>
@@ -61,14 +54,7 @@ const SettingRouter = ( { navigation }: Props) => {
 					headerRight: () => (
 						<TouchableHighlight
 							onPress={saveSetting}
-							style={{
-								backgroundColor: '#8bc6c7',
-								height: 40,
-								alignItems: 'center',
-								justifyContent: 'center',
-								marginRight: 10,
-								padding: 10
-							}}
+							style={Setting.saveBtn}
 						>
 							<Text style={{ fontSize: 16, color: 'white'}}>저장</Text>
 						</TouchableHighlight>
@@ -78,5 +64,25 @@ const SettingRouter = ( { navigation }: Props) => {
 		</Stack.Navigator>
 	);
 }
+
+const Setting = StyleSheet.create({
+	addBtn: {
+		backgroundColor: mint,
+		borderRadius: 100,
+		height: 40,
+		width: 40,
+		alignItems: 'center',
+		justifyContent: 'center',
+		marginRight: 10
+	},
+	saveBtn: {
+		backgroundColor: mint,
+		height: 40,
+		alignItems: 'center',
+		justifyContent: 'center',
+		marginRight: 10,
+		padding: 10
+	}
+})
 
 export default SettingRouter;

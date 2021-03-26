@@ -1,6 +1,7 @@
 import React from 'react';
 
 import {
+	StyleSheet,
 	View,
 	Text,
 	Button,
@@ -16,48 +17,52 @@ type Props = {
 	route: RouteProp<StackParamList, 'Home'>;
 }
 
-const IntroScreen = ({navigation} : Props) => {
-	return(
-		<View style={{
-			flexDirection:"column",
-			alignItems:"center",
-			justifyContent:"center",
-			height:"100%"
-		}}>
-			<Text style={{
-				marginBottom:16,
-				fontSize:16
-			}}>
+const IntroScreen = ({ navigation }: Props) => {
+	return (
+		<View style={Intro.wrap}>
+			<Text style={Intro.title}>
 				날개를 달자.
 			</Text>
 			<TouchableHighlight
 				onPress={() => {
 					navigation.navigate('User');
 				}}
-				style={{ marginBottom:16,}}
+				style={{ marginBottom: 16 }}
 			>
-				<View style={{
-					padding: 10
-				}}>
+				<View style={{ padding: 10 }}>
 					<Text>시작하기</Text>
 				</View>
 			</TouchableHighlight>
 			<TouchableHighlight
-				onPress={()=>{
+				onPress={() => {
 					navigation.navigate('Home');
 				}}
 			>
-				<View style={{
-					alignItems: "center",
-					backgroundColor: "#8bc6c7",
-					padding: 10,
-					borderRadius: 20
-				}}>
+				<View style={Intro.adminBtn}>
 					<Text>관리자용</Text>
 				</View>
 			</TouchableHighlight>
 		</View>
 	)
 };
+
+const Intro = StyleSheet.create({
+	wrap: {
+		flexDirection: "column",
+		alignItems: "center",
+		justifyContent: "center",
+		height: "100%"
+	},
+	title: {
+		marginBottom: 16,
+		fontSize: 16
+	},
+	adminBtn: {
+		alignItems: "center",
+		backgroundColor: "#8bc6c7",
+		padding: 10,
+		borderRadius: 20
+	}
+})
 
 export default IntroScreen;
