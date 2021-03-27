@@ -39,6 +39,7 @@ const IntroScreen = ({ navigation }: Props) => {
 					onPress={() => {
 						navigation.navigate('User');
 					}}
+					underlayColor="transparent"
 					style={{ marginBottom: 16, zIndex: 2 }}
 				>
 					<View style={Intro.startBtn}>
@@ -49,6 +50,7 @@ const IntroScreen = ({ navigation }: Props) => {
 					onPress={() => {
 						navigation.navigate('Home');
 					}}
+					underlayColor="transparent"
 					style={{zIndex: 2}}
 				>
 					<View style={Intro.adminBtn}>
