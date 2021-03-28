@@ -4,7 +4,7 @@ import {
 	StyleSheet,
 	View,
 	Text,
-	Button,
+	Image,
 	TouchableHighlight
 } from 'react-native';
 
@@ -25,16 +25,24 @@ const IntroScreen = ({ navigation }: Props) => {
 	return (
 		<View style={Intro.wrap}>
 			<LinearGradient colors={[mint, purple]} style={Intro.gradient}>
+				<Image
+					style={Intro.Logo}
+					source={require('../assets/img/logo.png')}
+				/>
 				<Text style={Intro.title}>
-					날개를 달자.
+					날개를 달다
+				</Text>
+				<Text style={Intro.subTitle}>
+					서울시립대 양심생리대함 앱
 				</Text>
 				<TouchableHighlight
 					onPress={() => {
 						navigation.navigate('User');
 					}}
+					underlayColor="transparent"
 					style={{ marginBottom: 16, zIndex: 2 }}
 				>
-					<View style={{ padding: 10 }}>
+					<View style={Intro.startBtn}>
 						<Text>시작하기</Text>
 					</View>
 				</TouchableHighlight>
@@ -42,6 +50,7 @@ const IntroScreen = ({ navigation }: Props) => {
 					onPress={() => {
 						navigation.navigate('Home');
 					}}
+					underlayColor="transparent"
 					style={{zIndex: 2}}
 				>
 					<View style={Intro.adminBtn}>
@@ -70,7 +79,7 @@ const Intro = StyleSheet.create({
 	whiteSpace: {
 		backgroundColor: "white",
 		width: "120%",
-		height: "40%",
+		height: "45%",
 		position: "absolute",
 		top: "30%",
 		zIndex: 1,
@@ -78,16 +87,38 @@ const Intro = StyleSheet.create({
 			{ rotateZ: '-11deg'},
 	  	]
 	},
+	Logo: {
+		width: 100,
+		height: 100,
+		zIndex: 2,
+		marginBottom: 10
+	},
 	title: {
-		marginBottom: 16,
-		fontSize: 32,
-		zIndex: 2
+		marginBottom: 8,
+		fontSize: 50,
+		zIndex: 2,
+		fontFamily: 'DOHYEON'
+	},
+	subTitle: {
+		zIndex: 2,
+		fontSize: 16,
+		marginBottom: 20
+	},
+	startBtn: {
+		backgroundColor: "white",
+		padding: 10,
+		paddingRight: 40,
+		paddingLeft: 40,
+		borderRadius: 20
 	},
 	adminBtn: {
 		alignItems: "center",
 		backgroundColor: "#8bc6c7",
-		padding: 10,
-		borderRadius: 20
+		padding: 5,
+		paddingRight: 15,
+		paddingLeft: 15,
+		borderRadius: 20,
+		marginBottom: 45
 	}
 })
 
