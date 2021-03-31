@@ -1,15 +1,15 @@
 import React from 'react';
 import {
-  StyleSheet,
   View,
   Text,
-  Button
 } from 'react-native';
+import { MapComponent } from '../Component';
 
 const MapScreen = () => {
 	return (
 		<View>
-			<Text>Map</Text>
+			<MapComponent />
+			<Text>hi</Text>
 		</View>
 	);
 }
