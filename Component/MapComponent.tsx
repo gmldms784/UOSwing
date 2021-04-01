@@ -35,6 +35,8 @@ const MapComponent = () => {
 			zoomEnabled={true}
 			minZoomLevel={16}
 			maxZoomLevel={18}
+			scrollEnabled={false}
+			loadingEnabled={true}
         >
 			<Marker
 				coordinate={{
