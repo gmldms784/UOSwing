@@ -4,7 +4,7 @@ import {
   Text
 } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { settingType } from '../Type';
+import { settingType } from '../Main/Type';
 import { SettingCard } from '../Component';
 import { SettingStackParamList } from '../Router/SettingRouter';
 

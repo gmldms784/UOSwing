@@ -3,11 +3,12 @@ import {
   View,
   Text
 } from 'react-native';
+import { MapComponent } from '../Component';
 
 const UserScreen = () => {
 	return (
 		<View>
-			<Text>UserSreen</Text>
+			<MapComponent />
 		</View>
 	);
 }
