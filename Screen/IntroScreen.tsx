@@ -1,19 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import {
 	StyleSheet,
 	View,
 	Text,
 	Image,
-	TouchableHighlight
+	TouchableHighlight,
+	TextInput,
+	Button,
+	Alert
 } from 'react-native';
 
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import LinearGradient from 'react-native-linear-gradient';
 
-import { StackParamList } from '../App';
+import { Modal } from '../Component';
+import { StackParamList } from '../Router/MainRouter';
 import { mint, purple } from '../StyleVariable';
+import { useLogin } from '../Main/Model/UserModel';
 import { withSafeAreaInsets } from 'react-native-safe-area-context';
 
 type Props = {
@@ -22,6 +27,25 @@ type Props = {
 }
 
 const IntroScreen = ({ navigation }: Props) => {
+	const [modal, setModal] = useState<boolean>(false);
+	const [key, setKey] = useState<string>("");
+	const login = useLogin();
+
+	const handleModalOpen = () => {
+		setModal(true);
+	}
+	const handleModalClose = () => {
+		setModal(false);
+	}
+
+	const loginAdmin = () => {
+		if(login(key)){
+			navigation.navigate("Home");
+		}else{
+			Alert.alert("key를 잘못 입력하셨습니다.");
+		}
+	}
+
 	return (
 		<View style={Intro.wrap}>
 			<LinearGradient colors={[mint, purple]} style={Intro.gradient}>
@@ -47,17 +71,26 @@ const IntroScreen = ({ navigation }: Props) => {
 					</View>
 				</TouchableHighlight>
 				<TouchableHighlight
-					onPress={() => {
-						navigation.navigate('Home');
-					}}
+					onPress={handleModalOpen}
 					underlayColor="transparent"
-					style={{zIndex: 2}}
+					style={{ zIndex: 2 }}
 				>
 					<View style={Intro.adminBtn}>
 						<Text>관리자용</Text>
 					</View>
 				</TouchableHighlight>
 				<View opacity={0.5} style={Intro.whiteSpace} />
+				<Modal
+					view={modal}
+					onClose={handleModalClose}
+					title="관리자 키를 입력해주세요."
+				>
+					<TextInput value={key} onChangeText={setKey} placeholder="관리자 키"/>
+					<Button
+						title="로그인"
+						onPress={loginAdmin}
+					/>
+				</Modal>
 			</LinearGradient>
 		</View>
 	)
@@ -84,8 +117,8 @@ const Intro = StyleSheet.create({
 		top: "30%",
 		zIndex: 1,
 		transform: [
-			{ rotateZ: '-11deg'},
-	  	]
+			{ rotateZ: '-11deg' },
+		]
 	},
 	Logo: {
 		width: 100,
@@ -113,7 +146,7 @@ const Intro = StyleSheet.create({
 	},
 	adminBtn: {
 		alignItems: "center",
-		backgroundColor: "#8bc6c7",
+		backgroundColor: mint,
 		padding: 5,
 		paddingRight: 15,
 		paddingLeft: 15,

@@ -1,3 +1,11 @@
-// todo : viewmodel 구현
 
-export const a = 1;
+import React, { createContext } from 'react';
+import { userType, childrenObj } from './Type';
+
+export const LogicProvider = ({ children } : childrenObj) => {
+
+
+	return (
+		true
+	);
+};

@@ -9,7 +9,6 @@ const MapScreen = () => {
 	return (
 		<View>
 			<MapComponent />
-			<Text>hi</Text>
 		</View>
 	);
 }
