@@ -1,19 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
 	StyleSheet,
 	View,
-	Text
+	Text,
+	StyleSheetProperties
 } from 'react-native';
 
-import { mint, purple } from '../StyleVariable';
+import { borderColor, mint, purple } from '../StyleVariable';
 
 type sizeArr = ["default", "fit"];
 // default는 text 크기에 맞춰서 button이 나옴
 // fit은 상위 컴포넌트 크기에 맞춰서 button이 나옴
 
 type Props = {
-	color?: string
-	size?: sizeArr[number]
+	color?: string,
+	size?: sizeArr[number],
+	border?: boolean
 }
 
 // how to use?
@@ -23,8 +25,8 @@ type Props = {
 //   </ButtonComponent>
 // </TouchableHighlight>
 
-const ButtonComponent : React.FC<Props> = ({color, size, children}) => {
-	let style = [];
+const ButtonComponent : React.FC<Props> = ({color, size, border, children}) => {
+	const style = [{}];
 	switch(color){
 		case "mint":
 			style.push(ButtonStyle.mint);
@@ -35,12 +37,13 @@ const ButtonComponent : React.FC<Props> = ({color, size, children}) => {
 		default :
 			style.push(ButtonStyle.white);
 	}
-	switch(size){
-		case "fit":
-			style.push(ButtonStyle.fit);
-			break;
-		default:
+	if(size === "fit"){
+		style.push(ButtonStyle.fit);
 	}
+	if(border){
+		style.push(ButtonStyle.border);
+	}
+
 	return (
 		<View style={StyleSheet.flatten([ButtonStyle.button, ...style])}>
 			{children}
@@ -51,11 +54,13 @@ const ButtonComponent : React.FC<Props> = ({color, size, children}) => {
 const ButtonStyle = StyleSheet.create({
 	button: {
 		alignItems: "center",
+		justifyContent: "center",
 		padding: 5,
 		paddingRight: 15,
 		paddingLeft: 15,
 		borderRadius: 20,
-		fontFamily: 'DOHYEON'
+		fontFamily: 'DOHYEON',
+		flexDirection: "row"
 	},
 	mint: {
 		backgroundColor: mint
@@ -68,6 +73,10 @@ const ButtonStyle = StyleSheet.create({
 		paddingRight: "auto",
 		paddingLeft: "auto",
 		width: "100%"
+	},
+	border: {
+		borderWidth: 1,
+		borderColor: borderColor
 	}
 })
 
