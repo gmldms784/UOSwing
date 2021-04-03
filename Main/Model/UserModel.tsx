@@ -26,7 +26,7 @@ export const UserContextProvider = ({ children }: childrenObj) => {
 		} else {
 			return false;
 		}
-	}
+	};
 
 	return (
 		<userContext.Provider value={user}>

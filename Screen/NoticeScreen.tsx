@@ -16,12 +16,6 @@ type Props = {
 const NoticeScreen = ({ navigation } : Props) => {
 	const noticeData = useNoticeState();
 
-	const deleteNotice = (index : number) => {
-		// todo : custom modal로 confirm 받기
-		// todo : viewModel에서 함수 구현해서 delete
-		let tmp : Array<noticeType> = noticeData.slice(index, 1);
-	}
-
 	return (
 		<ScrollView>
 			{
@@ -30,10 +24,9 @@ const NoticeScreen = ({ navigation } : Props) => {
 						key={notice.id}
 						navigation={navigation}
 						title={notice.title}
-						date={notice.created}
+						date={notice.createdDate}
 						contents={notice.content}
-						index={index}
-						deleteNotice={deleteNotice}
+						id={notice.id}
 					/>
 				)
 			}

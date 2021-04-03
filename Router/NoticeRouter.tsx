@@ -19,16 +19,14 @@ type Props = {
 export type NoticeStackParamList = {
 	Notice: undefined,
 	NoticeEdit: {
+		id: number;
 		title: string;
 		contents: string;
 	}
 };
 
 const NoticeRouter = ({ navigation }: Props) => {
-	const saveNotice = () => {
-		Alert.alert("Save Notice");
-	}
-
+	const a = 1;
 	return (
 		<Stack.Navigator screenOptions={{
 			headerTitleAlign: 'center',
@@ -39,6 +37,7 @@ const NoticeRouter = ({ navigation }: Props) => {
 					headerRight: () => (
 						<TouchableHighlight
 							onPress={() => navigation.push("NoticeEdit", {
+								id: -1,
 								title: "",
 								contents: ""
 							})}
@@ -55,23 +54,7 @@ const NoticeRouter = ({ navigation }: Props) => {
 					headerLeft: null
 				}}
 			/>
-			<Stack.Screen name="NoticeEdit" component={NoticeEditScreen}
-				options={{
-					headerRight: () => (
-						<TouchableHighlight
-							onPress={saveNotice}
-							style={Notice.saveBtn}
-						>
-							<Text
-								style={{
-									fontSize: 16,
-									color: 'white'
-								}}
-							>저장</Text>
-						</TouchableHighlight>
-					)
-				}}
-			/>
+			<Stack.Screen name="NoticeEdit" component={NoticeEditScreen}/>
 		</Stack.Navigator>
 	);
 }

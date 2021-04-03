@@ -23,11 +23,10 @@ type Props = {
 	title: string;
 	date: Date;
 	contents: string;
-	index: number;
-	deleteNotice: (index: number) => void;
+	id: number;
 }
 
-const NoticeCard = ({ navigation, title, date, contents, index, deleteNotice }: Props) => {
+const NoticeCard = ({ navigation, title, date, contents, id }: Props) => {
 	const [textHide, setTextHide] = useState<boolean>(true);
 
 	return (
@@ -53,14 +52,14 @@ const NoticeCard = ({ navigation, title, date, contents, index, deleteNotice }: 
 					<TouchableHighlight
 						onPress={() => navigation.navigate('NoticeEdit', {
 							title: title,
-							contents: contents
+							contents: contents,
+							id
 						})}
 						style={Notice.editBtn}
 					>
 						<EditIcon width={20} height={20} fill="black" />
 					</TouchableHighlight>
 					<TouchableHighlight
-						onPress={() => deleteNotice(index)}
 						style={Notice.deleteBtn}
 					>
 						<DeleteIcon width={20} height={20} fill="black" />
