@@ -8,6 +8,8 @@ import {
 import { mint, purple } from '../StyleVariable';
 
 type sizeArr = ["default", "fit"];
+// default는 text 크기에 맞춰서 button이 나옴
+// fit은 상위 컴포넌트 크기에 맞춰서 button이 나옴
 
 type Props = {
 	color?: string
@@ -16,7 +18,7 @@ type Props = {
 
 // how to use?
 // <TouchableHighlight>
-// 	 <ButtonComponent color="mint" size="lg">
+// 	 <ButtonComponent color="mint" size="fit">
 //     <Text>hi</Text>
 //   </ButtonComponent>
 // </TouchableHighlight>
