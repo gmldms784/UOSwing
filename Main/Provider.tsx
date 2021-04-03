@@ -1,6 +1,6 @@
 import React from 'react';
 import { LogicProvider } from './ViewModel';
-import { NoticeContextProvider, PadBoxContextProvider } from './Model';
+import { NoticeContextProvider, PadBoxContextProvider, StatisticsContextProvider, UserContextProvider } from './Model';
 import { MainRouter } from '../Router';
 
 const Provider = () => {
@@ -8,9 +8,13 @@ const Provider = () => {
 	return (
 		<NoticeContextProvider>
 			<PadBoxContextProvider>
-				<LogicProvider>
-					<MainRouter />
-				</LogicProvider>
+				<StatisticsContextProvider>
+					<UserContextProvider>
+						<LogicProvider>
+							<MainRouter />
+						</LogicProvider>
+					</UserContextProvider>
+				</StatisticsContextProvider>
 			</PadBoxContextProvider>
 		</NoticeContextProvider>
 	);
