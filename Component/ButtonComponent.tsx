@@ -66,8 +66,8 @@ const ButtonStyle = StyleSheet.create({
 	},
 	md: {
 		padding: 10,
-		paddingRight: 30,
-		paddingLeft: 30
+		paddingRight: 25,
+		paddingLeft: 25
 	},
 	lg: {
 		padding: 10,
