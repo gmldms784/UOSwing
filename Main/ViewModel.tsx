@@ -20,6 +20,7 @@ const NoticeLogicProvider = ({ children } : childrenObj) => {
 	const saveNotice = (id: number, title: string, content : string) => {
 		if(id === -1){
 			// todo : add new notice api call
+			// todo : get api call
 
 			// 임시코드
 			noticeDispatch([
@@ -33,6 +34,7 @@ const NoticeLogicProvider = ({ children } : childrenObj) => {
 			]);
 		}else{
 			// todo : add update notice api call
+			// todo : get api call
 
 			// 임시코드
 			const noticeExcept = notice.filter((value, index) => value.id !== id);
@@ -50,6 +52,7 @@ const NoticeLogicProvider = ({ children } : childrenObj) => {
 
 	const deleteNotice = (id : number) => {
 		// todo : delete notice api call
+		// todo : get api call
 
 		// 임시코드
 		noticeDispatch(notice.filter((value, index) => value.id !== id));

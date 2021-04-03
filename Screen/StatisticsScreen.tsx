@@ -6,9 +6,14 @@ import {
 	TouchableHighlight
 } from 'react-native';
 import { ButtonComponent } from '../Component';
+import { useStatisticsState } from '../Main/Model/StatisticsModel';
+
+type tabArray = ["week", "month"]
 
 const StatisticsScreen = () => {
-	const [tab, tabChange] = useState<boolean>(0); // 0 : week, 1: month
+	const [tab, tabChange] = useState<tabArray[number]>("week");
+	const statistics = useStatisticsState();
+
 	return (
 		<View>
 			<View
@@ -19,9 +24,11 @@ const StatisticsScreen = () => {
 						marginRight: 15,
 						width: "45%"
 					}}
+					underlayColor="transparent"
+					onPress={() => tabChange("week")}
 				>
 					<ButtonComponent
-						color="mint"
+						color={tab==="week"?"mint":"white"}
 						size="fit"
 					>
 						<Text>주별</Text>
@@ -31,15 +38,25 @@ const StatisticsScreen = () => {
 					style={{
 						width: "45%"
 					}}
+					underlayColor="transparent"
+					onPress={() => tabChange("month")}
 				>
 					<ButtonComponent
+						color={tab==="month"?"mint":"white"}
 						size="fit"
 					>
 						<Text>월별</Text>
 					</ButtonComponent>
 				</TouchableHighlight>
 			</View>
-			<Text>Statistics</Text>
+			<View>
+				{statistics.map((padBox) => (
+					<View key={padBox.id}>
+						<Text>{padBox.boxName}</Text>
+						<Text>todo : 차트 도입하기!</Text>
+					</View>
+				))}
+			</View>
 		</View>
 	);
 };
