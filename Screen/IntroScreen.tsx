@@ -61,19 +61,25 @@ const IntroScreen = ({ navigation }: Props) => {
 				<Text style={Intro.subTitle}>
 					서울시립대 양심생리대함 앱
 				</Text>
-				<TouchableHighlight
-					onPress={() => {
-						navigation.navigate('User');
+				<View
+					style={{
+						width: "40%"
 					}}
-					underlayColor="transparent"
-					style={{ marginTop: 20, marginBottom: 16, zIndex: 2 }}
 				>
-					<ButtonComponent
-						size="lg"
+					<TouchableHighlight
+						onPress={() => {
+							navigation.navigate('User');
+						}}
+						underlayColor="transparent"
+						style={{ marginTop: 20, marginBottom: 16, zIndex: 2 }}
 					>
-						<Text>시작하기</Text>
-					</ButtonComponent>
-				</TouchableHighlight>
+						<ButtonComponent
+							size="fit"
+						>
+							<Text>시작하기</Text>
+						</ButtonComponent>
+					</TouchableHighlight>
+				</View>
 				<TouchableHighlight
 					onPress={handleModalOpen}
 					underlayColor="transparent"
@@ -98,7 +104,7 @@ const IntroScreen = ({ navigation }: Props) => {
 					>
 						<ButtonComponent
 							color="mint"
-							size="md"
+							size="fit"
 						>
 							<Text>로그인</Text>
 						</ButtonComponent>

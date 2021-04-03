@@ -50,6 +50,7 @@ const NoticeEditScreen = ({ route, navigation }: Props) => {
 					onPress={save}
 				>
 					<ButtonComponent
+						size="fit"
 						color="mint"
 					>
 						<Text>저장</Text>

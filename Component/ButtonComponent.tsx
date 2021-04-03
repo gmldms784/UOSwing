@@ -7,7 +7,7 @@ import {
 
 import { mint, purple } from '../StyleVariable';
 
-type sizeArr = ["sm", "md", "lg"];
+type sizeArr = ["default", "fit"];
 
 type Props = {
 	color?: string
@@ -34,11 +34,8 @@ const ButtonComponent : React.FC<Props> = ({color, size, children}) => {
 			style.push(ButtonStyle.white);
 	}
 	switch(size){
-		case "md":
-			style.push(ButtonStyle.md);
-			break;
-		case "lg":
-			style.push(ButtonStyle.lg);
+		case "fit":
+			style.push(ButtonStyle.fit);
 			break;
 		default:
 	}
@@ -64,15 +61,11 @@ const ButtonStyle = StyleSheet.create({
 	white: {
 		backgroundColor: "white",
 	},
-	md: {
+	fit: {
 		padding: 10,
-		paddingRight: 25,
-		paddingLeft: 25
-	},
-	lg: {
-		padding: 10,
-		paddingRight: 50,
-		paddingLeft: 50
+		paddingRight: "auto",
+		paddingLeft: "auto",
+		width: "100%"
 	}
 })
 

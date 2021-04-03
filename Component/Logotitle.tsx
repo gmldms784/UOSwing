@@ -21,7 +21,8 @@ const Logotitle = ({ icon, name } : Props) => {
 			<Text>{icon}</Text>
 			<Text style={{
 				fontSize: 24,
-				marginLeft: 6
+				marginLeft: 6,
+				fontFamily: 'DOHYEON'
 			}}>{name}</Text>
 		</View>
 	)
