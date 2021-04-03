@@ -8,7 +8,7 @@ import MapView from 'react-native-maps';
 import { useUserState } from '../Main/Model/UserModel';
 import { usePadBoxState } from '../Main/Model/PadBoxModel';
 import { padBoxType } from '../Main/Type';
-import { MarkerComponent } from '../Component';
+import { MarkerComponent, MapWidget } from '../Component';
 
 
 const MapComponent = () => {
@@ -44,6 +44,7 @@ const MapComponent = () => {
 					/>
 				)
 			}
+			<MapWidget/>
 		</MapView>
 	);
 };
@@ -53,7 +54,8 @@ const Map = StyleSheet.create({
 		width: "100%",
 		height: "100%",
 		flexDirection: "column",
-		alignItems: "center"
+		alignItems: "center",
+		position: "relative"
 	}
 });
 
