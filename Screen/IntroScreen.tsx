@@ -17,6 +17,7 @@ import LinearGradient from 'react-native-linear-gradient';
 
 import { Modal } from '../Component';
 import { StackParamList } from '../Router/MainRouter';
+import { ButtonComponent } from '../Component';
 import { mint, purple } from '../StyleVariable';
 import { useLogin } from '../Main/Model/UserModel';
 import { withSafeAreaInsets } from 'react-native-safe-area-context';
@@ -41,6 +42,7 @@ const IntroScreen = ({ navigation }: Props) => {
 	const loginAdmin = () => {
 		if(login(key)){
 			navigation.navigate("Home");
+			setModal(false);
 		}else{
 			Alert.alert("key를 잘못 입력하셨습니다.");
 		}
@@ -64,20 +66,24 @@ const IntroScreen = ({ navigation }: Props) => {
 						navigation.navigate('User');
 					}}
 					underlayColor="transparent"
-					style={{ marginBottom: 16, zIndex: 2 }}
+					style={{ marginTop: 20, marginBottom: 16, zIndex: 2 }}
 				>
-					<View style={Intro.startBtn}>
+					<ButtonComponent
+						size="lg"
+					>
 						<Text>시작하기</Text>
-					</View>
+					</ButtonComponent>
 				</TouchableHighlight>
 				<TouchableHighlight
 					onPress={handleModalOpen}
 					underlayColor="transparent"
-					style={{ zIndex: 2 }}
+					style={{ marginBottom: 40, zIndex: 2 }}
 				>
-					<View style={Intro.adminBtn}>
+					<ButtonComponent
+						color="mint"
+					>
 						<Text>관리자용</Text>
-					</View>
+					</ButtonComponent>
 				</TouchableHighlight>
 				<View opacity={0.5} style={Intro.whiteSpace} />
 				<Modal
@@ -86,10 +92,17 @@ const IntroScreen = ({ navigation }: Props) => {
 					title="관리자 키를 입력해주세요."
 				>
 					<TextInput value={key} onChangeText={setKey} placeholder="관리자 키"/>
-					<Button
-						title="로그인"
+					<TouchableHighlight
 						onPress={loginAdmin}
-					/>
+						underlayColor="transparent"
+					>
+						<ButtonComponent
+							color="mint"
+							size="md"
+						>
+							<Text>로그인</Text>
+						</ButtonComponent>
+					</TouchableHighlight>
 				</Modal>
 			</LinearGradient>
 		</View>
@@ -137,22 +150,6 @@ const Intro = StyleSheet.create({
 		fontSize: 16,
 		marginBottom: 20
 	},
-	startBtn: {
-		backgroundColor: "white",
-		padding: 10,
-		paddingRight: 40,
-		paddingLeft: 40,
-		borderRadius: 20
-	},
-	adminBtn: {
-		alignItems: "center",
-		backgroundColor: mint,
-		padding: 5,
-		paddingRight: 15,
-		paddingLeft: 15,
-		borderRadius: 20,
-		marginBottom: 45
-	}
 })
 
 export default IntroScreen;
