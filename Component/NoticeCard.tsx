@@ -10,13 +10,14 @@ import { StackNavigationProp } from '@react-navigation/stack';
 
 import { BoxLayout } from '.';
 import { dateToString } from '../Function/DateToString';
+import { mint, borderColor } from '../StyleVariable';
+import { NoticeStackParamList } from '../Router/NoticeRouter';
+import { useDeleteNotice } from '../Main/ViewModel';
+
 import EditIcon from '../assets/edit.svg';
 import DeleteIcon from '../assets/delete.svg';
 import ArrowDownIcon from '../assets/arrow-down.svg';
 import ArrowUpIcon from '../assets/arrow-up.svg';
-import { mint, borderColor } from '../StyleVariable';
-
-import { NoticeStackParamList } from '../Router/NoticeRouter';
 
 type Props = {
 	navigation: StackNavigationProp<NoticeStackParamList, 'NoticeEdit'>;
@@ -28,6 +29,11 @@ type Props = {
 
 const NoticeCard = ({ navigation, title, date, contents, id }: Props) => {
 	const [textHide, setTextHide] = useState<boolean>(true);
+	const deleteNotice = useDeleteNotice();
+
+	const handleDelete = () => {
+		deleteNotice(id);
+	};
 
 	return (
 		<BoxLayout>
@@ -60,6 +66,7 @@ const NoticeCard = ({ navigation, title, date, contents, id }: Props) => {
 						<EditIcon width={20} height={20} fill="black" />
 					</TouchableHighlight>
 					<TouchableHighlight
+						onPress={handleDelete}
 						style={Notice.deleteBtn}
 					>
 						<DeleteIcon width={20} height={20} fill="black" />

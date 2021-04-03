@@ -4,9 +4,16 @@ import { userType, childrenObj } from './Type';
 import { useNoticeState, useNoticeDispatch } from './Model/NoticeModel';
 import { Value } from 'react-native-reanimated';
 
-const SaveNoticeContext = createContext<(id: number, title: string, content : string)=> void>((id: number, title: string, content : string) => {});
+export const LogicProvider = ({ children } : childrenObj) => (
+	<NoticeLogicProvider>
+		{children}
+	</NoticeLogicProvider>
+);
 
-export const LogicProvider = ({ children } : childrenObj) => {
+const SaveNoticeContext = createContext<(id: number, title: string, content : string)=> void>((id: number, title: string, content : string) => {});
+const DeleteNoticeContext = createContext<(id: number)=> void>((id: number) => {});
+
+const NoticeLogicProvider = ({ children } : childrenObj) => {
 	const notice = useNoticeState();
 	const noticeDispatch = useNoticeDispatch();
 
@@ -41,14 +48,27 @@ export const LogicProvider = ({ children } : childrenObj) => {
 		}
 	}
 
+	const deleteNotice = (id : number) => {
+		// todo : delete notice api call
+
+		// 임시코드
+		noticeDispatch(notice.filter((value, index) => value.id !== id));
+	}
+
 	return (
 		<SaveNoticeContext.Provider value={saveNotice}>
-			{children}
+			<DeleteNoticeContext.Provider value={deleteNotice}>
+				{children}
+			</DeleteNoticeContext.Provider>
 		</SaveNoticeContext.Provider>
 	);
 };
 
 export function useSaveNotice() {
 	const context = useContext(SaveNoticeContext);
+	return context;
+}
+export function useDeleteNotice() {
+	const context = useContext(DeleteNoticeContext);
 	return context;
 }
