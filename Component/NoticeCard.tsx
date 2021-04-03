@@ -12,6 +12,7 @@ import { BoxLayout } from '.';
 import { dateToString } from '../Function/DateToString';
 import { mint, borderColor } from '../StyleVariable';
 import { NoticeStackParamList } from '../Router/NoticeRouter';
+import { useUserState } from '../Main/Model/UserModel';
 import { useDeleteNotice } from '../Main/ViewModel';
 
 import EditIcon from '../assets/edit.svg';
@@ -20,7 +21,7 @@ import ArrowDownIcon from '../assets/arrow-down.svg';
 import ArrowUpIcon from '../assets/arrow-up.svg';
 
 type Props = {
-	navigation: StackNavigationProp<NoticeStackParamList, 'NoticeEdit'>;
+	navigation?: StackNavigationProp<NoticeStackParamList, 'NoticeEdit'>;
 	title: string;
 	date: Date;
 	contents: string;
@@ -29,6 +30,7 @@ type Props = {
 
 const NoticeCard = ({ navigation, title, date, contents, id }: Props) => {
 	const [textHide, setTextHide] = useState<boolean>(true);
+	const user = useUserState();
 	const deleteNotice = useDeleteNotice();
 
 	const handleDelete = () => {
@@ -41,7 +43,7 @@ const NoticeCard = ({ navigation, title, date, contents, id }: Props) => {
 				style={Notice.wrap}
 			>
 				<View
-					style={Notice.header}
+					style={user.auth === "admin"?Notice.header:Notice.userHeader}
 				>
 					<Text
 						style={Notice.title}
@@ -52,26 +54,29 @@ const NoticeCard = ({ navigation, title, date, contents, id }: Props) => {
 						{dateToString(date)}
 					</Text>
 				</View>
-				<View
-					style={Notice.btnContainer}
-				>
-					<TouchableHighlight
-						onPress={() => navigation.navigate('NoticeEdit', {
-							title: title,
-							contents: contents,
-							id
-						})}
-						style={Notice.editBtn}
+				{
+					user.auth === "admin" &&
+					<View
+						style={Notice.btnContainer}
 					>
-						<EditIcon width={20} height={20} fill="black" />
-					</TouchableHighlight>
-					<TouchableHighlight
-						onPress={handleDelete}
-						style={Notice.deleteBtn}
-					>
-						<DeleteIcon width={20} height={20} fill="black" />
-					</TouchableHighlight>
-				</View>
+						<TouchableHighlight
+							onPress={() => navigation?.navigate('NoticeEdit', {
+								title: title,
+								contents: contents,
+								id
+							})}
+							style={Notice.editBtn}
+						>
+							<EditIcon width={20} height={20} fill="black" />
+						</TouchableHighlight>
+						<TouchableHighlight
+							onPress={handleDelete}
+							style={Notice.deleteBtn}
+						>
+							<DeleteIcon width={20} height={20} fill="black" />
+						</TouchableHighlight>
+					</View>
+				}
 			</View>
 			<View>
 				<Text>{textHide ? contents.substr(0, 50) + "..." : contents}</Text>
@@ -107,6 +112,12 @@ const Notice = StyleSheet.create({
 		flexWrap: 'wrap',
 		justifyContent: 'flex-start',
 		width: '75%',
+		marginBottom: 10
+	},
+	userHeader: {
+		flexWrap: 'wrap',
+		justifyContent: 'flex-start',
+		width: '100%',
 		marginBottom: 10
 	},
 	title: {

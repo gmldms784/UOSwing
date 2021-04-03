@@ -1,12 +1,14 @@
 
 import React, { createContext, useContext } from 'react';
-import { userType, childrenObj } from './Type';
+import { childrenObj } from './Type';
 import { useNoticeState, useNoticeDispatch } from './Model/NoticeModel';
-import { Value } from 'react-native-reanimated';
+import { usePadBoxState, usePadBoxDispatch } from './Model/PadBoxModel';
 
 export const LogicProvider = ({ children } : childrenObj) => (
 	<NoticeLogicProvider>
-		{children}
+		<PadBoxLogicProvider>
+			{children}
+		</PadBoxLogicProvider>
 	</NoticeLogicProvider>
 );
 
@@ -73,5 +75,28 @@ export function useSaveNotice() {
 }
 export function useDeleteNotice() {
 	const context = useContext(DeleteNoticeContext);
+	return context;
+}
+
+const GetPadBoxContext = createContext<()=>void>(() => {});
+
+const PadBoxLogicProvider = ({ children } : childrenObj) => {
+	const padBox = usePadBoxState();
+	const padBoxDispatch = usePadBoxDispatch();
+
+	const getPadBox = () => {
+		// todo : get api call
+		console.log("get and set pad box info");
+	}
+
+	return (
+		<GetPadBoxContext.Provider value={getPadBox}>
+			{children}
+		</GetPadBoxContext.Provider>
+	);
+}
+
+export function useGetPadBox() {
+	const context = useContext(GetPadBoxContext);
 	return context;
 }

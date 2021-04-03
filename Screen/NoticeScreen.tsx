@@ -10,7 +10,7 @@ import { NoticeCard } from '../Component';
 import { NoticeStackParamList } from '../Router/NoticeRouter';
 
 type Props = {
-	navigation: StackNavigationProp<NoticeStackParamList, 'NoticeEdit'>;
+	navigation?: StackNavigationProp<NoticeStackParamList, 'NoticeEdit'>;
 }
 
 const NoticeScreen = ({ navigation } : Props) => {
