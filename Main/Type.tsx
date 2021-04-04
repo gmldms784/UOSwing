@@ -1,7 +1,7 @@
 export type noticeType = {
 	id: number,
 	title: string,
-	created: Date,
+	createdDate: Date,
 	content: string
 };
 
@@ -17,6 +17,14 @@ export type padBoxType = {
 	humidity: number,
 	updatedStateDate: Date
 };
+
+export type statisticsType = {
+	id: number,
+	// boxId: number, => 바꿔달라고 backend에 요청함
+	boxName: string,
+	usedAmount: number,
+	createdDate: Date
+}
 
 type authArray = ["admin", "user"]
 

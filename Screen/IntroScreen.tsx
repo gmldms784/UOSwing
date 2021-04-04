@@ -1,19 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import {
 	StyleSheet,
 	View,
 	Text,
 	Image,
-	TouchableHighlight
+	TouchableHighlight,
+	TextInput,
+	Button,
+	Alert
 } from 'react-native';
 
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import LinearGradient from 'react-native-linear-gradient';
 
-import { StackParamList } from '../App';
+import { Modal } from '../Component';
+import { StackParamList } from '../Router/MainRouter';
+import { ButtonComponent } from '../Component';
 import { mint, purple } from '../StyleVariable';
+import { useLogin } from '../Main/Model/UserModel';
 import { withSafeAreaInsets } from 'react-native-safe-area-context';
 
 type Props = {
@@ -22,6 +28,26 @@ type Props = {
 }
 
 const IntroScreen = ({ navigation }: Props) => {
+	const [modal, setModal] = useState<boolean>(false);
+	const [key, setKey] = useState<string>("");
+	const login = useLogin();
+
+	const handleModalOpen = () => {
+		setModal(true);
+	}
+	const handleModalClose = () => {
+		setModal(false);
+	}
+
+	const loginAdmin = () => {
+		if(login(key)){
+			navigation.navigate("Home");
+			setModal(false);
+		}else{
+			Alert.alert("key를 잘못 입력하셨습니다.");
+		}
+	}
+
 	return (
 		<View style={Intro.wrap}>
 			<LinearGradient colors={[mint, purple]} style={Intro.gradient}>
@@ -35,29 +61,55 @@ const IntroScreen = ({ navigation }: Props) => {
 				<Text style={Intro.subTitle}>
 					서울시립대 양심생리대함 앱
 				</Text>
-				<TouchableHighlight
-					onPress={() => {
-						navigation.navigate('User');
+				<View
+					style={{
+						width: "40%"
 					}}
-					underlayColor="transparent"
-					style={{ marginBottom: 16, zIndex: 2 }}
 				>
-					<View style={Intro.startBtn}>
-						<Text>시작하기</Text>
-					</View>
-				</TouchableHighlight>
+					<TouchableHighlight
+						onPress={() => {
+							navigation.navigate('User');
+						}}
+						underlayColor="transparent"
+						style={{ marginTop: 20, marginBottom: 16, zIndex: 2 }}
+					>
+						<ButtonComponent
+							size="fit"
+						>
+							<Text>시작하기</Text>
+						</ButtonComponent>
+					</TouchableHighlight>
+				</View>
 				<TouchableHighlight
-					onPress={() => {
-						navigation.navigate('Home');
-					}}
+					onPress={handleModalOpen}
 					underlayColor="transparent"
-					style={{zIndex: 2}}
+					style={{ marginBottom: 40, zIndex: 2 }}
 				>
-					<View style={Intro.adminBtn}>
+					<ButtonComponent
+						color="mint"
+					>
 						<Text>관리자용</Text>
-					</View>
+					</ButtonComponent>
 				</TouchableHighlight>
 				<View opacity={0.5} style={Intro.whiteSpace} />
+				<Modal
+					view={modal}
+					onClose={handleModalClose}
+					title="관리자 키를 입력해주세요."
+				>
+					<TextInput value={key} onChangeText={setKey} placeholder="관리자 키"/>
+					<TouchableHighlight
+						onPress={loginAdmin}
+						underlayColor="transparent"
+					>
+						<ButtonComponent
+							color="mint"
+							size="fit"
+						>
+							<Text>로그인</Text>
+						</ButtonComponent>
+					</TouchableHighlight>
+				</Modal>
 			</LinearGradient>
 		</View>
 	)
@@ -84,8 +136,8 @@ const Intro = StyleSheet.create({
 		top: "30%",
 		zIndex: 1,
 		transform: [
-			{ rotateZ: '-11deg'},
-	  	]
+			{ rotateZ: '-11deg' },
+		]
 	},
 	Logo: {
 		width: 100,
@@ -104,22 +156,6 @@ const Intro = StyleSheet.create({
 		fontSize: 16,
 		marginBottom: 20
 	},
-	startBtn: {
-		backgroundColor: "white",
-		padding: 10,
-		paddingRight: 40,
-		paddingLeft: 40,
-		borderRadius: 20
-	},
-	adminBtn: {
-		alignItems: "center",
-		backgroundColor: "#8bc6c7",
-		padding: 5,
-		paddingRight: 15,
-		paddingLeft: 15,
-		borderRadius: 20,
-		marginBottom: 45
-	}
 })
 
 export default IntroScreen;

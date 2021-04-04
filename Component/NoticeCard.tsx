@@ -10,25 +10,32 @@ import { StackNavigationProp } from '@react-navigation/stack';
 
 import { BoxLayout } from '.';
 import { dateToString } from '../Function/DateToString';
+import { mint, borderColor } from '../StyleVariable';
+import { NoticeStackParamList } from '../Router/NoticeRouter';
+import { useUserState } from '../Main/Model/UserModel';
+import { useDeleteNotice } from '../Main/ViewModel';
+
 import EditIcon from '../assets/edit.svg';
 import DeleteIcon from '../assets/delete.svg';
 import ArrowDownIcon from '../assets/arrow-down.svg';
 import ArrowUpIcon from '../assets/arrow-up.svg';
-import { mint, borderColor } from '../StyleVariable';
-
-import { NoticeStackParamList } from '../Router/NoticeRouter';
 
 type Props = {
-	navigation: StackNavigationProp<NoticeStackParamList, 'NoticeEdit'>;
+	navigation?: StackNavigationProp<NoticeStackParamList, 'NoticeEdit'>;
 	title: string;
 	date: Date;
 	contents: string;
-	index: number;
-	deleteNotice: (index: number) => void;
+	id: number;
 }
 
-const NoticeCard = ({ navigation, title, date, contents, index, deleteNotice }: Props) => {
+const NoticeCard = ({ navigation, title, date, contents, id }: Props) => {
 	const [textHide, setTextHide] = useState<boolean>(true);
+	const user = useUserState();
+	const deleteNotice = useDeleteNotice();
+
+	const handleDelete = () => {
+		deleteNotice(id);
+	};
 
 	return (
 		<BoxLayout>
@@ -36,7 +43,7 @@ const NoticeCard = ({ navigation, title, date, contents, index, deleteNotice }: 
 				style={Notice.wrap}
 			>
 				<View
-					style={Notice.header}
+					style={user.auth === "admin"?Notice.header:Notice.userHeader}
 				>
 					<Text
 						style={Notice.title}
@@ -47,42 +54,49 @@ const NoticeCard = ({ navigation, title, date, contents, index, deleteNotice }: 
 						{dateToString(date)}
 					</Text>
 				</View>
-				<View
-					style={Notice.btnContainer}
-				>
-					<TouchableHighlight
-						onPress={() => navigation.navigate('NoticeEdit', {
-							title: title,
-							contents: contents
-						})}
-						style={Notice.editBtn}
+				{
+					user.auth === "admin" &&
+					<View
+						style={Notice.btnContainer}
 					>
-						<EditIcon width={20} height={20} fill="black" />
-					</TouchableHighlight>
-					<TouchableHighlight
-						onPress={() => deleteNotice(index)}
-						style={Notice.deleteBtn}
-					>
-						<DeleteIcon width={20} height={20} fill="black" />
-					</TouchableHighlight>
-				</View>
+						<TouchableHighlight
+							onPress={() => navigation?.navigate('NoticeEdit', {
+								title: title,
+								contents: contents,
+								id
+							})}
+							style={Notice.editBtn}
+						>
+							<EditIcon width={20} height={20} fill="black" />
+						</TouchableHighlight>
+						<TouchableHighlight
+							onPress={handleDelete}
+							style={Notice.deleteBtn}
+						>
+							<DeleteIcon width={20} height={20} fill="black" />
+						</TouchableHighlight>
+					</View>
+				}
 			</View>
 			<View>
 				<Text>{textHide ? contents.substr(0, 50) + "..." : contents}</Text>
 			</View>
-			<View
-				style={Notice.arrowContainer}
-			>
-				<TouchableHighlight
-					onPress={() => setTextHide(!textHide)}
+			{
+				contents.length>50 &&
+				<View
+					style={Notice.arrowContainer}
 				>
-					{
-						textHide ?
-							<ArrowDownIcon width={20} height={20} fill="black" />
-							: <ArrowUpIcon width={20} height={20} fill="black" />
-					}
-				</TouchableHighlight>
-			</View>
+					<TouchableHighlight
+						onPress={() => setTextHide(!textHide)}
+					>
+						{
+							textHide ?
+								<ArrowDownIcon width={20} height={20} fill="black" />
+								: <ArrowUpIcon width={20} height={20} fill="black" />
+						}
+					</TouchableHighlight>
+				</View>
+			}
 		</BoxLayout>
 	);
 }
@@ -98,6 +112,12 @@ const Notice = StyleSheet.create({
 		flexWrap: 'wrap',
 		justifyContent: 'flex-start',
 		width: '75%',
+		marginBottom: 10
+	},
+	userHeader: {
+		flexWrap: 'wrap',
+		justifyContent: 'flex-start',
+		width: '100%',
 		marginBottom: 10
 	},
 	title: {
