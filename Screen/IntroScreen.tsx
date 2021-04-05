@@ -19,7 +19,7 @@ import { Modal } from '../Component';
 import { StackParamList } from '../Router/MainRouter';
 import { ButtonComponent } from '../Component';
 import { mint, purple } from '../StyleVariable';
-import { useLogin } from '../Main/Model/UserModel';
+import { useLogin, useUserLogin } from '../Main/Model/UserModel';
 import { withSafeAreaInsets } from 'react-native-safe-area-context';
 
 type Props = {
@@ -31,6 +31,7 @@ const IntroScreen = ({ navigation }: Props) => {
 	const [modal, setModal] = useState<boolean>(false);
 	const [key, setKey] = useState<string>("");
 	const login = useLogin();
+	const userLogin = useUserLogin();
 
 	const handleModalOpen = () => {
 		setModal(true);
@@ -68,6 +69,7 @@ const IntroScreen = ({ navigation }: Props) => {
 				>
 					<TouchableHighlight
 						onPress={() => {
+							userLogin();
 							navigation.navigate('User');
 						}}
 						underlayColor="transparent"
