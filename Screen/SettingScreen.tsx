@@ -4,8 +4,11 @@ import {
   Text
 } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { settingType } from '../Main/Type';
-import { SettingCard } from '../Component';
+
+import { usePadBoxState } from '../Main/Model/PadBoxModel'
+import { padBoxType } from '../Main/Type';
+import { SettingCard, SettingModal } from '../Component';
+import SquareIcon from '../assets/square.svg';
 import { SettingStackParamList } from '../Router/SettingRouter';
 
 type Props = {
@@ -13,36 +16,45 @@ type Props = {
 }
 
 const SettingScreen = ({ navigation } : Props) => {
-	const [settingData, setSettingData] = useState<Array<settingType>>([
-		{
-			id: 1,
-			title: "미래관 1층",
-			position: "서울특별시 동대문구 서울시립대로 163",
-			quantity: "8~10개",
-			humidity: "28.2도 / 68%"
-		}
-	]);
-	const deleteSetting = (index : number) => {
-		let tmp : Array<settingType> = settingData.slice(index, 1);
-		setSettingData(tmp);
+	const settingData = usePadBoxState();
+	const [modal, setModal] = useState<boolean>(false);
+
+	const handleModalOpen = () => {
+		setModal(true);
 	}
+	const handleModalClose = () => {
+		setModal(false);
+	}
+
 	return (
-		<ScrollView>
-			{
-				settingData.map((setting: settingType, index: number) => 
-					<SettingCard
-						key={setting.id}
-						index={index}
-						navigation={navigation}
-						title={setting.title}
-						position={setting.position}
-						quantity={setting.quantity}
-						humidity={setting.humidity}
-						deleteSetting={deleteSetting}
-					/>
-				)
-			}
-		</ScrollView>
+		<>
+			<ScrollView>
+				{
+					settingData.map((setting: padBoxType, index: number) => 
+						<>
+							<SettingCard
+								key={setting.id}
+								index={index}
+								name={setting.name}
+								address={setting.address}
+								padAmount={setting.padAmount}
+								humidity={setting.humidity}
+								temperature={setting.temperature}
+								modalOpen={handleModalOpen}
+							/>
+							<SettingModal
+								view={modal}
+								onClose={handleModalClose}
+								icon={<SquareIcon width={30} height={30} fill="black" />}
+								title="개별 생리대함 관리"
+								initialName={setting.name}
+								initialPos={setting.address}
+							/>
+						</>
+					)
+				}
+			</ScrollView>
+		</>
 	);
 }
 

@@ -89,6 +89,33 @@ const PadBoxLogicProvider = ({ children } : childrenObj) => {
 		console.log("get and set pad box info");
 	}
 
+	// const savepadBox = (id: number, name: string, address:string) => {
+	// 	if(id === -1){
+	// 		padBoxDispatch([
+	// 			...padBox,
+	// 			{
+	// 				id: 3,
+	// 				name,
+	// 				address
+	// 			}
+	// 		]);
+	// 	}else{
+	// 		const padBoxExcept = padBox.filter((value,index) => value.id !== id);
+	// 		padBoxDispatch([
+	// 			...padBoxExcept,
+	// 			{
+	// 				id: 3,
+	// 				name,
+	// 				address
+	// 			}
+	// 		]);
+	// 	}
+	// }
+
+	// const deletepadBox = (id:number) => {
+	// 	padBoxDispatch(padBox.filter((value, index) => value.id !== id));
+	// }
+
 	return (
 		<GetPadBoxContext.Provider value={getPadBox}>
 			{children}
