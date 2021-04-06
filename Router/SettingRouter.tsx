@@ -1,13 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { RouteProp } from '@react-navigation/native';
 import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack';
-import { StyleSheet, Alert, Text, TouchableHighlight } from 'react-native';
+import {
+	StyleSheet,
+	View,
+	Text,
+	TextInput,
+	TouchableHighlight,
+} from 'react-native';
 
-import { Logotitle } from '../Component';
-import { SettingScreen, SettingCreateScreen } from '../Screen';
+import {  Logotitle, SettingModal } from '../Component';
+import { SettingScreen } from '../Screen';
 import SettingIcon from '../assets/squares.svg';
-import { mint } from '../StyleVariable';
+import SquareIcon from '../assets/square.svg';
+import { mint } from '../StyleVariable'; 
 
 const Stack = createStackNavigator();
 
@@ -24,44 +31,43 @@ export type SettingStackParamList = {
 };
 
 const SettingRouter = ( { navigation }: Props) => {
-	const saveSetting = () => {
-		Alert.alert("Save Setting");
+	const [modal, setModal] = useState<boolean>(false);
+
+	const handleModalOpen = () => {
+		setModal(true);
+	}
+	const handleModalClose = () => {
+		setModal(false);
 	}
 	return (
-		<Stack.Navigator screenOptions={{
-			headerTitleAlign: 'center',
-			headerTitle: props => <Logotitle {...props} icon={<SettingIcon width={30} height={30} fill="black" />}
-			name="생리대함 관리" />
-		}}>
-			<Stack.Screen name="Setting" component={SettingScreen}
-				options={{
-					headerRight: () => (
-						<TouchableHighlight
-							onPress={()=> navigation.push("SettingCreate", {
-								title: "",
-							})}
-							style={Setting.addBtn}
-						>
-							<Text style={{ fontSize: 20, color: 'white' }}>+</Text>
-						</TouchableHighlight>
-					),
-					headerLeft: null
-				}} />
-			<Stack.Screen
-				name="SettingCreate"
-				component={SettingCreateScreen}
-				options={{
-					headerRight: () => (
-						<TouchableHighlight
-							onPress={saveSetting}
-							style={Setting.saveBtn}
-						>
-							<Text style={{ fontSize: 16, color: 'white'}}>저장</Text>
-						</TouchableHighlight>
-					)
-				}}
+		<>
+			<Stack.Navigator screenOptions={{
+				headerTitleAlign: 'center',
+				headerTitle: props => <Logotitle {...props} icon={<SettingIcon width={30} height={30} fill="black" />}
+				name="생리대함 관리" />
+			}}>
+				<Stack.Screen name="Setting" component={SettingScreen}
+					options={{
+						headerRight: () => (
+							<TouchableHighlight
+								onPress={handleModalOpen}
+								style={Setting.addBtn}
+							>
+								<Text style={{ fontSize: 20, color: 'white' }}>+</Text>
+							</TouchableHighlight>
+						),
+						headerLeft: null
+					}} />
+			</Stack.Navigator>
+			<SettingModal
+			view={modal}
+			onClose={handleModalClose}
+			icon={<SquareIcon width={30} height={30} fill="black" />}
+			title="생리대함 생성"
+			initialName=""
+			initialPos=""
 			/>
-		</Stack.Navigator>
+		</>
 	);
 }
 
@@ -82,7 +88,7 @@ const Setting = StyleSheet.create({
 		justifyContent: 'center',
 		marginRight: 10,
 		padding: 10
-	}
+	},
 })
 
 export default SettingRouter;
