@@ -50,8 +50,9 @@ const SettingScreen = ({ navigation } : Props) => {
 							<Modal
 								view={modal}
 								onClose={handleModalClose}
-								title={<Logotitle icon={<SquareIcon width={30} height={30} fill="black" />} name="생리대함 생성" />}
+								title={<Logotitle icon={<SquareIcon width={30} height={30} fill="black" />} name="개별 생리대함 관리" />}
 							>
+								{/* 이름, 장소 받아오기 구현해야함 */}
 								<View style={{ width: 270 }}>
 									<Text style={MS.title}>이름</Text>
 									<TextInput value={name} onChangeText={setName} style={MS.input} />
