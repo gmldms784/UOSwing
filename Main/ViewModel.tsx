@@ -3,11 +3,14 @@ import React, { createContext, useContext } from 'react';
 import { childrenObj } from './Type';
 import { useNoticeState, useNoticeDispatch } from './Model/NoticeModel';
 import { usePadBoxState, usePadBoxDispatch } from './Model/PadBoxModel';
+import { ReportLogicProvider } from './ReportViewModel';
 
 export const LogicProvider = ({ children } : childrenObj) => (
 	<NoticeLogicProvider>
 		<PadBoxLogicProvider>
-			{children}
+			<ReportLogicProvider>
+				{children}
+			</ReportLogicProvider>
 		</PadBoxLogicProvider>
 	</NoticeLogicProvider>
 );
