@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { EventHandler, useState } from 'react';
 import {
   ScrollView,
   Text,
@@ -52,12 +52,13 @@ const SettingScreen = ({ navigation } : Props) => {
 								onClose={handleModalClose}
 								title={<Logotitle icon={<SquareIcon width={30} height={30} fill="black" />} name="개별 생리대함 관리" />}
 							>
-								{/* 이름, 장소 받아오기 구현해야함 */}
+								{/* 이름, 장소 받아오기 구현해야함, 어떻게..?????  */}
+								{/* modal이 겹쳐 뜨는 것 같음 */}
 								<View style={{ width: 270 }}>
 									<Text style={MS.title}>이름</Text>
-									<TextInput value={name} onChangeText={setName} style={MS.input} />
+									<TextInput value={setting.name} style={MS.input} />
 									<Text style={MS.title}>장소</Text>
-									<TextInput value={pos} onChangeText={setPos} style={MS.input} />
+									<TextInput value={setting.address} style={MS.input} />
 									<TouchableHighlight
 										// !키보드가 올라오면 버튼이 자리를 벗어남 해결필요!
 										style={{
