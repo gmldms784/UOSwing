@@ -1,5 +1,5 @@
 import React from 'react';
-import { LogicProvider } from './ViewModel';
+import { LogicProvider } from './ViewModel/ViewModel';
 import { NoticeContextProvider, PadBoxContextProvider, StatisticsContextProvider, UserContextProvider } from './Model';
 import { MainRouter } from '../Router';
 

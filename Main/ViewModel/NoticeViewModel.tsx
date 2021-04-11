@@ -1,21 +1,14 @@
-
 import React, { createContext, useContext } from 'react';
-import { childrenObj } from './Type';
-import { useNoticeState, useNoticeDispatch } from './Model/NoticeModel';
-import { usePadBoxState, usePadBoxDispatch } from './Model/PadBoxModel';
+import axios from 'axios';
+import { API_URL } from '../../CommonVariable';
 
-export const LogicProvider = ({ children } : childrenObj) => (
-	<NoticeLogicProvider>
-		<PadBoxLogicProvider>
-			{children}
-		</PadBoxLogicProvider>
-	</NoticeLogicProvider>
-);
+import { childrenObj } from '../Type';
+import { useNoticeState, useNoticeDispatch } from '../Model/NoticeModel';
 
 const SaveNoticeContext = createContext<(id: number, title: string, content : string)=> void>((id: number, title: string, content : string) => {});
 const DeleteNoticeContext = createContext<(id: number)=> void>((id: number) => {});
 
-const NoticeLogicProvider = ({ children } : childrenObj) => {
+export const NoticeLogicProvider = ({ children } : childrenObj) => {
 	const notice = useNoticeState();
 	const noticeDispatch = useNoticeDispatch();
 
@@ -75,28 +68,5 @@ export function useSaveNotice() {
 }
 export function useDeleteNotice() {
 	const context = useContext(DeleteNoticeContext);
-	return context;
-}
-
-const GetPadBoxContext = createContext<()=>void>(() => {});
-
-const PadBoxLogicProvider = ({ children } : childrenObj) => {
-	const padBox = usePadBoxState();
-	const padBoxDispatch = usePadBoxDispatch();
-
-	const getPadBox = () => {
-		// todo : get api call
-		console.log("get and set pad box info");
-	}
-
-	return (
-		<GetPadBoxContext.Provider value={getPadBox}>
-			{children}
-		</GetPadBoxContext.Provider>
-	);
-}
-
-export function useGetPadBox() {
-	const context = useContext(GetPadBoxContext);
 	return context;
 }

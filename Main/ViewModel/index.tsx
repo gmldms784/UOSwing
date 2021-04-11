@@ -1,0 +1,1 @@
+export { NoticeLogicProvider } from './NoticeViewModel';
