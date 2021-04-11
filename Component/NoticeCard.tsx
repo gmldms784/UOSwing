@@ -10,7 +10,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 
 import { BoxLayout } from '.';
 import { dateToString } from '../Function/DateToString';
-import { mint, borderColor } from '../StyleVariable';
+import { mint, borderColor } from '../CommonVariable';
 import { NoticeStackParamList } from '../Router/NoticeRouter';
 import { useUserState } from '../Main/Model/UserModel';
 import { useDeleteNotice } from '../Main/ViewModel';

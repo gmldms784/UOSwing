@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Marker } from 'react-native-maps';
-import { green, yellow, red, alert } from '../StyleVariable';
+import { green, yellow, red, alert } from '../CommonVariable';
 import {
 	StyleSheet,
 	View,

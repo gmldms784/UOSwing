@@ -12,7 +12,7 @@ import { BoxLayout } from '.';
 import EditIcon from '../assets/edit.svg';
 import DeleteIcon from '../assets/delete.svg';
 import SettingIcon from '../assets/squares.svg';
-import { mint, borderColor } from '../StyleVariable';
+import { mint, borderColor } from '../CommonVariable';
 
 import { SettingStackParamList } from '../Router/SettingRouter';
 

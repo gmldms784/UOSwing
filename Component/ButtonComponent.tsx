@@ -6,7 +6,7 @@ import {
 	StyleSheetProperties
 } from 'react-native';
 
-import { borderColor, mint, purple } from '../StyleVariable';
+import { borderColor, mint, purple } from '../CommonVariable';
 
 type sizeArr = ["default", "fit"];
 // default는 text 크기에 맞춰서 button이 나옴

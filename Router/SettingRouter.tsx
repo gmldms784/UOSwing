@@ -7,7 +7,7 @@ import { StyleSheet, Alert, Text, TouchableHighlight } from 'react-native';
 import { Logotitle } from '../Component';
 import { SettingScreen, SettingCreateScreen } from '../Screen';
 import SettingIcon from '../assets/squares.svg';
-import { mint } from '../StyleVariable';
+import { mint } from '../CommonVariable';
 
 const Stack = createStackNavigator();
 

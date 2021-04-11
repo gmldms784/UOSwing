@@ -14,7 +14,6 @@ import { useUserState } from '../Main/Model/UserModel';
 import { usePadBoxState } from '../Main/Model/PadBoxModel';
 import { padBoxType } from '../Main/Type';
 import { MarkerComponent, MapWidget, ButtonComponent } from '../Component';
-import { mint } from '../StyleVariable';
 
 type ILocation = {
 	latitude: number;

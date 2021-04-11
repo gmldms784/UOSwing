@@ -7,7 +7,7 @@ import { StyleSheet, Alert, Text, TouchableHighlight } from 'react-native';
 import { NoticeScreen, NoticeEditScreen } from '../Screen';
 import { Logotitle } from '../Component';
 import NoticeIcon from '../assets/information.svg';
-import { mint } from '../StyleVariable';
+import { mint } from '../CommonVariable';
 
 const Stack = createStackNavigator();
 

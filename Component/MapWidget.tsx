@@ -10,7 +10,7 @@ import NoticeIcon from '../assets/information.svg';
 import RefreshIcon from '../assets/refresh.svg';
 import GPSIcon from '../assets/gps.svg';
 
-import { borderColor, darkGray } from '../StyleVariable';
+import { borderColor, darkGray } from '../CommonVariable';
 import { Modal } from '.';
 import Logotitle from './Logotitle';
 import { NoticeScreen } from '../Screen';
