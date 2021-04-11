@@ -5,4 +5,4 @@ export const yellow = "#E6BA66";
 export const green = "#A2DE90";
 export const borderColor = "#adadad";
 export const alert = "#b51529";
-export const darkGray = "#545b63"
+export const darkGray = "#545b63";

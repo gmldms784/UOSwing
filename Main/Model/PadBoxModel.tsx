@@ -27,6 +27,17 @@ export const PadBoxContextProvider = ({ children }: childrenObj) => {
 		temperature: 27,
 		humidity: 50,
 		updatedStateDate: new Date("2021-03-29T03:30:00")
+	}, {
+		id: 3,
+		boxId: 3,
+		latitude: 37.5847995,
+		longitude: 127.0621226,
+		name: "중앙도서관 1층",
+		address: "서울시립대학교 중앙도서관",
+		padAmount: 12,
+		temperature: 27,
+		humidity: 50,
+		updatedStateDate: new Date("2021-03-29T03:30:00")
 	}];
 
 	const [padBoxData, setPadBoxDate] = useState<Array<padBoxType>>(initialState);
