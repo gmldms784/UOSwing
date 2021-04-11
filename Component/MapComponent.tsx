@@ -118,20 +118,23 @@ const MapComponent = () => {
 			<MapWidget
 				getMyPosition={getMyPosition}
 			/>
-			<TouchableHighlight
-				style={
-					Map.alert
-				}
-			// todo : onPress로 신고 modal 열기
-			>
-				<ButtonComponent
-					color="mint"
-					border={true}
+			{
+				user.auth === "user" &&
+				<TouchableHighlight
+					style={
+						Map.alert
+					}
+				// todo : onPress로 신고 modal 열기
 				>
-					<AlertIcon width={30} height={30} style={{ marginRight: 7 }} />
-					<Text style={{ fontSize: 18 }}>신고하기</Text>
-				</ButtonComponent>
-			</TouchableHighlight>
+					<ButtonComponent
+						color="mint"
+						border={true}
+					>
+						<AlertIcon width={30} height={30} style={{ marginRight: 7 }} />
+						<Text style={{ fontSize: 18 }}>신고하기</Text>
+					</ButtonComponent>
+				</TouchableHighlight>
+			}
 		</View>
 	);
 };

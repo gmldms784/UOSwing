@@ -7,7 +7,7 @@ import {
 	Text,
 	TextInput
 } from 'react-native';
-import { HeaderBackButton } from '@react-navigation/stack';
+import { useUserLogin, useUserState } from '../Main/Model/UserModel';
 
 type Props = {
 	name: string;
@@ -21,7 +21,8 @@ type Props = {
 
 const MarkerComponent = ({name, latitude, longitude, amount, humidity, temperature} : Props) => {
 	const [markerColor, setMarkerColor] = useState<string>("yellow");
-	
+	const user = useUserState();
+
 	useEffect(()=> {
 		if(amount == 0){
 			setMarkerColor(red);
@@ -44,9 +45,12 @@ const MarkerComponent = ({name, latitude, longitude, amount, humidity, temperatu
 			}}
 			style={{ padding: 10 }}
 		>
-			<View style={MarkerStyle.alert}>
-				<Text style={MarkerStyle.alertText}>!</Text>
-			</View>
+			{
+				user.auth === "admin" &&
+				<View style={MarkerStyle.alert}>
+					<Text style={MarkerStyle.alertText}>!</Text>
+				</View>
+			}
 			<View
 				style={StyleSheet.flatten([{backgroundColor: markerColor}, MarkerStyle.marker])}
 			>
