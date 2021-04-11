@@ -17,7 +17,7 @@ export const UserContextProvider = ({ children }: childrenObj) => {
 	const [header, setHeader] = useState<{ "X-AUTH-TOKEN": string }>({ "X-AUTH-TOKEN": "" });
 
 	const login = (key: string): boolean => {
-		axios.post("/api/v1/admin/login", {
+		axios.post(`${API_URL}/api/v1/admin/login`, {
 			"email": "samsam-uos@gmail.com",
 			"password": key
 		})
@@ -26,8 +26,14 @@ export const UserContextProvider = ({ children }: childrenObj) => {
 				setHeader({
 					"X-AUTH-TOKEN" : resKey
 				});
+				setUser({
+					...user,
+					auth: "admin"
+				});
+				console.log(res);
 			})
 			.catch(e => {
+				// todo : 현재 api 에러코드가 제대로 반환되지 않아서 고쳐주시면 다시 error 처리하기
 				if (e.response) {
 					// 요청이 이루어졌으며 서버가 2xx의 범위를 벗어나는 상태 코드로 응답했습니다.
 					console.log(e.response.data);
@@ -44,7 +50,6 @@ export const UserContextProvider = ({ children }: childrenObj) => {
 					// 오류를 발생시킨 요청을 설정하는 중에 문제가 발생했습니다.
 					console.log('Error', e.message);
 				}
-				console.log(e.config);
 				return false;
 			});
 		return true;
