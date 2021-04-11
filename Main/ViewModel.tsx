@@ -2,7 +2,7 @@
 import React, { createContext, useContext } from 'react';
 import { childrenObj } from './Type';
 import { useNoticeState, useNoticeDispatch } from './Model/NoticeModel';
-import { usePadBoxState, usePadBoxDispatch } from './Model/PadBoxModel';
+import { PadBoxLogicProvider } from './PadBoxViewModel';
 import { ReportLogicProvider } from './ReportViewModel';
 
 export const LogicProvider = ({ children } : childrenObj) => (
@@ -78,55 +78,5 @@ export function useSaveNotice() {
 }
 export function useDeleteNotice() {
 	const context = useContext(DeleteNoticeContext);
-	return context;
-}
-
-const GetPadBoxContext = createContext<()=>void>(() => {});
-
-const PadBoxLogicProvider = ({ children } : childrenObj) => {
-	const padBox = usePadBoxState();
-	const padBoxDispatch = usePadBoxDispatch();
-
-	const getPadBox = () => {
-		// todo : get api call
-		console.log("get and set pad box info");
-	}
-
-	// const savepadBox = (id: number, name: string, address:string) => {
-	// 	if(id === -1){
-	// 		padBoxDispatch([
-	// 			...padBox,
-	// 			{
-	// 				id: 3,
-	// 				name,
-	// 				address
-	// 			}
-	// 		]);
-	// 	}else{
-	// 		const padBoxExcept = padBox.filter((value,index) => value.id !== id);
-	// 		padBoxDispatch([
-	// 			...padBoxExcept,
-	// 			{
-	// 				id: 3,
-	// 				name,
-	// 				address
-	// 			}
-	// 		]);
-	// 	}
-	// }
-
-	// const deletepadBox = (id:number) => {
-	// 	padBoxDispatch(padBox.filter((value, index) => value.id !== id));
-	// }
-
-	return (
-		<GetPadBoxContext.Provider value={getPadBox}>
-			{children}
-		</GetPadBoxContext.Provider>
-	);
-}
-
-export function useGetPadBox() {
-	const context = useContext(GetPadBoxContext);
 	return context;
 }

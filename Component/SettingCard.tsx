@@ -6,16 +6,15 @@ import {
 	Text,
 	TouchableHighlight
 } from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack';
 
 import { BoxLayout } from '.';
 import EditIcon from '../assets/edit.svg';
 import DeleteIcon from '../assets/delete.svg';
 import SettingIcon from '../assets/square.svg';
 import { mint, borderColor } from '../StyleVariable';
-import { usePadBoxState } from '../Main/Model/PadBoxModel';
 
-import { SettingStackParamList } from '../Router/SettingRouter';
+import { usePadBoxState } from '../Main/Model/PadBoxModel';
+import { useDeletePadBox } from '../Main/PadBoxViewModel';
 
 type Props = {
 	index: number;
@@ -28,6 +27,12 @@ type Props = {
 }
 
 const SettingCard = ({ name, address, padAmount, humidity, temperature, index, modalOpen }: Props) => {
+	const padBox = usePadBoxState();
+	const deletePadBox = useDeletePadBox();
+
+	const handleDelete = () => {
+		deletePadBox(index);
+	}
 
 	return (
 		<>
@@ -63,7 +68,7 @@ const SettingCard = ({ name, address, padAmount, humidity, temperature, index, m
 							<EditIcon width={20} height={20} fill="black" />
 						</TouchableHighlight>
 						<TouchableHighlight
-							// onPress={() => }
+							onPress={handleDelete}
 							style={Setting.deleteBtn}
 						>
 							<DeleteIcon width={20} height={20} fill="black" />
