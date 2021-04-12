@@ -1,22 +1,22 @@
 import React from 'react';
-import { LogicProvider } from './ViewModel';
+import { LogicProvider } from './ViewModel/ViewModel';
 import { NoticeContextProvider, PadBoxContextProvider, StatisticsContextProvider, UserContextProvider } from './Model';
 import { MainRouter } from '../Router';
 
 const Provider = () => {
 	const a = 1;
 	return (
-		<NoticeContextProvider>
-			<PadBoxContextProvider>
-				<StatisticsContextProvider>
-					<UserContextProvider>
+		<UserContextProvider>
+			<NoticeContextProvider>
+				<PadBoxContextProvider>
+					<StatisticsContextProvider>
 						<LogicProvider>
 							<MainRouter />
 						</LogicProvider>
-					</UserContextProvider>
-				</StatisticsContextProvider>
-			</PadBoxContextProvider>
-		</NoticeContextProvider>
+					</StatisticsContextProvider>
+				</PadBoxContextProvider>
+			</NoticeContextProvider>
+		</UserContextProvider>
 	);
 };
 

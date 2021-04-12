@@ -1,6 +1,6 @@
 import React, { createContext, useContext } from 'react';
-import { childrenObj } from './Type';
-import { usePadBoxState, usePadBoxDispatch } from './Model/PadBoxModel';
+import { childrenObj } from '../Type';
+import { usePadBoxState, usePadBoxDispatch } from '../Model/PadBoxModel';
 
 const SavePadBoxContext = createContext<(id: number, name: string, padAmount: number, temperature: number, humidity: number)=> void>((id: number, name: string, padAmount: number, temperature: number, humidity: number) => {});
 const DeletePadBoxContext = createContext<(id:number)=> void>((id:number) => {});

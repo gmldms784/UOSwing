@@ -61,6 +61,9 @@ const SettingScreen = ({ navigation } : Props) => {
 						<Text style={MS.title}>이름</Text>
 						<TextInput value={name} onChangeText={setName} style={MS.input} />
 						<Text style={MS.title}>장소</Text>
+						{
+							// 희은 : 장소 map api 연동해서 받아올 수 있게 해야해요!
+						}
 						<TextInput value={pos} onChangeText={setPos} style={MS.input} />
 						<TouchableHighlight
 							// !키보드가 올라오면 버튼이 자리를 벗어남 해결필요!

@@ -10,11 +10,11 @@ import {
 import { BoxLayout } from '.';
 import EditIcon from '../assets/edit.svg';
 import DeleteIcon from '../assets/delete.svg';
+import { mint, borderColor } from '../CommonVariable';
 import SettingIcon from '../assets/square.svg';
-import { mint, borderColor } from '../StyleVariable';
 
 import { usePadBoxState } from '../Main/Model/PadBoxModel';
-import { useDeletePadBox } from '../Main/PadBoxViewModel';
+import { useDeletePadBox } from '../Main/ViewModel/PadBoxViewModel';
 
 type Props = {
 	index: number;
@@ -64,12 +64,14 @@ const SettingCard = ({ name, address, padAmount, humidity, temperature, index, m
 						<TouchableHighlight
 							onPress={modalOpen}
 							style={Setting.editBtn}
+							underlayColor="transparent"
 						>
 							<EditIcon width={20} height={20} fill="black" />
 						</TouchableHighlight>
 						<TouchableHighlight
 							onPress={handleDelete}
 							style={Setting.deleteBtn}
+							underlayColor="transparent"
 						>
 							<DeleteIcon width={20} height={20} fill="black" />
 						</TouchableHighlight>

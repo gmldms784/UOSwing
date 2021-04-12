@@ -18,7 +18,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { Modal } from '../Component';
 import { StackParamList } from '../Router/MainRouter';
 import { ButtonComponent } from '../Component';
-import { mint, purple } from '../StyleVariable';
+import { mint, purple } from '../CommonVariable';
 import { useLogin, useUserLogin } from '../Main/Model/UserModel';
 
 type Props = {

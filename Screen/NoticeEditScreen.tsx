@@ -11,7 +11,7 @@ import { RouteProp } from '@react-navigation/native';
 
 import { NoticeStackParamList } from '../Router/NoticeRouter';
 import { ButtonComponent } from '../Component';
-import { useSaveNotice } from '../Main/ViewModel';
+import { useSaveNotice } from '../Main/ViewModel/NoticeViewModel';
 
 type Props = {
 	route: RouteProp<NoticeStackParamList, 'NoticeEdit'>;

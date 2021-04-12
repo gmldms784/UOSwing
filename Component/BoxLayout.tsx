@@ -4,7 +4,7 @@ import {
 	View,
 	Text
 } from 'react-native';
-import { borderColor } from '../StyleVariable';
+import { borderColor } from '../CommonVariable';
 
 type Props = {};
 

@@ -10,11 +10,11 @@ import NoticeIcon from '../assets/information.svg';
 import RefreshIcon from '../assets/refresh.svg';
 import GPSIcon from '../assets/gps.svg';
 
-import { borderColor, darkGray } from '../StyleVariable';
+import { borderColor, darkGray } from '../CommonVariable';
 import { Modal } from '.';
 import Logotitle from './Logotitle';
 import { NoticeScreen } from '../Screen';
-import { useGetPadBox } from '../Main/PadBoxViewModel';
+import { useGetPadBox } from '../Main/ViewModel/PadBoxViewModel';
 
 type Props = {
 	getMyPosition : () => void
@@ -66,7 +66,7 @@ const MapWidget = ({getMyPosition} : Props) => {
 				onClose={handleInfoClose}
 				title={<Logotitle icon={<NoticeIcon width={25} height={25} fill="black" />} name="공지사항"/>}
 			>
-				<NoticeScreen />
+				<NoticeScreen type="modal"/>
 			</Modal>
 		</>
 	);

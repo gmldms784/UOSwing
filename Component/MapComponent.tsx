@@ -18,9 +18,7 @@ import { useUserState } from '../Main/Model/UserModel';
 import { usePadBoxState } from '../Main/Model/PadBoxModel';
 import { padBoxType } from '../Main/Type';
 import { MarkerComponent, MapWidget, ButtonComponent } from '../Component';
-import { alert, mint } from '../StyleVariable';
-
-import { useSaveReport } from '../Main/ReportViewModel';
+import { useSaveReport } from '../Main/ViewModel/ReportViewModel';
 
 type ILocation = {
 	latitude: number;
@@ -144,32 +142,27 @@ const MapComponent = () => {
 						<Text style={{textAlign: "center"}}>😅 학교 내에 있지 않으시군요!</Text>
 					</View>
 				}
-			</MapView>
-			{
-				locationInfo &&
-				<View style={Map.info}>
-					<Text style={{textAlign: "center"}}>😅 학교 내에 있지 않으시군요!</Text>
-				</View>
-			}
-			<MapWidget
-				getMyPosition={getMyPosition}
-			/>
-			{
-				user.auth === "user" &&
-				<TouchableHighlight
-					style={
-						Map.alert
-					}
-				// todo : onPress로 신고 modal 열기
-				>
-					<ButtonComponent
-						color="mint"
-						border={true}
+				<MapWidget
+					getMyPosition={getMyPosition}
+				/>
+				{
+					user.auth === "user" &&
+					<TouchableHighlight
+						style={
+							Map.alert
+						}
+						onPress = {handleReportOpen}
+						underlayColor="transparent"
 					>
-						<AlertIcon width={30} height={30} style={{ marginRight: 7 }} />
-						<Text style={{ fontSize: 18 }}>신고하기</Text>
-					</ButtonComponent>
-				</TouchableHighlight>
+						<ButtonComponent
+							color="mint"
+							border={true}
+						>
+							<AlertIcon width={30} height={30} style={{ marginRight: 7 }} />
+							<Text style={{ fontSize: 18 }}>신고하기</Text>
+						</ButtonComponent>
+					</TouchableHighlight>
+				}
 			</View>
 			<Modal
 				view={reportModal}
@@ -180,6 +173,7 @@ const MapComponent = () => {
 					<Text style={MS.title}>장소</Text>
 					<Picker
 						selectedValue={reportPos}
+						// 희은 피드백 : ts 맞춰서 type 기재해주세요!
 						onValueChange={(v, i)=>setReportPos(v)}>
 						<Picker.Item label="창공관" value={0} />
 						<Picker.Item label="학관" value={1} />

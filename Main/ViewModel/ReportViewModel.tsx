@@ -1,6 +1,6 @@
 import React, { createContext, useContext } from 'react';
-import { childrenObj } from './Type';
-import { useReportState, useReportDispatch } from './Model/ReportModel';
+import { childrenObj } from '../Type';
+import { useReportState, useReportDispatch } from '../Model/ReportModel';
 
 const SaveReportContext = createContext<(id: number, tag: string, content: string, box_id: number)=> void>((id: number, tag: string, content : string, box_id: number) => {});
 const DeleteReportContext = createContext<(id: number)=> void>((id: number) => {});
