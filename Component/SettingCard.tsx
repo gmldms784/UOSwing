@@ -6,86 +6,89 @@ import {
 	Text,
 	TouchableHighlight
 } from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack';
 
 import { BoxLayout } from '.';
 import EditIcon from '../assets/edit.svg';
 import DeleteIcon from '../assets/delete.svg';
-import SettingIcon from '../assets/squares.svg';
+import SettingIcon from '../assets/square.svg';
 import { mint, borderColor } from '../StyleVariable';
 
-import { SettingStackParamList } from '../Router/SettingRouter';
+import { usePadBoxState } from '../Main/Model/PadBoxModel';
+import { useDeletePadBox } from '../Main/PadBoxViewModel';
 
 type Props = {
-	navigation: StackNavigationProp<SettingStackParamList, 'SettingCreate'>;
 	index: number;
-	title: string;
-	position: string;
-	quantity: string;
-	humidity: string;
-	deleteSetting: (index: number) => void;
+	name: string;
+	address: string;
+	padAmount: Number;
+	humidity: Number;
+	temperature: Number;
+	modalOpen: any;
 }
 
-const SettingCard = ({ navigation, title, position, quantity, humidity, index, deleteSetting }: Props) => {
+const SettingCard = ({ name, address, padAmount, humidity, temperature, index, modalOpen }: Props) => {
+	const padBox = usePadBoxState();
+	const deletePadBox = useDeletePadBox();
+
+	const handleDelete = () => {
+		deletePadBox(index);
+	}
 
 	return (
-		<BoxLayout>
-			<View
-				style={Setting.wrap}
-			>
+		<>
+			<BoxLayout>
 				<View
-					style={Setting.header}
+					style={Setting.wrap}
 				>
-					<View style={{ flexDirection: 'row' }}>
-						<SettingIcon width={20} height={20} fill="black" />
+					<View
+						style={Setting.header}
+					>
+						<View style={{ flexDirection: 'row' }}>
+							<SettingIcon width={30} height={30} fill="black" />
+							<Text
+								style={Setting.title}
+							>{name}</Text>
+						</View>
 						<Text
-							style={Setting.title}
-						>{title}</Text>
+							style={{
+								color: 'gray',
+								width: '100%'
+							}}
+						>
+							{address}
+						</Text>
 					</View>
-					<Text
-						style={{
-							color: 'gray',
-							width: '100%'
-						}}
+					<View
+						style={Setting.btnContainer}
 					>
-						{position}
-						{
-							// 이부분 position이 아니라 name 같은 이름으로 지어야할 것 같아요 :) 사용자가 지정한 이름이 들어가니까..!
-						}
-					</Text>
+						<TouchableHighlight
+							onPress={modalOpen}
+							style={Setting.editBtn}
+						>
+							<EditIcon width={20} height={20} fill="black" />
+						</TouchableHighlight>
+						<TouchableHighlight
+							onPress={handleDelete}
+							style={Setting.deleteBtn}
+						>
+							<DeleteIcon width={20} height={20} fill="black" />
+						</TouchableHighlight>
+					</View>
 				</View>
-				<View
-					style={Setting.btnContainer}
-				>
-					<TouchableHighlight
-						onPress={() => navigation.navigate('SettingCreate', {
-							title: title,
-						})}
-						style={Setting.editBtn}
-					>
-						<EditIcon width={20} height={20} fill="black" />
-					</TouchableHighlight>
-					<TouchableHighlight
-						onPress={() => deleteSetting(index)}
-						style={Setting.deleteBtn}
-					>
-						<DeleteIcon width={20} height={20} fill="black" />
-					</TouchableHighlight>
+				<View>
+					<View style={{ flexDirection: 'row' }}>
+						<Text
+							style={Setting.quantity}>잔량</Text>
+						<Text>{padAmount}개</Text>
+					</View>
+					<View style={{ flexDirection: 'row' }}>
+						<Text
+							style={Setting.humidity}>온습도</Text>
+						<Text>{temperature}℃ / {humidity}%</Text>
+					</View>
 				</View>
-			</View>
-			<View>
-				<View style={{ flexDirection: 'row' }}>
-					<Text
-						style={Setting.quantity}>잔량</Text>
-					<Text>{quantity}</Text>
-				</View>
-				<View style={{ flexDirection: 'row' }}>
-					<Text
-						style={Setting.humidity}>온습도</Text>
-					<Text>{humidity}</Text>
-				</View>
-			</View>
-		</BoxLayout>
+			</BoxLayout>
+		</>
 	);
 }
 
@@ -102,11 +105,13 @@ const Setting = StyleSheet.create({
 		width: '75%',
 		marginBottom: 10
 	},
+	titleContainer: {
+		flexDirection: 'row',
+	},
 	title: {
 		fontSize: 20,
 		fontWeight: 'bold',
 		width: '100%',
-		marginLeft: 10,
 		marginBottom: 10
 	},
 	btnContainer: {
