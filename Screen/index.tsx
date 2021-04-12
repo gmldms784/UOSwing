@@ -4,5 +4,4 @@ export { default as IntroScreen } from './IntroScreen';
 export { default as MapScreen } from './MapScreen';
 export { default as StatisticsScreen } from './StatisticsScreen';
 export { default as SettingScreen } from './SettingScreen';
-export { default as SettingCreateScreen } from './SettingCreateScreen';
 export { default as UserScreen } from './UserScreen';
