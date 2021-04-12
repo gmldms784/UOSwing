@@ -3,18 +3,24 @@ import {
 	StyleSheet,
 	TouchableHighlight,
 	Text,
-	View
+	View,
+	TextInput,
+	Alert
 } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import MapView, { Marker } from 'react-native-maps';
+import { Picker } from '@react-native-picker/picker';
 
+import { Modal, Logotitle } from '.';
 import AlertIcon from '../assets/warning.svg';
 
 import { useUserState } from '../Main/Model/UserModel';
 import { usePadBoxState } from '../Main/Model/PadBoxModel';
 import { padBoxType } from '../Main/Type';
 import { MarkerComponent, MapWidget, ButtonComponent } from '../Component';
-import { mint } from '../StyleVariable';
+import { alert, mint } from '../StyleVariable';
+
+import { useSaveReport } from '../Main/ReportViewModel';
 
 type ILocation = {
 	latitude: number;
@@ -37,6 +43,28 @@ const MapComponent = () => {
 	const user = useUserState();
 	const [location, setLocation] = useState<ILocation | undefined>(undefined);
 	const [locationInfo, setLocationInfo] = useState<boolean>(false);
+
+	// <---report modal
+	const saveReport = useSaveReport();
+	const [reportModal, setReportModal] = useState<boolean>(false);
+	const [reportPos, setReportPos] = useState<number>(0);
+	const [reportWhy, setReportWhy] = useState<string>("");
+	const [reportBody, setReportBody] = useState<string>("");
+	const handleReportOpen = () => {
+		setReportModal(true);
+	}
+	const handleReportClose = () => {
+		setReportModal(false);
+	}
+	const handleReportComplete= () => {
+		saveReport(-1, reportWhy, reportBody, reportPos);
+		handleReportClose();
+		setReportPos(0);
+		setReportWhy("");
+		setReportBody("");
+		Alert.alert("신고가 성공적으로 접수되었습니다");
+	}
+	// ----> report modal
 
 	const getMyPosition = () => {
 		// 잘작동하는지 실제 디바이스로 테스트 필요
@@ -70,43 +98,51 @@ const MapComponent = () => {
 	};
 
 	return (
-		<View style={Map.wrap}>
-			<MapView
-				style={Map.map}
-				initialRegion={{
-					latitude: 37.5833427,
-					longitude: 127.0590842,
-					latitudeDelta: 0.2,
-					longitudeDelta: 0.2,
-				}}
-				zoomEnabled={true}
-				minZoomLevel={15.8}
-				maxZoomLevel={18}
-				scrollEnabled={false}
-				loadingEnabled={true}
-				moveOnMarkerPress={false}
-			>
-				{
-					padBoxState.map((padBox: padBoxType) =>
-						<MarkerComponent
-							key={padBox.boxId}
-							name={padBox.name}
-							latitude={padBox.latitude}
-							longitude={padBox.longitude}
-							amount={padBox.padAmount}
-							humidity={user.auth === "admin" ? padBox.humidity : undefined}
-							temperature={user.auth === "admin" ? padBox.temperature : undefined}
+		<>
+			<View style={Map.wrap}>
+				<MapView
+					style={Map.map}
+					initialRegion={{
+						latitude: 37.5833427,
+						longitude: 127.0590842,
+						latitudeDelta: 0.2,
+						longitudeDelta: 0.2,
+					}}
+					zoomEnabled={true}
+					minZoomLevel={15.8}
+					maxZoomLevel={18}
+					scrollEnabled={false}
+					loadingEnabled={true}
+					moveOnMarkerPress={false}
+				>
+					{
+						padBoxState.map((padBox: padBoxType) =>
+							<MarkerComponent
+								key={padBox.boxId}
+								name={padBox.name}
+								latitude={padBox.latitude}
+								longitude={padBox.longitude}
+								amount={padBox.padAmount}
+								humidity={user.auth === "admin" ? padBox.humidity : undefined}
+								temperature={user.auth === "admin" ? padBox.temperature : undefined}
+							/>
+						)
+					}
+					{
+						location &&
+						<Marker
+							coordinate={{
+								latitude: location.latitude,
+								longitude: location.longitude
+							}}
 						/>
-					)
-				}
+					}
+				</MapView>
 				{
-					location &&
-					<Marker
-						coordinate={{
-							latitude: location.latitude,
-							longitude: location.longitude
-						}}
-					/>
+					locationInfo &&
+					<View style={Map.info}>
+						<Text style={{textAlign: "center"}}>😅 학교 내에 있지 않으시군요!</Text>
+					</View>
 				}
 			</MapView>
 			{
@@ -134,8 +170,47 @@ const MapComponent = () => {
 						<Text style={{ fontSize: 18 }}>신고하기</Text>
 					</ButtonComponent>
 				</TouchableHighlight>
-			}
-		</View>
+			</View>
+			<Modal
+				view={reportModal}
+				onClose={handleReportClose}
+				title={<Logotitle icon={<AlertIcon width={30} height={30} style={{ marginRight: 7 }} />}name="신고하기" />}
+			>
+				<View style={{ width: 270 }}>
+					<Text style={MS.title}>장소</Text>
+					<Picker
+						selectedValue={reportPos}
+						onValueChange={(v, i)=>setReportPos(v)}>
+						<Picker.Item label="창공관" value={0} />
+						<Picker.Item label="학관" value={1} />
+						<Picker.Item label="도서관" value={2} />
+					</Picker>
+					<Text style={MS.title}>신고사유</Text>
+					<Picker
+						selectedValue={reportWhy}
+						onValueChange={(v, i)=>setReportWhy(v)}>
+						<Picker.Item label="Test" value={0} />
+						<Picker.Item label="Test2" value={1} />
+						<Picker.Item label="Test3" value={2} />
+					</Picker>
+					<Text style={MS.title}>기타사항</Text>
+					<TextInput style={MS.input} value={reportBody} onChangeText={setReportBody} />
+					<TouchableHighlight
+						style={{
+							width: "50%",
+							left: "25%",
+							marginTop: 20
+						}}
+						underlayColor="transparent"
+						onPress={handleReportComplete}
+					>
+						<ButtonComponent color="mint">
+							<Text style={MS.btnText}>완료</Text>
+						</ButtonComponent>
+					</TouchableHighlight>
+				</View>
+			</Modal>
+		</>
 	);
 };
 
@@ -178,5 +253,28 @@ const Map = StyleSheet.create({
 		padding: 8
 	}
 });
+
+const MS = StyleSheet.create({
+	title: {
+		paddingLeft: 10,
+		marginTop: 25,
+		borderLeftColor: 'black',
+		borderLeftWidth: 3,
+		fontSize: 18,
+		fontWeight: '600',
+		fontFamily: 'DOHYEON',
+	},
+	input: {
+		borderWidth: 1,
+		borderRadius: 7,
+		padding: 5,
+		marginTop: 10,
+	},
+	btnText: {
+		fontSize: 15,
+		fontFamily: 'DOHYEON',
+		marginVertical: 7,
+	}
+})
 
 export default MapComponent;

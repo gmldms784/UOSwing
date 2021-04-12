@@ -26,6 +26,15 @@ export type statisticsType = {
 	createdDate: Date
 }
 
+export type reportType = {
+	id: number,
+	tag: string, // 추후 수정
+	content: string,
+	isResolved: boolean,
+	createdDate: Date,
+	box_id: number
+}
+
 type authArray = ["admin", "user"]
 
 export type userType = {
