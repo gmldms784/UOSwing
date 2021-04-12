@@ -72,7 +72,6 @@ const ModalStyle = StyleSheet.create({
 		shadowRadius: 4,
 		elevation: 6,
 		maxWidth: "80%",
-		maxHeight: "80%"
 	},
 	header : {
 		display: "flex",

@@ -150,6 +150,7 @@ const MapComponent = () => {
 				<TouchableHighlight
 					style={Map.alert}
 					onPress={handleReportOpen}
+					underlayColor="transparent"
 				>
 					<ButtonComponent
 						color="mint"
@@ -185,7 +186,6 @@ const MapComponent = () => {
 					<Text style={MS.title}>기타사항</Text>
 					<TextInput style={MS.input} value={reportBody} onChangeText={setReportBody} />
 					<TouchableHighlight
-						// !키보드가 올라오면 버튼이 자리를 벗어남 해결필요!
 						style={{
 							width: "50%",
 							left: "25%",
