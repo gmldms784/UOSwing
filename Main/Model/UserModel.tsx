@@ -14,7 +14,7 @@ export const UserContextProvider = ({ children }: childrenObj) => {
 	const [user, setUser] = useState<userType>({
 		auth: "user"
 	});
-	const [header, setHeader] = useState<{ "X-AUTH-TOKEN": string }>({ "X-AUTH-TOKEN": "" });
+	const [header, setHeader] = useState<{"X-AUTH-TOKEN": string }>({ "X-AUTH-TOKEN": "" });
 
 	const login = (key: string): boolean => {
 		axios.post(`${API_URL}/api/v1/admin/login`, {
@@ -65,17 +65,24 @@ export const UserContextProvider = ({ children }: childrenObj) => {
 
 	return (
 		<userContext.Provider value={user}>
-			<loginContext.Provider value={login}>
-				<userLoginContext.Provider value={userLogin}>
-					{children}
-				</userLoginContext.Provider>
-			</loginContext.Provider>
+			<headerContext.Provider value={header}>
+				<loginContext.Provider value={login}>
+					<userLoginContext.Provider value={userLogin}>
+						{children}
+					</userLoginContext.Provider>
+				</loginContext.Provider>
+			</headerContext.Provider>
 		</userContext.Provider>
 	);
 };
 
 export function useUserState() {
 	const context = useContext(userContext);
+	return context;
+}
+
+export function useHeader() {
+	const context = useContext(headerContext);
 	return context;
 }
 

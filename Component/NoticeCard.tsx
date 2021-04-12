@@ -13,7 +13,7 @@ import { dateToString } from '../Function/DateToString';
 import { mint, borderColor } from '../CommonVariable';
 import { NoticeStackParamList } from '../Router/NoticeRouter';
 import { useUserState } from '../Main/Model/UserModel';
-import { useDeleteNotice } from '../Main/ViewModel';
+import { useDeleteNotice } from '../Main/ViewModel/NoticeViewModel';
 
 import EditIcon from '../assets/edit.svg';
 import DeleteIcon from '../assets/delete.svg';
@@ -79,7 +79,7 @@ const NoticeCard = ({ navigation, title, date, contents, id }: Props) => {
 				}
 			</View>
 			<View>
-				<Text>{textHide ? contents.substr(0, 50) + "..." : contents}</Text>
+				<Text>{textHide && contents.length > 50 ? contents.substr(0, 50) + "..." : contents}</Text>
 			</View>
 			{
 				contents.length>50 &&

@@ -14,7 +14,7 @@ import { borderColor, darkGray } from '../CommonVariable';
 import { Modal } from '.';
 import Logotitle from './Logotitle';
 import { NoticeScreen } from '../Screen';
-import { useGetPadBox } from '../Main/ViewModel';
+import { useGetPadBox } from '../Main/ViewModel/ViewModel';
 
 type Props = {
 	getMyPosition : () => void
