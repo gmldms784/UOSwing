@@ -6,7 +6,9 @@ import { NoticeLogicProvider, PadBoxLogicProvider, ReportLogicProvider } from '.
 export const LogicProvider = ({ children } : childrenObj) => (
 	<NoticeLogicProvider>
 		<PadBoxLogicProvider>
-			{children}
+			<ReportLogicProvider>
+				{children}
+			</ReportLogicProvider>
 		</PadBoxLogicProvider>
 	</NoticeLogicProvider>
 );

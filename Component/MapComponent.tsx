@@ -18,7 +18,7 @@ import { useUserState } from '../Main/Model/UserModel';
 import { usePadBoxState } from '../Main/Model/PadBoxModel';
 import { padBoxType } from '../Main/Type';
 import { MarkerComponent, MapWidget, ButtonComponent } from '../Component';
-import { useSaveReport } from '../Main/ReportViewModel';
+import { useSaveReport } from '../Main/ViewModel/ReportViewModel';
 
 type ILocation = {
 	latitude: number;
@@ -151,7 +151,8 @@ const MapComponent = () => {
 						style={
 							Map.alert
 						}
-					// todo : onPress로 신고 modal 열기
+						onPress = {handleReportOpen}
+						underlayColor="transparent"
 					>
 						<ButtonComponent
 							color="mint"

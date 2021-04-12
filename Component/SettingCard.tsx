@@ -64,12 +64,14 @@ const SettingCard = ({ name, address, padAmount, humidity, temperature, index, m
 						<TouchableHighlight
 							onPress={modalOpen}
 							style={Setting.editBtn}
+							underlayColor="transparent"
 						>
 							<EditIcon width={20} height={20} fill="black" />
 						</TouchableHighlight>
 						<TouchableHighlight
 							onPress={handleDelete}
 							style={Setting.deleteBtn}
+							underlayColor="transparent"
 						>
 							<DeleteIcon width={20} height={20} fill="black" />
 						</TouchableHighlight>

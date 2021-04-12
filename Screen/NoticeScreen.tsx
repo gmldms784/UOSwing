@@ -11,9 +11,10 @@ import { NoticeStackParamList } from '../Router/NoticeRouter';
 
 type Props = {
 	navigation?: StackNavigationProp<NoticeStackParamList, 'NoticeEdit'>;
+	type? : string;
 }
 
-const NoticeScreen = ({ navigation } : Props) => {
+const NoticeScreen = ({ navigation, type } : Props) => {
 	const noticeData = useNoticeState();
 
 	return (
@@ -22,6 +23,7 @@ const NoticeScreen = ({ navigation } : Props) => {
 				noticeData.map((notice : noticeType, index: number) => 
 					<NoticeCard
 						key={notice.id}
+						type={type}
 						navigation={navigation}
 						title={notice.title}
 						date={notice.createdDate}
