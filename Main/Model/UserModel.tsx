@@ -5,6 +5,7 @@ const userContext = createContext<userType>({
 	auth: "user"
 });
 const loginContext = createContext<(key: string) => boolean>((key: string) => { return true });
+const userLoginContext = createContext<() => void>(() => {});
 
 export const UserContextProvider = ({ children }: childrenObj) => {
 	const [user, setUser] = useState<userType>({
@@ -28,10 +29,19 @@ export const UserContextProvider = ({ children }: childrenObj) => {
 		}
 	};
 
+	const userLogin = () => {
+		setUser({
+			...user,
+			auth: "user"
+		});
+	};
+
 	return (
 		<userContext.Provider value={user}>
 			<loginContext.Provider value={login}>
-				{children}
+				<userLoginContext.Provider value={userLogin}>
+					{children}
+				</userLoginContext.Provider>
 			</loginContext.Provider>
 		</userContext.Provider>
 	);
@@ -46,3 +56,9 @@ export function useLogin() {
 	const context = useContext(loginContext);
 	return context;
 }
+
+export function useUserLogin() {
+	const context = useContext(userLoginContext);
+	return context;
+}
+

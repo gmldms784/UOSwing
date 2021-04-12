@@ -144,13 +144,23 @@ const MapComponent = () => {
 						<Text style={{textAlign: "center"}}>😅 학교 내에 있지 않으시군요!</Text>
 					</View>
 				}
-				<MapWidget
-					getMyPosition={getMyPosition}
-				/>
+			</MapView>
+			{
+				locationInfo &&
+				<View style={Map.info}>
+					<Text style={{textAlign: "center"}}>😅 학교 내에 있지 않으시군요!</Text>
+				</View>
+			}
+			<MapWidget
+				getMyPosition={getMyPosition}
+			/>
+			{
+				user.auth === "user" &&
 				<TouchableHighlight
-					style={Map.alert}
-					onPress={handleReportOpen}
-					underlayColor="transparent"
+					style={
+						Map.alert
+					}
+				// todo : onPress로 신고 modal 열기
 				>
 					<ButtonComponent
 						color="mint"
