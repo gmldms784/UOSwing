@@ -1,7 +1,7 @@
 export type noticeType = {
 	id: number,
 	title: string,
-	createdDate?: Date,
+	createdDate: String,
 	content: string
 };
 

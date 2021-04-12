@@ -23,7 +23,7 @@ import ArrowUpIcon from '../assets/arrow-up.svg';
 type Props = {
 	navigation?: StackNavigationProp<NoticeStackParamList, 'NoticeEdit'>;
 	title: string;
-	date: Date;
+	date?: Date;
 	contents: string;
 	id: number;
 	type? : string;
@@ -52,7 +52,7 @@ const NoticeCard = ({ navigation, title, date, contents, id, type }: Props) => {
 					<Text
 						style={Notice.date}
 					>
-						{dateToString(date)}
+						{date && dateToString(date)}
 					</Text>
 				</View>
 				{
