@@ -1,5 +1,5 @@
 export const dateToString = (date : Date) => {
-	if(date === undefined)
+	if(!date)
 		return "";
 	const year = date.getFullYear();
 	let month = (date.getMonth()+1).toString();

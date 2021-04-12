@@ -16,8 +16,8 @@ export const UserContextProvider = ({ children }: childrenObj) => {
 	});
 	const [header, setHeader] = useState<{"X-AUTH-TOKEN": string }>({ "X-AUTH-TOKEN": "" });
 
-	const login = (key: string): boolean => {
-		axios.post(`${API_URL}/api/v1/admin/login`, {
+	const login = async (key: string): boolean => {
+		const status = await axios.post(`${API_URL}/api/v1/admin/login`, {
 			"email": "samsam-uos@gmail.com",
 			"password": key
 		})
@@ -30,7 +30,7 @@ export const UserContextProvider = ({ children }: childrenObj) => {
 					...user,
 					auth: "admin"
 				});
-				console.log(res);
+				return true;
 			})
 			.catch(e => {
 				// todo : 현재 api 에러코드가 제대로 반환되지 않아서 고쳐주시면 다시 error 처리하기
@@ -52,7 +52,7 @@ export const UserContextProvider = ({ children }: childrenObj) => {
 				}
 				return false;
 			});
-		return true;
+		return status;
 	};
 
 	const userLogin = () => {

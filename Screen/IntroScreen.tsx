@@ -39,8 +39,9 @@ const IntroScreen = ({ navigation }: Props) => {
 		setModal(false);
 	}
 
-	const loginAdmin = () => {
-		if(login(key)){
+	const loginAdmin = async () => {
+		const status = await login(key);
+		if(status){
 			navigation.navigate("Home");
 			setModal(false);
 		}else{
