@@ -222,7 +222,7 @@ const MapComponent = () => {
 					onClose={handleReportClose}
 					title={<Logotitle icon={<AlertIcon width={25} height={25} fill="black" />} name="신고내역"/>}
 				>
-					<Text style={MS.title}>{padBoxState}</Text>
+					<Text style={MS.title}>{padBoxState[reportPos].name}</Text>
 				</Modal>
 			}
 		</>
