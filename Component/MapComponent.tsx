@@ -1,24 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
 	StyleSheet,
 	TouchableHighlight,
 	Text,
 	View,
-	TextInput,
-	Alert
 } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import MapView, { Marker } from 'react-native-maps';
-import { Picker } from '@react-native-picker/picker';
 
-import { Modal, Logotitle } from '.';
+import {ReportModal } from '.';
 import AlertIcon from '../assets/warning.svg';
 
 import { useUserState } from '../Main/Model/UserModel';
 import { usePadBoxState } from '../Main/Model/PadBoxModel';
 import { padBoxType } from '../Main/Type';
 import { MarkerComponent, MapWidget, ButtonComponent } from '../Component';
-import { useSaveReport } from '../Main/ViewModel/ReportViewModel';
 
 type ILocation = {
 	latitude: number;
@@ -43,25 +39,15 @@ const MapComponent = () => {
 	const [locationInfo, setLocationInfo] = useState<boolean>(false);
 
 	// <---report modal
-	const saveReport = useSaveReport();
 	const [reportModal, setReportModal] = useState<boolean>(false);
 	const [reportPos, setReportPos] = useState<number>(0);
-	const [reportWhy, setReportWhy] = useState<string>("");
-	const [reportBody, setReportBody] = useState<string>("");
+	const reportHandle = (idx:number) => setReportPos(idx);
 	const handleReportOpen = (idx : number) => {
-		setReportPos(idx);
+		reportHandle(idx);
 		setReportModal(true);
 	}
 	const handleReportClose = () => {
 		setReportModal(false);
-	}
-	const handleReportComplete= () => {
-		saveReport(-1, reportWhy, reportBody, reportPos);
-		handleReportClose();
-		setReportPos(0);
-		setReportWhy("");
-		setReportBody("");
-		Alert.alert("신고가 성공적으로 접수되었습니다");
 	}
 	// ----> report modal
 
@@ -167,64 +153,12 @@ const MapComponent = () => {
 					</TouchableHighlight>
 				}
 			</View>
-			{
-				// todo : report 모달 관련 요소 컴포넌트로 분리하기
-				user.auth==="user"?
-				<Modal
-					view={reportModal}
-					onClose={handleReportClose}
-					title={<Logotitle icon={<AlertIcon width={30} height={30} style={{ marginRight: 7 }} />}name="신고하기" />}
-				>
-					<View style={{ width: 270 }}>
-						<Text style={MS.title}>장소</Text>
-						<Picker
-							selectedValue={reportPos}
-							// 희은 피드백 : ts 맞춰서 type 기재해주세요!
-							// 이제 마커 클릭해도 신고하기가 뜨는데 바로 클릭한 padBox가 select되게 해두었어요! 아래 map도 구현해두었습니다!
-							onValueChange={(v, i)=>setReportPos(v)}>
-							{
-								padBoxState.map((padBox : padBoxType, index : number) =>
-									<Picker.Item key={padBox.id} label={padBox.name} value={index}/>
-								)	
-							}
-							{/* <Picker.Item label="창공관" value={0} />
-							<Picker.Item label="학관" value={1} />
-							<Picker.Item label="도서관" value={2} /> */}
-						</Picker>
-						<Text style={MS.title}>신고사유</Text>
-						<Picker
-							selectedValue={reportWhy}
-							onValueChange={(v, i)=>setReportWhy(v)}>
-							<Picker.Item label="Test" value={0} />
-							<Picker.Item label="Test2" value={1} />
-							<Picker.Item label="Test3" value={2} />
-						</Picker>
-						<Text style={MS.title}>기타사항</Text>
-						<TextInput style={MS.input} value={reportBody} onChangeText={setReportBody} />
-						<TouchableHighlight
-							style={{
-								width: "50%",
-								left: "25%",
-								marginTop: 20
-							}}
-							underlayColor="transparent"
-							onPress={handleReportComplete}
-						>
-							<ButtonComponent color="mint">
-								<Text style={MS.btnText}>완료</Text>
-							</ButtonComponent>
-						</TouchableHighlight>
-					</View>
-				</Modal>
-				:
-				<Modal
-					view = {reportModal}
-					onClose={handleReportClose}
-					title={<Logotitle icon={<AlertIcon width={25} height={25} fill="black" />} name="신고내역"/>}
-				>
-					<Text style={MS.title}>{padBoxState[reportPos].name}</Text>
-				</Modal>
-			}
+			<ReportModal
+				reportModal={reportModal}
+				handleReportClose={handleReportClose}
+				reportPos={reportPos}
+				reportHandle={reportHandle}
+			/>
 		</>
 	);
 };
@@ -268,28 +202,5 @@ const Map = StyleSheet.create({
 		padding: 8
 	}
 });
-
-const MS = StyleSheet.create({
-	title: {
-		paddingLeft: 10,
-		marginTop: 25,
-		borderLeftColor: 'black',
-		borderLeftWidth: 3,
-		fontSize: 18,
-		fontWeight: '600',
-		fontFamily: 'DOHYEON',
-	},
-	input: {
-		borderWidth: 1,
-		borderRadius: 7,
-		padding: 5,
-		marginTop: 10,
-	},
-	btnText: {
-		fontSize: 15,
-		fontFamily: 'DOHYEON',
-		marginVertical: 7,
-	}
-})
 
 export default MapComponent;
