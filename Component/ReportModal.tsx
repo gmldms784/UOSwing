@@ -78,7 +78,12 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 							<Picker.Item label="Test3" value={2} />
 						</Picker>
 						<Text style={MS.title}>기타사항</Text>
-						<TextInput style={MS.input} value={reportBody} onChangeText={setReportBody} />
+						<TextInput
+							style={MS.input}
+							value={reportBody}
+							onChangeText={setReportBody}
+							maxLength={40}
+						/>
 						<TouchableHighlight
 							style={{
 								width: "50%",
@@ -101,17 +106,23 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 					onClose={handleReportClose}
 					title={<Logotitle icon={<AlertIcon width={25} height={25} fill="black" />} name="신고내역"/>}
 				>
-					<View style={{width:270}}>
+					<View style={{width:270, height:'95%'}}>
 						<Text style={MS.title}>{padBoxState[reportPos].name}</Text>
 						<View style={MS.tagCon}>
-							<View>
+							{/* 태그 추가하기, 아래처럼 추가하면 되나요 .. ?  */}
+							{/* 태그별 이미지가 없어요! */}
+							<View style={MS.tagSet}>
 								<KeyIcon width={40} height={40} fill="black" />
 								<Text style={MS.tagText}>열쇠 분실</Text>
 							</View>
+							<View style={MS.tagSet}>
+								<KeyIcon width={40} height={40} fill="black" />
+								<Text style={MS.tagText}>생리대함 파손</Text>
+							</View>
 						</View>
-						<ScrollView style={MS.reportList}>
+						<ScrollView style={MS.reportList} contentContainerStyle={{flexGrow:1}}>
 							{
-								reportData.map((report:reportType, index:number)=>{
+								reportData.map((report:reportType, index:number)=>
 									<ReportCard
 										key={report.id}
 										id={index}
@@ -121,7 +132,7 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 										createdDate={report.createdDate}
 										box_id={report.box_id}
 									/>
-								})
+								)
 							}
 						</ScrollView>
 					</View>
@@ -157,9 +168,16 @@ const MS = StyleSheet.create({
 		flexDirection: 'row',
 		paddingVertical: 10,
 	},
+	tagSet: {
+		display: 'flex',
+		flexDirection: 'column',
+		alignItems: 'center',
+		justifyContent: 'center',
+		marginRight: 5,
+	},
 	tagText: {
 		marginTop: 10,
-		fontSize: 10,
+		fontSize: 11,
 	},
 	reportList: {
 		borderWidth: 1,

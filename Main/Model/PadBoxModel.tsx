@@ -27,7 +27,7 @@ export const PadBoxContextProvider = ({ children }: childrenObj) => {
 		temperature: 27,
 		humidity: 50,
 		updatedStateDate: new Date("2021-03-29T03:30:00")
-	}];
+	},];
 
 	const [padBoxData, setPadBoxDate] = useState<Array<padBoxType>>(initialState);
 

@@ -8,9 +8,11 @@ import {
 } from 'react-native';
 
 import { BoxLayout } from '.';
-import { borderColor } from '../CommonVariable';
-import { useReportState } from '../Main/Model/ReportModel';
+import { mint } from '../CommonVariable';
+import { ReportContextProvider, useReportState } from '../Main/Model/ReportModel';
 import { useDeleteReport } from '../Main/ViewModel/ReportViewModel';
+
+import { dateToString } from '../Function/DateToString';
 
 type Props = {
 	id: number,
@@ -36,8 +38,8 @@ const ReportCard = ({ id, tag, content, isResolved, createdDate, box_id }: Props
 					style={Report.wrap}
 				>
 					<View>
-						<Text>{content}</Text>
-						<Text>{createdDate}</Text>
+						<Text style={Report.content}>{content}</Text>
+						<Text style={Report.date}>{createdDate && dateToString(createdDate)}</Text>
 					</View>
 				</View>
 			</BoxLayout>
@@ -51,6 +53,15 @@ const Report = StyleSheet.create({
 		flexWrap: 'nowrap',
 		flexDirection: 'row',
 		justifyContent: 'space-between'
+	},
+	content: {
+		marginBottom: 10,
+	},
+	date: {
+		paddingLeft: 5,
+		backgroundColor: mint,
+		borderRadius: 4,
+		width: 85,
 	},
 })
 
