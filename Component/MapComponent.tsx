@@ -48,7 +48,8 @@ const MapComponent = () => {
 	const [reportPos, setReportPos] = useState<number>(0);
 	const [reportWhy, setReportWhy] = useState<string>("");
 	const [reportBody, setReportBody] = useState<string>("");
-	const handleReportOpen = () => {
+	const handleReportOpen = (idx : number) => {
+		setReportPos(idx);
 		setReportModal(true);
 	}
 	const handleReportClose = () => {
@@ -114,15 +115,17 @@ const MapComponent = () => {
 					moveOnMarkerPress={false}
 				>
 					{
-						padBoxState.map((padBox: padBoxType) =>
+						padBoxState.map((padBox: padBoxType, index : number) =>
 							<MarkerComponent
 								key={padBox.boxId}
+								index={index}
 								name={padBox.name}
 								latitude={padBox.latitude}
 								longitude={padBox.longitude}
 								amount={padBox.padAmount}
 								humidity={user.auth === "admin" ? padBox.humidity : undefined}
 								temperature={user.auth === "admin" ? padBox.temperature : undefined}
+								onPress={handleReportOpen}
 							/>
 						)
 					}
@@ -164,46 +167,64 @@ const MapComponent = () => {
 					</TouchableHighlight>
 				}
 			</View>
-			<Modal
-				view={reportModal}
-				onClose={handleReportClose}
-				title={<Logotitle icon={<AlertIcon width={30} height={30} style={{ marginRight: 7 }} />}name="신고하기" />}
-			>
-				<View style={{ width: 270 }}>
-					<Text style={MS.title}>장소</Text>
-					<Picker
-						selectedValue={reportPos}
-						// 희은 피드백 : ts 맞춰서 type 기재해주세요!
-						onValueChange={(v, i)=>setReportPos(v)}>
-						<Picker.Item label="창공관" value={0} />
-						<Picker.Item label="학관" value={1} />
-						<Picker.Item label="도서관" value={2} />
-					</Picker>
-					<Text style={MS.title}>신고사유</Text>
-					<Picker
-						selectedValue={reportWhy}
-						onValueChange={(v, i)=>setReportWhy(v)}>
-						<Picker.Item label="Test" value={0} />
-						<Picker.Item label="Test2" value={1} />
-						<Picker.Item label="Test3" value={2} />
-					</Picker>
-					<Text style={MS.title}>기타사항</Text>
-					<TextInput style={MS.input} value={reportBody} onChangeText={setReportBody} />
-					<TouchableHighlight
-						style={{
-							width: "50%",
-							left: "25%",
-							marginTop: 20
-						}}
-						underlayColor="transparent"
-						onPress={handleReportComplete}
-					>
-						<ButtonComponent color="mint">
-							<Text style={MS.btnText}>완료</Text>
-						</ButtonComponent>
-					</TouchableHighlight>
-				</View>
-			</Modal>
+			{
+				// todo : report 모달 관련 요소 컴포넌트로 분리하기
+				user.auth==="user"?
+				<Modal
+					view={reportModal}
+					onClose={handleReportClose}
+					title={<Logotitle icon={<AlertIcon width={30} height={30} style={{ marginRight: 7 }} />}name="신고하기" />}
+				>
+					<View style={{ width: 270 }}>
+						<Text style={MS.title}>장소</Text>
+						<Picker
+							selectedValue={reportPos}
+							// 희은 피드백 : ts 맞춰서 type 기재해주세요!
+							// 이제 마커 클릭해도 신고하기가 뜨는데 바로 클릭한 padBox가 select되게 해두었어요! 아래 map도 구현해두었습니다!
+							onValueChange={(v, i)=>setReportPos(v)}>
+							{
+								padBoxState.map((padBox : padBoxType, index : number) =>
+									<Picker.Item key={padBox.id} label={padBox.name} value={index}/>
+								)	
+							}
+							{/* <Picker.Item label="창공관" value={0} />
+							<Picker.Item label="학관" value={1} />
+							<Picker.Item label="도서관" value={2} /> */}
+						</Picker>
+						<Text style={MS.title}>신고사유</Text>
+						<Picker
+							selectedValue={reportWhy}
+							onValueChange={(v, i)=>setReportWhy(v)}>
+							<Picker.Item label="Test" value={0} />
+							<Picker.Item label="Test2" value={1} />
+							<Picker.Item label="Test3" value={2} />
+						</Picker>
+						<Text style={MS.title}>기타사항</Text>
+						<TextInput style={MS.input} value={reportBody} onChangeText={setReportBody} />
+						<TouchableHighlight
+							style={{
+								width: "50%",
+								left: "25%",
+								marginTop: 20
+							}}
+							underlayColor="transparent"
+							onPress={handleReportComplete}
+						>
+							<ButtonComponent color="mint">
+								<Text style={MS.btnText}>완료</Text>
+							</ButtonComponent>
+						</TouchableHighlight>
+					</View>
+				</Modal>
+				:
+				<Modal
+					view = {reportModal}
+					onClose={handleReportClose}
+					title={<Logotitle icon={<AlertIcon width={25} height={25} fill="black" />} name="신고내역"/>}
+				>
+					<Text style={MS.title}>{padBoxState[reportPos].name}</Text>
+				</Modal>
+			}
 		</>
 	);
 };

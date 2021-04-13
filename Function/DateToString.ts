@@ -1,6 +1,9 @@
-export const dateToString = (date : Date) => {
-	if(date === undefined)
+export const dateToString = (dateString : string) => {
+	const date = new Date(dateString);
+
+	if(!date)
 		return "";
+
 	const year = date.getFullYear();
 	let month = (date.getMonth()+1).toString();
 	let day= date.getDate().toString();
