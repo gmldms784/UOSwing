@@ -1,7 +1,7 @@
 export type noticeType = {
 	id: number,
 	title: string,
-	createdDate: Date,
+	createdDate: String,
 	content: string
 };
 
@@ -15,15 +15,14 @@ export type padBoxType = {
 	padAmount: number,
 	temperature: number,
 	humidity: number,
-	updatedStateDate: Date
+	updatedStateDate: Date,
+	// 희은 : isReported 속성 추가 되어야합니다!
 };
 
 export type statisticsType = {
-	id: number,
-	// boxId: number, => 바꿔달라고 backend에 요청함
-	boxName: string,
-	usedAmount: number,
-	createdDate: Date
+	padBoxId: number,
+	padBoxName: string,
+	amount: number
 }
 
 export type reportType = {

@@ -18,9 +18,8 @@ import LinearGradient from 'react-native-linear-gradient';
 import { Modal } from '../Component';
 import { StackParamList } from '../Router/MainRouter';
 import { ButtonComponent } from '../Component';
-import { mint, purple } from '../StyleVariable';
+import { mint, purple } from '../CommonVariable';
 import { useLogin, useUserLogin } from '../Main/Model/UserModel';
-import { withSafeAreaInsets } from 'react-native-safe-area-context';
 
 type Props = {
 	navigation: StackNavigationProp<StackParamList, 'Home'>;
@@ -40,8 +39,9 @@ const IntroScreen = ({ navigation }: Props) => {
 		setModal(false);
 	}
 
-	const loginAdmin = () => {
-		if(login(key)){
+	const loginAdmin = async () => {
+		const status = await login(key);
+		if(status){
 			navigation.navigate("Home");
 			setModal(false);
 		}else{
@@ -71,6 +71,7 @@ const IntroScreen = ({ navigation }: Props) => {
 						onPress={() => {
 							userLogin();
 							navigation.navigate('User');
+							userLogin();
 						}}
 						underlayColor="transparent"
 						style={{ marginTop: 20, marginBottom: 16, zIndex: 2 }}

@@ -10,10 +10,10 @@ import { StackNavigationProp } from '@react-navigation/stack';
 
 import { BoxLayout } from '.';
 import { dateToString } from '../Function/DateToString';
-import { mint, borderColor } from '../StyleVariable';
+import { mint, borderColor } from '../CommonVariable';
 import { NoticeStackParamList } from '../Router/NoticeRouter';
 import { useUserState } from '../Main/Model/UserModel';
-import { useDeleteNotice } from '../Main/ViewModel';
+import { useDeleteNotice } from '../Main/ViewModel/NoticeViewModel';
 
 import EditIcon from '../assets/edit.svg';
 import DeleteIcon from '../assets/delete.svg';
@@ -23,12 +23,13 @@ import ArrowUpIcon from '../assets/arrow-up.svg';
 type Props = {
 	navigation?: StackNavigationProp<NoticeStackParamList, 'NoticeEdit'>;
 	title: string;
-	date: Date;
+	date?: Date;
 	contents: string;
 	id: number;
+	type? : string;
 }
 
-const NoticeCard = ({ navigation, title, date, contents, id }: Props) => {
+const NoticeCard = ({ navigation, title, date, contents, id, type }: Props) => {
 	const [textHide, setTextHide] = useState<boolean>(true);
 	const user = useUserState();
 	const deleteNotice = useDeleteNotice();
@@ -51,11 +52,11 @@ const NoticeCard = ({ navigation, title, date, contents, id }: Props) => {
 					<Text
 						style={Notice.date}
 					>
-						{dateToString(date)}
+						{date && dateToString(date)}
 					</Text>
 				</View>
 				{
-					user.auth === "admin" &&
+					user.auth === "admin" && !type && // 관리자가 page에서 볼 때만 수정, 삭제 버튼 등장
 					<View
 						style={Notice.btnContainer}
 					>
@@ -79,7 +80,7 @@ const NoticeCard = ({ navigation, title, date, contents, id }: Props) => {
 				}
 			</View>
 			<View>
-				<Text>{textHide ? contents.substr(0, 50) + "..." : contents}</Text>
+				<Text>{textHide && contents.length > 50 ? contents.substr(0, 50) + "..." : contents}</Text>
 			</View>
 			{
 				contents.length>50 &&

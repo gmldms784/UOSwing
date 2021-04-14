@@ -12,9 +12,9 @@ import {
 
 import {  Logotitle, Modal, ButtonComponent } from '../Component';
 import { SettingScreen } from '../Screen';
-import SettingIcon from '../assets/squares.svg';
+import { mint } from '../CommonVariable';
+import SquaresIcon from '../assets/squares.svg';
 import SquareIcon from '../assets/square.svg';
-import { mint } from '../StyleVariable'; 
 
 const Stack = createStackNavigator();
 
@@ -45,7 +45,7 @@ const SettingRouter = ( { navigation }: Props) => {
 		<>
 			<Stack.Navigator screenOptions={{
 				headerTitleAlign: 'center',
-				headerTitle: props => <Logotitle {...props} icon={<SettingIcon width={30} height={30} fill="black" />}
+				headerTitle: props => <Logotitle {...props} icon={<SquaresIcon width={30} height={30} fill="black" />}
 				name="생리대함 관리" />
 			}}>
 				<Stack.Screen name="Setting" component={SettingScreen}

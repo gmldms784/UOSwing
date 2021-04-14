@@ -1,27 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import { Marker } from 'react-native-maps';
-import { green, yellow, red, alert } from '../StyleVariable';
+import { green, yellow, red, alert } from '../CommonVariable';
 import {
 	StyleSheet,
 	View,
 	Text,
 	TextInput
 } from 'react-native';
-import { HeaderBackButton } from '@react-navigation/stack';
+import { Modal, Logotitle } from '../Component';
+import { useUserLogin, useUserState } from '../Main/Model/UserModel';
+import AlertIcon from '../assets/warning.svg';
 
 type Props = {
+	index: number;
 	name: string;
 	latitude: number;
 	longitude: number;
 	amount: number;
 	humidity?: number;
 	temperature?: number;
+	onPress: (idx : number) => void;
 }
 
 
-const MarkerComponent = ({name, latitude, longitude, amount, humidity, temperature} : Props) => {
+const MarkerComponent = ({index, name, latitude, longitude, amount, humidity, temperature, onPress} : Props) => {
 	const [markerColor, setMarkerColor] = useState<string>("yellow");
-	
+	const user = useUserState();
+
 	useEffect(()=> {
 		if(amount == 0){
 			setMarkerColor(red);
@@ -37,27 +42,33 @@ const MarkerComponent = ({name, latitude, longitude, amount, humidity, temperatu
 	// todo: marker arrow 만들기
 
 	return (
-		<Marker
-			coordinate={{
-				latitude: latitude,
-				longitude: longitude
-			}}
-			style={{ padding: 10 }}
-		>
-			<View style={MarkerStyle.alert}>
-				<Text style={MarkerStyle.alertText}>!</Text>
-			</View>
-			<View
-				style={StyleSheet.flatten([{backgroundColor: markerColor}, MarkerStyle.marker])}
+		<>
+			<Marker
+				coordinate={{
+					latitude: latitude,
+					longitude: longitude
+				}}
+				style={{ padding: 10 }}
+				onPress={() => onPress(index)}
 			>
-				<Text style={MarkerStyle.info}>{name}</Text>
-				<Text style={StyleSheet.flatten([MarkerStyle.whiteText, MarkerStyle.margin])}>{amount}개</Text>
 				{
-					temperature && humidity &&
-					<Text style={MarkerStyle.whiteText}>{`${temperature}°C / ${humidity}%`}</Text>
+					user.auth === "admin" &&
+					<View style={MarkerStyle.alert}>
+						<Text style={MarkerStyle.alertText}>!</Text>
+					</View>
 				}
-			</View>
-		</Marker>
+				<View
+					style={StyleSheet.flatten([{backgroundColor: markerColor}, MarkerStyle.marker])}
+				>
+					<Text style={MarkerStyle.info}>{name}</Text>
+					<Text style={StyleSheet.flatten([MarkerStyle.whiteText, MarkerStyle.margin])}>{amount}개</Text>
+					{
+						temperature && humidity &&
+						<Text style={MarkerStyle.whiteText}>{`${temperature}°C / ${humidity}%`}</Text>
+					}
+				</View>
+			</Marker>
+		</>
 	);
 };
 
