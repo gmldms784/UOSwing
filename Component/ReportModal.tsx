@@ -14,6 +14,8 @@ import { Modal, Logotitle, ReportCard } from '.';
 import { borderColor } from '../CommonVariable';
 import AlertIcon from '../assets/warning.svg';
 import KeyIcon from '../assets/key.svg';
+import BrokenIcon from '../assets/broken-link.svg';
+import WrongNumIcon from '../assets/decision.svg';
 
 import { useUserState } from '../Main/Model/UserModel';
 import { usePadBoxState } from '../Main/Model/PadBoxModel';
@@ -109,15 +111,23 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 					<View style={{width:270, height:'95%'}}>
 						<Text style={MS.title}>{padBoxState[reportPos].name}</Text>
 						<View style={MS.tagCon}>
-							{/* 태그 추가하기, 아래처럼 추가하면 되나요 .. ?  */}
-							{/* 태그별 이미지가 없어요! */}
 							<View style={MS.tagSet}>
-								<KeyIcon width={40} height={40} fill="black" />
+								<Text style={MS.tagIconCon}>
+									<KeyIcon width={30} height={30} fill="black" />
+								</Text>
 								<Text style={MS.tagText}>열쇠 분실</Text>
 							</View>
 							<View style={MS.tagSet}>
-								<KeyIcon width={40} height={40} fill="black" />
+								<Text style={MS.tagIconCon}>
+									<BrokenIcon width={30} height={30} fill="black" />
+								</Text>
 								<Text style={MS.tagText}>생리대함 파손</Text>
+							</View>
+							<View style={MS.tagSet}>
+								<Text style={MS.tagIconCon}>
+									<WrongNumIcon width={30} height={30} fill="black" />
+								</Text>
+								<Text style={MS.tagText}>수량 오차</Text>
 							</View>
 						</View>
 						<ScrollView style={MS.reportList} contentContainerStyle={{flexGrow:1}}>
@@ -175,8 +185,14 @@ const MS = StyleSheet.create({
 		justifyContent: 'center',
 		marginRight: 5,
 	},
+	tagIconCon: {
+		borderColor: borderColor,
+		borderWidth: 1,
+		borderRadius: 100,
+		padding: 10
+	},
 	tagText: {
-		marginTop: 10,
+		marginTop: 3,
 		fontSize: 11,
 	},
 	reportList: {
