@@ -8,11 +8,7 @@ const userContext = createContext<userType>({
 });
 const headerContext = createContext<{"X-AUTH-TOKEN": string}>({"X-AUTH-TOKEN": ""}); // 관리자 api 호출 시 사용할 header
 const loginContext = createContext<(key: string) => boolean>((key: string) => { return true });
-<<<<<<< HEAD
-const userLoginContext = createContext<()=>void>(() => {});
-=======
 const userLoginContext = createContext<() => void>(() => { });
->>>>>>> fae64487c26446cbf8adcc1deb6e8e95ccba3788
 
 export const UserContextProvider = ({ children }: childrenObj) => {
 	const [user, setUser] = useState<userType>({
@@ -66,12 +62,6 @@ export const UserContextProvider = ({ children }: childrenObj) => {
 		});
 		setHeader({ "X-AUTH-TOKEN": "" });
 	};
-
-	const userLogin = () => {
-		setUser({
-			auth: "user"
-		});
-	}
 
 	return (
 		<userContext.Provider value={user}>

@@ -11,7 +11,7 @@ import {
 import { Picker } from '@react-native-picker/picker';
 
 import { Modal, Logotitle, ReportCard } from '.';
-import { borderColor } from '../CommonVariable';
+import { borderColor, darkGray } from '../CommonVariable';
 import AlertIcon from '../assets/warning.svg';
 import KeyIcon from '../assets/key.svg';
 
@@ -112,11 +112,11 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 							{/* 태그 추가하기, 아래처럼 추가하면 되나요 .. ?  */}
 							{/* 태그별 이미지가 없어요! */}
 							<View style={MS.tagSet}>
-								<KeyIcon width={40} height={40} fill="black" />
+								<Text style={MS.tagIconCon}><KeyIcon width={30} height={30} fill="black" /></Text>
 								<Text style={MS.tagText}>열쇠 분실</Text>
 							</View>
 							<View style={MS.tagSet}>
-								<KeyIcon width={40} height={40} fill="black" />
+								<Text style={MS.tagIconCon}><KeyIcon width={30} height={30} fill="black" /></Text>
 								<Text style={MS.tagText}>생리대함 파손</Text>
 							</View>
 						</View>
@@ -173,11 +173,17 @@ const MS = StyleSheet.create({
 		flexDirection: 'column',
 		alignItems: 'center',
 		justifyContent: 'center',
-		marginRight: 5,
+		marginRight: 5
 	},
 	tagText: {
-		marginTop: 10,
+		marginTop: 3,
 		fontSize: 11,
+	},
+	tagIconCon: {
+		borderColor: borderColor,
+		borderWidth: 1,
+		borderRadius: 100,
+		padding: 10
 	},
 	reportList: {
 		borderWidth: 1,
