@@ -16,6 +16,7 @@ import AlertIcon from '../assets/warning.svg';
 import KeyIcon from '../assets/key.svg';
 import BrokenIcon from '../assets/broken-link.svg';
 import WrongNumIcon from '../assets/decision.svg';
+import NoPadIcon from '../assets/lost.svg';
 
 import { useUserState } from '../Main/Model/UserModel';
 import { usePadBoxState } from '../Main/Model/PadBoxModel';
@@ -126,6 +127,12 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 							<View style={MS.tagSet}>
 								<Text style={MS.tagIconCon}>
 									<WrongNumIcon width={30} height={30} fill="black" />
+								</Text>
+								<Text style={MS.tagText}>생리대 없음</Text>
+							</View>
+							<View style={MS.tagSet}>
+								<Text style={MS.tagIconCon}>
+									<NoPadIcon width={30} height={30} fill="black" />
 								</Text>
 								<Text style={MS.tagText}>수량 오차</Text>
 							</View>
