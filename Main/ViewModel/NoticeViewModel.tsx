@@ -25,7 +25,6 @@ export const NoticeLogicProvider = ({ children } : childrenObj) => {
 		axios.get(`${API_URL}/api/v1/notice`)
 		.then(res => {
 			noticeDispatch(res.data);
-			console.log(res.data);
 		})
 		.catch(e => {
 			if (e.response) {
