@@ -55,7 +55,6 @@ const SettingScreen = ({ navigation } : Props) => {
 					onClose={handleModalClose}
 					title={<Logotitle icon={<SquareIcon width={30} height={30} fill="black" />} name="개별 생리대함 관리" />}
 				>
-					{/* 이름, 장소 받아오기 구현해야함, 어떻게..?????  */}
 					{/* modal이 겹쳐 뜨는 것 같음 */}
 					<View style={{ width: 270 }}>
 						<Text style={MS.title}>이름</Text>
@@ -66,7 +65,6 @@ const SettingScreen = ({ navigation } : Props) => {
 						}
 						<TextInput value={pos} onChangeText={setPos} style={MS.input} />
 						<TouchableHighlight
-							// !키보드가 올라오면 버튼이 자리를 벗어남 해결필요!
 							style={{
 								width: "50%",
 								left: "25%",
