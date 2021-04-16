@@ -7,13 +7,14 @@ import {
   StyleSheet
 } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { TouchableHighlight } from 'react-native-gesture-handler';
+import { Picker } from '@react-native-picker/picker';
 
-import { usePadBoxState } from '../Main/Model/PadBoxModel'
-import { padBoxType } from '../Main/Type';
+import { usePadBoxAddress, usePadBoxState } from '../Main/Model/PadBoxModel'
+import { padBoxType, padBoxAddressType } from '../Main/Type';
 import { Logotitle, Modal, SettingCard, ButtonComponent } from '../Component';
 import SquareIcon from '../assets/square.svg';
 import { SettingStackParamList } from '../Router/SettingRouter';
-import { TouchableHighlight } from 'react-native-gesture-handler';
 
 type Props = {
 	navigation: StackNavigationProp<SettingStackParamList, 'SettingCreate'>;
@@ -21,6 +22,7 @@ type Props = {
 
 const SettingScreen = ({ navigation } : Props) => {
 	const settingData = usePadBoxState();
+	const settingAddress = usePadBoxAddress();
 	const [modal, setModal] = useState<boolean>(false);
 	const [name, setName] = useState<string>("");
 	const [pos, setPos] = useState<string>("");
@@ -40,7 +42,7 @@ const SettingScreen = ({ navigation } : Props) => {
 					settingData.map((setting: padBoxType, index: number) => 
 						<SettingCard
 							key={setting.id}
-							index={index}
+							index={setting.id}
 							name={setting.name}
 							address={setting.address}
 							padAmount={setting.padAmount}
@@ -55,18 +57,20 @@ const SettingScreen = ({ navigation } : Props) => {
 					onClose={handleModalClose}
 					title={<Logotitle icon={<SquareIcon width={30} height={30} fill="black" />} name="개별 생리대함 관리" />}
 				>
-					{/* 이름, 장소 받아오기 구현해야함, 어떻게..?????  */}
-					{/* modal이 겹쳐 뜨는 것 같음 */}
 					<View style={{ width: 270 }}>
 						<Text style={MS.title}>이름</Text>
 						<TextInput value={name} onChangeText={setName} style={MS.input} />
 						<Text style={MS.title}>장소</Text>
-						{
-							// 희은 : 장소 map api 연동해서 받아올 수 있게 해야해요!
-						}
-						<TextInput value={pos} onChangeText={setPos} style={MS.input} />
+						<Picker 
+							selectedValue={pos}
+							onValueChange={(v, i)=>setPos(v)}>
+							{
+								settingAddress.map((padBox : padBoxAddressType, index : number) =>
+									<Picker.Item key={index} label={padBox.address} value={padBox.address}/>
+								)	
+							}
+						</Picker>
 						<TouchableHighlight
-							// !키보드가 올라오면 버튼이 자리를 벗어남 해결필요!
 							style={{
 								width: "50%",
 								left: "25%",

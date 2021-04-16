@@ -12,7 +12,7 @@ import { useUserLogin, useUserState } from '../Main/Model/UserModel';
 import AlertIcon from '../assets/warning.svg';
 
 type Props = {
-	index: number;
+	id: number;
 	name: string;
 	latitude: number;
 	longitude: number;
@@ -23,7 +23,7 @@ type Props = {
 }
 
 
-const MarkerComponent = ({index, name, latitude, longitude, amount, humidity, temperature, onPress} : Props) => {
+const MarkerComponent = ({id, name, latitude, longitude, amount, humidity, temperature, onPress} : Props) => {
 	const [markerColor, setMarkerColor] = useState<string>("yellow");
 	const user = useUserState();
 
@@ -49,7 +49,7 @@ const MarkerComponent = ({index, name, latitude, longitude, amount, humidity, te
 					longitude: longitude
 				}}
 				style={{ padding: 10 }}
-				onPress={() => onPress(index)}
+				onPress={() => onPress(id)}
 			>
 				{
 					user.auth === "admin" &&

@@ -9,12 +9,16 @@ import {
 	TextInput,
 	TouchableHighlight,
 } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
 
+import { usePadBoxAddress } from '../Main/Model/PadBoxModel'
+import { padBoxAddressType } from '../Main/Type';
 import {  Logotitle, Modal, ButtonComponent } from '../Component';
 import { SettingScreen } from '../Screen';
 import { mint } from '../CommonVariable';
 import SquaresIcon from '../assets/squares.svg';
 import SquareIcon from '../assets/square.svg';
+import { useSavePadBox } from '../Main/ViewModel/PadBoxViewModel';
 
 const Stack = createStackNavigator();
 
@@ -31,15 +35,25 @@ export type SettingStackParamList = {
 };
 
 const SettingRouter = ( { navigation }: Props) => {
+	const settingAddress = usePadBoxAddress();
+
 	const [modal, setModal] = useState<boolean>(false);
 	const [name, setName] = useState<string>("");
 	const [pos, setPos] = useState<string>("");
+	const [posData, setPosData] = useState<Object>();
+	const saveSetting = useSavePadBox();
 
 	const handleModalOpen = () => {
 		setModal(true);
 	}
 	const handleModalClose = () => {
 		setModal(false);
+	}
+
+	const posChangeHandler = (pos: string) => {
+		setPos(pos);
+		setPosData(settingAddress.filter((padBox : padBoxAddressType)=> padBox.address==pos));
+		saveSetting(posData,)
 	}
 	return (
 		<>
@@ -70,9 +84,16 @@ const SettingRouter = ( { navigation }: Props) => {
 				<Text style={MS.title}>이름</Text>
 					<TextInput value={name} onChangeText={setName} style={MS.input} />
 					<Text style={MS.title}>장소</Text>
-					<TextInput value={pos} onChangeText={setPos} style={MS.input} />
+					<Picker 
+							selectedValue={pos}
+							onValueChange={(v, i)=>posChangeHandler(v)}>
+							{
+								settingAddress.map((padBox : padBoxAddressType, index : number) =>
+									<Picker.Item key={index} label={padBox.address} value={padBox.address} />
+								)	
+							}
+						</Picker>
 					<TouchableHighlight
-						// !키보드가 올라오면 버튼이 자리를 벗어남 해결필요!
 						style={{
 							width: "50%",
 							left: "25%",

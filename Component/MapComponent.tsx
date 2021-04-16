@@ -117,8 +117,8 @@ const MapComponent = () => {
 					{
 						padBoxState.map((padBox: padBoxType, index : number) =>
 							<MarkerComponent
-								key={padBox.boxId}
-								index={index}
+								key={index}
+								id={padBox.id}
 								name={padBox.name}
 								latitude={padBox.latitude}
 								longitude={padBox.longitude}
