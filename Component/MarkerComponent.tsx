@@ -63,7 +63,8 @@ const MarkerComponent = ({id, name, latitude, longitude, amount, humidity, tempe
 					<Text style={MarkerStyle.info}>{name}</Text>
 					<Text style={StyleSheet.flatten([MarkerStyle.whiteText, MarkerStyle.margin])}>{amount}개</Text>
 					{
-						temperature && humidity &&
+						// temperature && humidity &&
+						// 수빈 : 처음 생리대함을 만들때 temp, humid를 0으로 주니까 이부분에서 오류가 나서 주석 처리 했습니당
 						<Text style={MarkerStyle.whiteText}>{`${temperature}°C / ${humidity}%`}</Text>
 					}
 				</View>

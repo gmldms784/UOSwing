@@ -9,21 +9,15 @@ import { usePadBoxState, usePadBoxDispatch } from '../Model/PadBoxModel';
 const GetPadBoxContext = createContext<()=>void>(() => {});
 const SavePadBoxContext = createContext<(
 	address: string,
-	humidity: number,
 	id: number,
 	latitude: number,
 	longitude: number,
-	name: string,
-	padAmount: number,
-	temperature: number)=> void>((
+	name: string,)=> void>((
 		address: string,
-		humidity: number,
 		id: number,
 		latitude: number,
 		longitude: number,
-		name: string,
-		padAmount: number,
-		temperature: number) => {});
+		name: string,) => {});
 const DeletePadBoxContext = createContext<(id:number)=> void>((id:number) => {});
 
 export const PadBoxLogicProvider = ({ children } : childrenObj) => {
@@ -39,11 +33,13 @@ export const PadBoxLogicProvider = ({ children } : childrenObj) => {
 
 	const errorCatch = (e:any) => {
 		if(e.response) {
+			console.log("error catch");
 			console.log(e.response.data);
 			console.log(e.response.status);
 			console.log(e.response.headers);
 		}
 		else if(e.request) {
+			console.log("error catch");
 			console.log(e.request);
 		}
 		else { console.log('Error', e.message); }
@@ -52,8 +48,8 @@ export const PadBoxLogicProvider = ({ children } : childrenObj) => {
 	const fetchPadBox = () => {
 		axios.get(`${API_URL}/api/v1/padbox`)
 		.then(res => {
-			padBoxDispatch(res.data);
-			console.log(res.data);
+			padBoxDispatch(res.data)
+			console.log("padBoxDispatch --------- " + res.data);
 		})
 		.catch(e => errorCatch(e))
 	}
@@ -64,25 +60,22 @@ export const PadBoxLogicProvider = ({ children } : childrenObj) => {
 
 	const savepadBox = (
 		address: string,
-		humidity: number,
 		id: number,
 		latitude: number,
 		longitude: number,
 		name: string,
-		padAmount: number,
-		temperature: number
 		) => {
 		if(id === -1){
 			// 새로운 padbox
 			axios.post(`${API_URL}/api/v1/padbox`, {
 				"address": address,
-				"humidity": humidity,
+				"humidity": 0,
 				"id": id,
 				"latitude": latitude,
 				"longitude": longitude,
 				"name": name,
-				"padAmount": padAmount,
-				"temperature": temperature
+				"padAmount": 0,
+				"temperature": 0
 			},{
 				headers : header
 			})

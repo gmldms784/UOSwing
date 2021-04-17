@@ -11,6 +11,7 @@ import { TouchableHighlight } from 'react-native-gesture-handler';
 import { Picker } from '@react-native-picker/picker';
 
 import { usePadBoxAddress, usePadBoxState } from '../Main/Model/PadBoxModel'
+import { useSavePadBox } from '../Main/ViewModel/PadBoxViewModel';
 import { padBoxType, padBoxAddressType } from '../Main/Type';
 import { Logotitle, Modal, SettingCard, ButtonComponent } from '../Component';
 import SquareIcon from '../assets/square.svg';
@@ -23,17 +24,36 @@ type Props = {
 const SettingScreen = ({ navigation } : Props) => {
 	const settingData = usePadBoxState();
 	const settingAddress = usePadBoxAddress();
+	const saveSetting = useSavePadBox();
 	const [modal, setModal] = useState<boolean>(false);
-	const [name, setName] = useState<string>("");
-	const [pos, setPos] = useState<string>("");
 
-	const handleModalOpen = (n:string, a:string) => {
-		setName(n);
-		setPos(a);
+	// <-- 넘겨줄 데이터(주소, id, 위도, 경도, 이름)
+	const [name, setName] = useState<string>("");
+	const [pos, setPos] = useState<string>(""); // 주소(address)
+	const [id, setId] = useState<number>(0);
+	const [latitude, setLatitude] = useState<number>(0);
+	const [longitude, setLongitude] = useState<number>(0);
+	// -->
+
+	const handleModalOpen = (setting: padBoxType) => {
+		setName(setting.name);
+		setPos(setting.address);
+		setId(setting.id);
+		setLatitude(setting.latitude);
+		setLongitude(setting.longitude);
+		
 		setModal(true);
 	}
 	const handleModalClose = () => {
+		saveSetting(pos,id,latitude,longitude,name);
 		setModal(false);
+	}
+	const posChangeHandler = (pos: string) => {
+		console.log(pos);
+		setPos(pos);
+		let filterData = settingAddress.filter((padBox : padBoxAddressType)=> padBox.address==pos);
+		setLatitude(filterData[0].latitude);
+		setLongitude(filterData[0].longitude);
 	}
 	return (
 		<>
@@ -48,7 +68,7 @@ const SettingScreen = ({ navigation } : Props) => {
 							padAmount={setting.padAmount}
 							humidity={setting.humidity}
 							temperature={setting.temperature}
-							modalOpen={()=>handleModalOpen(setting.name, setting.address)}
+							modalOpen={()=>handleModalOpen(setting)}
 						/>
 					)
 				}
@@ -63,7 +83,7 @@ const SettingScreen = ({ navigation } : Props) => {
 						<Text style={MS.title}>장소</Text>
 						<Picker 
 							selectedValue={pos}
-							onValueChange={(v, i)=>setPos(v)}>
+							onValueChange={(v, i)=>posChangeHandler(v)}>
 							{
 								settingAddress.map((padBox : padBoxAddressType, index : number) =>
 									<Picker.Item key={index} label={padBox.address} value={padBox.address}/>
@@ -77,7 +97,7 @@ const SettingScreen = ({ navigation } : Props) => {
 								marginTop: 20
 							}}
 							underlayColor="transparent"
-							onPress={handleModalClose} // todo
+							onPress={handleModalClose}
 						>
 							<ButtonComponent color="mint">
 								<Text style={MS.btnText}>완료</Text>
