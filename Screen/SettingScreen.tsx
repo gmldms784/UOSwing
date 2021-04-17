@@ -11,7 +11,7 @@ import { TouchableHighlight } from 'react-native-gesture-handler';
 import { Picker } from '@react-native-picker/picker';
 
 import { usePadBoxAddress, usePadBoxState } from '../Main/Model/PadBoxModel'
-import { useSavePadBox } from '../Main/ViewModel/PadBoxViewModel';
+import { useSavePadBox, useDeletePadBox } from '../Main/ViewModel/PadBoxViewModel';
 import { padBoxType, padBoxAddressType } from '../Main/Type';
 import { Logotitle, Modal, SettingCard, ButtonComponent } from '../Component';
 import SquareIcon from '../assets/square.svg';
@@ -25,7 +25,9 @@ const SettingScreen = ({ navigation } : Props) => {
 	const settingData = usePadBoxState();
 	const settingAddress = usePadBoxAddress();
 	const saveSetting = useSavePadBox();
+	const deletePadBox = useDeletePadBox();
 	const [modal, setModal] = useState<boolean>(false);
+	const [deleteModal, setDeleteModal] = useState<boolean>(false);
 
 	// <-- 넘겨줄 데이터(주소, id, 위도, 경도, 이름)
 	const [name, setName] = useState<string>("");
@@ -41,10 +43,13 @@ const SettingScreen = ({ navigation } : Props) => {
 		setId(setting.id);
 		setLatitude(setting.latitude);
 		setLongitude(setting.longitude);
-		
+
 		setModal(true);
 	}
 	const handleModalClose = () => {
+		setModal(false);
+	}
+	const handleModalSave = () => {
 		saveSetting(pos,id,latitude,longitude,name);
 		setModal(false);
 	}
@@ -55,6 +60,20 @@ const SettingScreen = ({ navigation } : Props) => {
 		setLatitude(filterData[0].latitude);
 		setLongitude(filterData[0].longitude);
 	}
+
+	// <-- 삭제 눌렀을 때 뜨는 modal
+	const handleDeleteModal = (id:number) => {
+		setId(id);
+		setDeleteModal(true);
+	}
+	const handleDeleteModalClose = () => {
+		setDeleteModal(false);
+	}
+	const handleDeleteModalSave = () => {
+		deletePadBox(id);
+		setDeleteModal(false);
+	}
+	// 삭제 modal -->
 	return (
 		<>
 			<ScrollView contentContainerStyle={{flexGrow:1}}>
@@ -69,6 +88,7 @@ const SettingScreen = ({ navigation } : Props) => {
 							humidity={setting.humidity}
 							temperature={setting.temperature}
 							modalOpen={()=>handleModalOpen(setting)}
+							handleDeleteModal={()=>handleDeleteModal(setting.id)}
 						/>
 					)
 				}
@@ -97,7 +117,7 @@ const SettingScreen = ({ navigation } : Props) => {
 								marginTop: 20
 							}}
 							underlayColor="transparent"
-							onPress={handleModalClose}
+							onPress={handleModalSave}
 						>
 							<ButtonComponent color="mint">
 								<Text style={MS.btnText}>완료</Text>
@@ -105,6 +125,38 @@ const SettingScreen = ({ navigation } : Props) => {
 						</TouchableHighlight>
 					</View>
 				</Modal>
+				{
+					deleteModal &&
+					<View style={ModalStyle.wrap}>
+						<View style={ModalStyle.back} />
+						<View style={ModalStyle.modal}>
+							<View style={{ width: 270 }}>
+								<View style={{alignItems:'center', marginVertical:25}}>
+									<Text style={ModalStyle.content}>정말 삭제하시겠습니까?</Text>
+									<View style={{ flexDirection: 'row' }}>
+										<TouchableHighlight
+											underlayColor="transparent"
+											onPress={handleDeleteModalSave}
+											style={{ marginRight: 10 }}
+										>
+											<ButtonComponent border>
+												<Text>예</Text>
+											</ButtonComponent>
+										</TouchableHighlight>
+										<TouchableHighlight
+											underlayColor="transparent"
+											onPress={handleDeleteModalClose}
+										>
+											<ButtonComponent color="mint">
+												<Text>아니요</Text>
+											</ButtonComponent>
+										</TouchableHighlight>
+									</View>
+								</View>
+							</View>
+						</View>
+					</View>
+				}
 			</ScrollView>
 		</>
 	);
@@ -130,6 +182,45 @@ const MS = StyleSheet.create({
 		fontFamily: 'DOHYEON',
 		marginVertical: 7,
 	}
+})
+const ModalStyle = StyleSheet.create({
+	wrap: {
+		position: "absolute",
+		top: 0,
+		left: 0,
+		width: "100%",
+		height: "100%",
+		display: "flex",
+		justifyContent: "center",
+		alignItems: "center"
+	},
+	back: {
+		position: "absolute",
+		width: "100%",
+		height: "100%",
+		backgroundColor: "black",
+		opacity: 0.5,
+		zIndex: 11,
+	},
+	modal: {
+		zIndex: 12,
+		backgroundColor: "white",
+		padding: 20,
+		shadowColor: "#000",
+		shadowOffset: {
+			width: 0,
+			height: 3,
+		},
+		shadowOpacity: 1,
+		shadowRadius: 4,
+		elevation: 6,
+		margin: 60
+	},
+	content: {
+		fontSize: 16,
+		fontWeight: 'bold',
+		marginBottom: 20,
+	},
 })
 
 export default SettingScreen;

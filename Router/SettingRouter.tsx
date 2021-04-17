@@ -42,9 +42,9 @@ const SettingRouter = ( { navigation }: Props) => {
 
 	// <-- 넘겨줄 데이터(주소, id, 위도, 경도, 이름)
 	const [name, setName] = useState<string>("");
-	const [pos, setPos] = useState<string>(""); // 주소(address)
-	const [latitude, setLatitude] = useState<number>(0);
-	const [longitude, setLongitude] = useState<number>(0);
+	const [pos, setPos] = useState<string>("서울시립대학교 미래관"); // 주소(address)
+	const [latitude, setLatitude] = useState<number>(37.5842410);
+	const [longitude, setLongitude] = useState<number>(127.0562571);
 	// -->
 
 	const handleModalOpen = () => {
@@ -60,6 +60,7 @@ const SettingRouter = ( { navigation }: Props) => {
 		setLatitude(filterData[0].latitude);
 		setLongitude(filterData[0].longitude);
 	}
+
 	return (
 		<>
 			<Stack.Navigator screenOptions={{
