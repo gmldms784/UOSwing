@@ -2,7 +2,7 @@ import React, { createContext, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { API_URL } from '../../CommonVariable';
 
-import { childrenObj, padBoxParmeter } from '../Type';
+import { childrenObj } from '../Type';
 import { useHeader } from '../Model/UserModel';
 import { usePadBoxState, usePadBoxDispatch } from '../Model/PadBoxModel';
 
