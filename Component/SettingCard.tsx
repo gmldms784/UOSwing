@@ -14,7 +14,6 @@ import { mint, borderColor } from '../CommonVariable';
 import SettingIcon from '../assets/square.svg';
 
 import { usePadBoxState } from '../Main/Model/PadBoxModel';
-import { useDeletePadBox } from '../Main/ViewModel/PadBoxViewModel';
 
 type Props = {
 	index: number;
@@ -24,15 +23,11 @@ type Props = {
 	humidity: Number;
 	temperature: Number;
 	modalOpen: any;
+	handleDeleteModal: any;
 }
 
-const SettingCard = ({ name, address, padAmount, humidity, temperature, index, modalOpen }: Props) => {
+const SettingCard = ({ name, address, padAmount, humidity, temperature, index, modalOpen, handleDeleteModal }: Props) => {
 	const padBox = usePadBoxState();
-	const deletePadBox = useDeletePadBox();
-
-	const handleDelete = () => {
-		deletePadBox(index);
-	}
 
 	return (
 		<>
@@ -69,7 +64,7 @@ const SettingCard = ({ name, address, padAmount, humidity, temperature, index, m
 							<EditIcon width={20} height={20} fill="black" />
 						</TouchableHighlight>
 						<TouchableHighlight
-							onPress={handleDelete}
+							onPress={handleDeleteModal}
 							style={Setting.deleteBtn}
 							underlayColor="transparent"
 						>

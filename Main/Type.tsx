@@ -6,18 +6,22 @@ export type noticeType = {
 };
 
 export type padBoxType = {
+	address: string,
+	humidity: number,
 	id: number,
-	boxId: number,
+	isReported: boolean,
 	latitude: number,
 	longitude: number,
 	name: string,
-	address: string,
 	padAmount: number,
 	temperature: number,
-	humidity: number,
-	updatedStateDate: Date,
-	// 희은 : isReported 속성 추가 되어야합니다!
 };
+
+export type padBoxAddressType = {
+	address: string,
+	latitude: number,
+	longitude: number
+}
 
 export type statisticsType = {
 	padBoxId: number,
