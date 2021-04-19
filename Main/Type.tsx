@@ -17,14 +17,6 @@ export type padBoxType = {
 	temperature: number,
 };
 
-export type padBoxParmeter = {
-	address: string,
-	id: number,
-	latitude: number,
-	longitude: number,
-	name: string,
-}
-
 export type padBoxAddressType = {
 	address: string,
 	latitude: number,

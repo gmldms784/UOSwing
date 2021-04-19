@@ -6,18 +6,16 @@ import { childrenObj, padBoxParmeter } from '../Type';
 import { useHeader } from '../Model/UserModel';
 import { usePadBoxState, usePadBoxDispatch } from '../Model/PadBoxModel';
 
-const GetPadBoxContext = createContext<()=>void>(() => {});
-const SavePadBoxContext = createContext<(
+type padBoxParmeter = {
 	address: string,
 	id: number,
 	latitude: number,
 	longitude: number,
-	name: string,)=> void>((
-		address: string,
-		id: number,
-		latitude: number,
-		longitude: number,
-		name: string,) => {});
+	name: string,
+}
+
+const GetPadBoxContext = createContext<()=>void>(() => {});
+const SavePadBoxContext = createContext<({address, id, latitude, longitude, name}:padBoxParmeter)=> void>(({address, id, latitude, longitude, name}:padBoxParmeter) => {});
 const DeletePadBoxContext = createContext<(id:number)=> void>((id:number) => {});
 
 export const PadBoxLogicProvider = ({ children } : childrenObj) => {
@@ -58,13 +56,7 @@ export const PadBoxLogicProvider = ({ children } : childrenObj) => {
 		fetchPadBox();
 	}
 
-	const savepadBox = (
-		address: string,
-		id: number,
-		latitude: number,
-		longitude: number,
-		name: string,
-		) => {
+	const savepadBox = ({address, id, latitude, longitude, name}:padBoxParmeter) => {
 		if(id === -1){
 			// 새로운 padbox
 			axios.post(`${API_URL}/api/v1/padbox`, {
