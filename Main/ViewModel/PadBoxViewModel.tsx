@@ -15,7 +15,17 @@ type padBoxParmeter = {
 }
 
 const GetPadBoxContext = createContext<()=>void>(() => {});
-const SavePadBoxContext = createContext<({address, id, latitude, longitude, name}:padBoxParmeter)=> void>(({address, id, latitude, longitude, name}:padBoxParmeter) => {});
+const SavePadBoxContext = createContext<(
+	address: string,
+	id: number,
+	latitude: number,
+	longitude: number,
+	name: string,)=> void>((
+		address: string,
+		id: number,
+		latitude: number,
+		longitude: number,
+		name: string,) => {});
 const DeletePadBoxContext = createContext<(id:number)=> void>((id:number) => {});
 
 export const PadBoxLogicProvider = ({ children } : childrenObj) => {
@@ -52,11 +62,12 @@ export const PadBoxLogicProvider = ({ children } : childrenObj) => {
 		.catch(e => errorCatch(e))
 	}
 
-	const getpadBox = () => {
-		fetchPadBox();
-	}
-
-	const savepadBox = ({address, id, latitude, longitude, name}:padBoxParmeter) => {
+	const savepadBox = (
+		address: string,
+		id: number,
+		latitude: number,
+		longitude: number,
+		name: string,) => {
 		if(id === -1){
 			// 새로운 padbox
 			axios.post(`${API_URL}/api/v1/padbox`, {
@@ -105,7 +116,7 @@ export const PadBoxLogicProvider = ({ children } : childrenObj) => {
 	}
 
 	return (
-		<GetPadBoxContext.Provider value={getpadBox}>
+		<GetPadBoxContext.Provider value={fetchPadBox}>
 			<SavePadBoxContext.Provider value={savepadBox}>
 				<DeletePadBoxContext.Provider value={deletepadBox}>
 					{children}
