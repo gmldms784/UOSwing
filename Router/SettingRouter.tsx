@@ -56,7 +56,7 @@ const SettingRouter = ( { navigation }: Props) => {
 	}
 	const posChangeHandler = (pos: string) => {
 		setPos(pos);
-		let filterData = settingAddress.filter((padBox : padBoxAddressType)=> padBox.address==pos);
+		let filterData = settingAddress.filter((padBox : padBoxAddressType)=> padBox.address===pos);
 		setLatitude(filterData[0].latitude);
 		setLongitude(filterData[0].longitude);
 	}
