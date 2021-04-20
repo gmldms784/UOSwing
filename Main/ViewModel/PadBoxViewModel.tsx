@@ -2,6 +2,7 @@ import React, { createContext, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { API_URL } from '../../CommonVariable';
 
+import { ErrorHandle } from '../../Function/ErrorHandling';
 import { childrenObj } from '../Type';
 import { useHeader } from '../Model/UserModel';
 import { usePadBoxState, usePadBoxDispatch } from '../Model/PadBoxModel';
@@ -37,21 +38,7 @@ export const PadBoxLogicProvider = ({ children } : childrenObj) => {
 		// padBox 데이터 읽어오기
 		fetchPadBox();
 
-	}, [])
-
-	const errorCatch = (e:any) => {
-		if(e.response) {
-			console.log("error catch");
-			console.log(e.response.data);
-			console.log(e.response.status);
-			console.log(e.response.headers);
-		}
-		else if(e.request) {
-			console.log("error catch");
-			console.log(e.request);
-		}
-		else { console.log('Error', e.message); }
-	}
+	}, []);
 
 	const fetchPadBox = () => {
 		axios.get(`${API_URL}/api/v1/padbox`)
@@ -59,7 +46,9 @@ export const PadBoxLogicProvider = ({ children } : childrenObj) => {
 			padBoxDispatch(res.data)
 			console.log("padBoxDispatch --------- " + res.data);
 		})
-		.catch(e => errorCatch(e))
+		.catch(error => {
+			ErrorHandle.errorHandle(error, true, fetchPadBox);
+		});
 	}
 
 	const savepadBox = (
@@ -86,7 +75,9 @@ export const PadBoxLogicProvider = ({ children } : childrenObj) => {
 				console.log(res);
 				fetchPadBox();
 			})
-			.catch(e=>errorCatch(e))
+			.catch(error => {
+				ErrorHandle.errorHandle(error, true, savepadBox);
+			});
 		}else{
 			axios.patch(`${API_URL}/api/v1/padbox/${id}`, {
 				"address": address,
@@ -100,7 +91,9 @@ export const PadBoxLogicProvider = ({ children } : childrenObj) => {
 				console.log(res);
 				fetchPadBox();
 			})
-			.catch(e=>errorCatch(e))
+			.catch(error => {
+				ErrorHandle.errorHandle(error, true, savepadBox);
+			});
 		}
 	}
 
@@ -112,7 +105,9 @@ export const PadBoxLogicProvider = ({ children } : childrenObj) => {
 			console.log(res);
 			fetchPadBox();
 		})
-		.catch(e=>errorCatch(e))
+		.catch(error => {
+			ErrorHandle.errorHandle(error, true, deletepadBox);
+		});
 	}
 
 	return (
