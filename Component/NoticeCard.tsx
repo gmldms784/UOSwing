@@ -4,6 +4,7 @@ import {
 	StyleSheet,
 	View,
 	Text,
+	Alert,
 	TouchableHighlight
 } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -26,7 +27,7 @@ type Props = {
 	date?: Date;
 	contents: string;
 	id: number;
-	type? : string;
+	type?: string;
 }
 
 const NoticeCard = ({ navigation, title, date, contents, id, type }: Props) => {
@@ -35,7 +36,22 @@ const NoticeCard = ({ navigation, title, date, contents, id, type }: Props) => {
 	const deleteNotice = useDeleteNotice();
 
 	const handleDelete = () => {
-		deleteNotice(id);
+		// confirm
+		Alert.alert(
+			"정말 삭제하시겠습니까?",
+			"사용자에게 공지가 노출되지 않도록 하려면 삭제하세요.",
+			[
+				{
+					text: "네",
+					onPress: () => deleteNotice(id)
+				},
+				{
+					text: "아니요",
+					style: "cancel"
+				}
+			],
+			{ cancelable: false }
+		);
 	};
 
 	return (
@@ -44,7 +60,7 @@ const NoticeCard = ({ navigation, title, date, contents, id, type }: Props) => {
 				style={Notice.wrap}
 			>
 				<View
-					style={user.auth === "admin"?Notice.header:Notice.userHeader}
+					style={user.auth === "admin" ? Notice.header : Notice.userHeader}
 				>
 					<Text
 						style={Notice.title}
@@ -83,7 +99,7 @@ const NoticeCard = ({ navigation, title, date, contents, id, type }: Props) => {
 				<Text>{textHide && contents.length > 50 ? contents.substr(0, 50) + "..." : contents}</Text>
 			</View>
 			{
-				contents.length>50 &&
+				contents.length > 50 &&
 				<View
 					style={Notice.arrowContainer}
 				>
