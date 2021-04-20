@@ -12,7 +12,7 @@ import { useUserLogin, useUserState } from '../Main/Model/UserModel';
 import AlertIcon from '../assets/warning.svg';
 
 type Props = {
-	index: number;
+	id: number;
 	name: string;
 	latitude: number;
 	longitude: number;
@@ -23,7 +23,7 @@ type Props = {
 }
 
 
-const MarkerComponent = ({index, name, latitude, longitude, amount, humidity, temperature, onPress} : Props) => {
+const MarkerComponent = ({id, name, latitude, longitude, amount, humidity, temperature, onPress} : Props) => {
 	const [markerColor, setMarkerColor] = useState<string>("yellow");
 	const user = useUserState();
 
@@ -49,7 +49,7 @@ const MarkerComponent = ({index, name, latitude, longitude, amount, humidity, te
 					longitude: longitude
 				}}
 				style={{ padding: 10 }}
-				onPress={() => onPress(index)}
+				onPress={() => onPress(id)}
 			>
 				{
 					user.auth === "admin" &&
@@ -63,7 +63,8 @@ const MarkerComponent = ({index, name, latitude, longitude, amount, humidity, te
 					<Text style={MarkerStyle.info}>{name}</Text>
 					<Text style={StyleSheet.flatten([MarkerStyle.whiteText, MarkerStyle.margin])}>{amount}개</Text>
 					{
-						temperature && humidity &&
+						// temperature && humidity &&
+						// 수빈 : 처음 생리대함을 만들때 temp, humid를 0으로 주니까 이부분에서 오류가 나서 주석 처리 했습니당
 						<Text style={MarkerStyle.whiteText}>{`${temperature}°C / ${humidity}%`}</Text>
 					}
 				</View>

@@ -7,13 +7,15 @@ import {
   StyleSheet
 } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { TouchableHighlight } from 'react-native-gesture-handler';
+import { Picker } from '@react-native-picker/picker';
 
-import { usePadBoxState } from '../Main/Model/PadBoxModel'
-import { padBoxType } from '../Main/Type';
+import { usePadBoxAddress, usePadBoxState } from '../Main/Model/PadBoxModel'
+import { useSavePadBox, useDeletePadBox } from '../Main/ViewModel/PadBoxViewModel';
+import { padBoxType, padBoxAddressType } from '../Main/Type';
 import { Logotitle, Modal, SettingCard, ButtonComponent } from '../Component';
 import SquareIcon from '../assets/square.svg';
 import { SettingStackParamList } from '../Router/SettingRouter';
-import { TouchableHighlight } from 'react-native-gesture-handler';
 
 type Props = {
 	navigation: StackNavigationProp<SettingStackParamList, 'SettingCreate'>;
@@ -21,18 +23,57 @@ type Props = {
 
 const SettingScreen = ({ navigation } : Props) => {
 	const settingData = usePadBoxState();
+	const settingAddress = usePadBoxAddress();
+	const saveSetting = useSavePadBox();
+	const deletePadBox = useDeletePadBox();
 	const [modal, setModal] = useState<boolean>(false);
-	const [name, setName] = useState<string>("");
-	const [pos, setPos] = useState<string>("");
+	const [deleteModal, setDeleteModal] = useState<boolean>(false);
 
-	const handleModalOpen = (n:string, a:string) => {
-		setName(n);
-		setPos(a);
+	// <-- 넘겨줄 데이터(주소, id, 위도, 경도, 이름)
+	const [name, setName] = useState<string>("");
+	const [pos, setPos] = useState<string>(""); // 주소(address)
+	const [id, setId] = useState<number>(0);
+	const [latitude, setLatitude] = useState<number>(0);
+	const [longitude, setLongitude] = useState<number>(0);
+	// -->
+
+	const handleModalOpen = (setting: padBoxType) => {
+		setName(setting.name);
+		setPos(setting.address);
+		setId(setting.id);
+		setLatitude(setting.latitude);
+		setLongitude(setting.longitude);
+
 		setModal(true);
 	}
 	const handleModalClose = () => {
 		setModal(false);
 	}
+	const handleModalSave = () => {
+		saveSetting(pos,id,latitude,longitude,name);
+		setModal(false);
+	}
+	const posChangeHandler = (pos: string) => {
+		console.log(pos);
+		setPos(pos);
+		let filterData = settingAddress.filter((padBox : padBoxAddressType)=> padBox.address===pos);
+		setLatitude(filterData[0].latitude);
+		setLongitude(filterData[0].longitude);
+	}
+
+	// <-- 삭제 눌렀을 때 뜨는 modal
+	const handleDeleteModal = (id:number) => {
+		setId(id);
+		setDeleteModal(true);
+	}
+	const handleDeleteModalClose = () => {
+		setDeleteModal(false);
+	}
+	const handleDeleteModalSave = () => {
+		deletePadBox(id);
+		setDeleteModal(false);
+	}
+	// 삭제 modal -->
 	return (
 		<>
 			<ScrollView contentContainerStyle={{flexGrow:1}}>
@@ -40,13 +81,14 @@ const SettingScreen = ({ navigation } : Props) => {
 					settingData.map((setting: padBoxType, index: number) => 
 						<SettingCard
 							key={setting.id}
-							index={index}
+							index={setting.id}
 							name={setting.name}
 							address={setting.address}
 							padAmount={setting.padAmount}
 							humidity={setting.humidity}
 							temperature={setting.temperature}
-							modalOpen={()=>handleModalOpen(setting.name, setting.address)}
+							modalOpen={()=>handleModalOpen(setting)}
+							handleDeleteModal={()=>handleDeleteModal(setting.id)}
 						/>
 					)
 				}
@@ -55,15 +97,19 @@ const SettingScreen = ({ navigation } : Props) => {
 					onClose={handleModalClose}
 					title={<Logotitle icon={<SquareIcon width={30} height={30} fill="black" />} name="개별 생리대함 관리" />}
 				>
-					{/* modal이 겹쳐 뜨는 것 같음 */}
 					<View style={{ width: 270 }}>
 						<Text style={MS.title}>이름</Text>
 						<TextInput value={name} onChangeText={setName} style={MS.input} />
 						<Text style={MS.title}>장소</Text>
-						{
-							// 희은 : 장소 map api 연동해서 받아올 수 있게 해야해요!
-						}
-						<TextInput value={pos} onChangeText={setPos} style={MS.input} />
+						<Picker 
+							selectedValue={pos}
+							onValueChange={(v, i)=>posChangeHandler(v)}>
+							{
+								settingAddress.map((padBox : padBoxAddressType, index : number) =>
+									<Picker.Item key={index} label={padBox.address} value={padBox.address}/>
+								)	
+							}
+						</Picker>
 						<TouchableHighlight
 							style={{
 								width: "50%",
@@ -71,7 +117,7 @@ const SettingScreen = ({ navigation } : Props) => {
 								marginTop: 20
 							}}
 							underlayColor="transparent"
-							onPress={handleModalClose} // todo
+							onPress={handleModalSave}
 						>
 							<ButtonComponent color="mint">
 								<Text style={MS.btnText}>완료</Text>
@@ -79,6 +125,38 @@ const SettingScreen = ({ navigation } : Props) => {
 						</TouchableHighlight>
 					</View>
 				</Modal>
+				{
+					deleteModal &&
+					<View style={ModalStyle.wrap}>
+						<View style={ModalStyle.back} />
+						<View style={ModalStyle.modal}>
+							<View style={{ width: 270 }}>
+								<View style={{alignItems:'center', marginVertical:25}}>
+									<Text style={ModalStyle.content}>정말 삭제하시겠습니까?</Text>
+									<View style={{ flexDirection: 'row' }}>
+										<TouchableHighlight
+											underlayColor="transparent"
+											onPress={handleDeleteModalSave}
+											style={{ marginRight: 10 }}
+										>
+											<ButtonComponent border>
+												<Text>예</Text>
+											</ButtonComponent>
+										</TouchableHighlight>
+										<TouchableHighlight
+											underlayColor="transparent"
+											onPress={handleDeleteModalClose}
+										>
+											<ButtonComponent color="mint">
+												<Text>아니요</Text>
+											</ButtonComponent>
+										</TouchableHighlight>
+									</View>
+								</View>
+							</View>
+						</View>
+					</View>
+				}
 			</ScrollView>
 		</>
 	);
@@ -104,6 +182,45 @@ const MS = StyleSheet.create({
 		fontFamily: 'DOHYEON',
 		marginVertical: 7,
 	}
+})
+const ModalStyle = StyleSheet.create({
+	wrap: {
+		position: "absolute",
+		top: 0,
+		left: 0,
+		width: "100%",
+		height: "100%",
+		display: "flex",
+		justifyContent: "center",
+		alignItems: "center"
+	},
+	back: {
+		position: "absolute",
+		width: "100%",
+		height: "100%",
+		backgroundColor: "black",
+		opacity: 0.5,
+		zIndex: 11,
+	},
+	modal: {
+		zIndex: 12,
+		backgroundColor: "white",
+		padding: 20,
+		shadowColor: "#000",
+		shadowOffset: {
+			width: 0,
+			height: 3,
+		},
+		shadowOpacity: 1,
+		shadowRadius: 4,
+		elevation: 6,
+		margin: 60
+	},
+	content: {
+		fontSize: 16,
+		fontWeight: 'bold',
+		marginBottom: 20,
+	},
 })
 
 export default SettingScreen;
