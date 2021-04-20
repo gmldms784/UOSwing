@@ -1,36 +1,45 @@
 import React, { useState, useContext, createContext, Dispatch } from 'react';
 import { statisticsType, childrenObj } from '../Type';
 
-const statisticsContext = createContext<statisticsType[]>([]);
+const statisticsWeekContext = createContext<statisticsType[]>([]);
+const statisticsWeekDispatch = createContext<Dispatch<statisticsType[]>>(() => {});
+const statisticsMonthContext = createContext<statisticsType[]>([]);
+const statisticsMonthDispatch = createContext<Dispatch<statisticsType[]>>(() => {});
 
 export const StatisticsContextProvider = ({ children }: childrenObj) => {
-	const [statistics, setStatistics] = useState<statisticsType[]>([{
-		padBoxId: 1,
-		padBoxName: "미래관 2층",
-		amount: 5
-	}, {
-		padBoxId: 2,
-		padBoxName: "도서관 1층",
-		amount: 8
-	}, {
-		padBoxId: 3,
-		padBoxName: "전농관",
-		amount: 16
-	}, {
-		padBoxId: 4,
-		padBoxName: "학관 2층",
-		amount: 6
-	}]);
+	const [statisticsWeek, setStatisticsWeek] = useState<statisticsType[]>([]);
+	const [statisticsMonth, setStatisticsMonth] = useState<statisticsType[]>([]);
 
 	return (
-		<statisticsContext.Provider value={statistics}>
-			{children}
-		</statisticsContext.Provider>
+		<statisticsWeekContext.Provider value={statisticsWeek}>
+			<statisticsWeekDispatch.Provider value={setStatisticsWeek}>
+				<statisticsMonthContext.Provider value={statisticsMonth}>
+					<statisticsMonthDispatch.Provider value={setStatisticsMonth}>
+						{children}
+					</statisticsMonthDispatch.Provider>
+				</statisticsMonthContext.Provider>
+			</statisticsWeekDispatch.Provider>
+		</statisticsWeekContext.Provider>
 	);
 };
 
-export function useStatisticsState() {
-	const context = useContext(statisticsContext);
+export function useStatisticsWeekState() {
+	const context = useContext(statisticsWeekContext);
+	return context;
+};
+
+export function useStatisticsWeekDispatch() {
+	const context = useContext(statisticsWeekDispatch);
+	return context;
+};
+
+export function useStatisticsMonthState() {
+	const context = useContext(statisticsMonthContext);
+	return context;
+};
+
+export function useStatisticsMonthDispatch() {
+	const context = useContext(statisticsMonthDispatch);
 	return context;
 };
 

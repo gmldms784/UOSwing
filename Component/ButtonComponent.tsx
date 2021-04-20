@@ -6,7 +6,7 @@ import {
 	StyleSheetProperties
 } from 'react-native';
 
-import { borderColor, mint, purple } from '../CommonVariable';
+import { borderColor, green, mint, purple } from '../CommonVariable';
 
 type sizeArr = ["default", "fit"];
 // default는 text 크기에 맞춰서 button이 나옴
@@ -28,6 +28,12 @@ type Props = {
 const ButtonComponent : React.FC<Props> = ({color, size, border, children}) => {
 	const style = [{}];
 	switch(color){
+		case "green":
+			style.push(ButtonStyle.green);
+			break;
+		case "purple":
+			style.push(ButtonStyle.purple);
+			break;
 		case "mint":
 			style.push(ButtonStyle.mint);
 			break;
@@ -64,6 +70,12 @@ const ButtonStyle = StyleSheet.create({
 	},
 	mint: {
 		backgroundColor: mint
+	},
+	purple: {
+		backgroundColor: purple
+	},
+	green: {
+		backgroundColor: green
 	},
 	white: {
 		backgroundColor: "white",

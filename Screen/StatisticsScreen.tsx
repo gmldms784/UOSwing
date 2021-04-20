@@ -5,10 +5,10 @@ import {
 	Text,
 	TouchableHighlight
 } from 'react-native';
-import { BarChart, Grid, YAxis } from 'react-native-svg-charts';
+import { BarChart, Grid } from 'react-native-svg-charts';
 
 import { ButtonComponent } from '../Component';
-import { useStatisticsState } from '../Main/Model/StatisticsModel';
+import { useStatisticsWeekState, useStatisticsMonthState } from '../Main/Model/StatisticsModel';
 
 type tabArray = ["week", "month"];
 type barDataType = {
@@ -17,13 +17,29 @@ type barDataType = {
 }
 
 const StatisticsScreen = () => {
+	const weekData = useStatisticsWeekState();
+	const monthData = useStatisticsMonthState();
+
 	const [tab, tabChange] = useState<tabArray[number]>("week");
-	const statistics = useStatisticsState();
 	const [barData, setBarData] = useState<Array<barDataType>>([]);
 
 	useEffect(()=> {
-		setBarData(statistics.map((stat) => ({ value : stat.amount, label: stat.padBoxName})));
-	}, statistics);
+		if(tab === "week")
+			setBarData(weekData.map((stat) => ({ value : stat.amount, label: stat.padBoxName})));
+		else
+			setBarData(monthData.map((stat) => ({ value : stat.amount, label: stat.padBoxName})));
+	}, [tab]);
+
+	const handleClickPeriod = (period : tabArray[number]) => {
+		switch(period){
+			case "week" :
+				tabChange("week");
+				break;
+			case "month" :
+				tabChange("month");
+				break;
+		}
+	};
 	
 	return (
 		<View>
@@ -36,7 +52,7 @@ const StatisticsScreen = () => {
 						width: "45%"
 					}}
 					underlayColor="transparent"
-					onPress={() => tabChange("week")}
+					onPress={() => handleClickPeriod("week")}
 				>
 					<ButtonComponent
 						color={tab==="week"?"mint":"white"}
@@ -50,7 +66,7 @@ const StatisticsScreen = () => {
 						width: "45%"
 					}}
 					underlayColor="transparent"
-					onPress={() => tabChange("month")}
+					onPress={() => handleClickPeriod("month")}
 				>
 					<ButtonComponent
 						color={tab==="month"?"mint":"white"}
@@ -65,7 +81,7 @@ const StatisticsScreen = () => {
 				<View style={{ flexDirection: 'row', marginTop: 20 }}>
 					<View>
 						{
-							barData.map((data :barDataType) => <Text style={StatisStyle.barLabel}>{`[${data.label}]\n${data.value}개`}</Text>)
+							barData.map((data :barDataType) => <Text key={data.label} style={StatisStyle.barLabel}>{`[${data.label}]\n${data.value}개`}</Text>)
 						}
 					</View>
 					<BarChart
