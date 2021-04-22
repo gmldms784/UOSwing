@@ -69,6 +69,7 @@ const IntroScreen = ({ navigation }: Props) => {
 				>
 					<TouchableHighlight
 						onPress={() => {
+							userLogin();
 							navigation.navigate('User');
 							userLogin();
 						}}

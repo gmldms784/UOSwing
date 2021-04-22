@@ -11,7 +11,7 @@ import {
 import { Picker } from '@react-native-picker/picker';
 
 import { Modal, Logotitle, ReportCard } from '.';
-import { borderColor } from '../CommonVariable';
+import { borderColor, darkGray } from '../CommonVariable';
 import AlertIcon from '../assets/warning.svg';
 import KeyIcon from '../assets/key.svg';
 import BrokenIcon from '../assets/broken-link.svg';
@@ -190,7 +190,7 @@ const MS = StyleSheet.create({
 		flexDirection: 'column',
 		alignItems: 'center',
 		justifyContent: 'center',
-		marginRight: 5,
+		marginRight: 5
 	},
 	tagIconCon: {
 		borderColor: borderColor,
@@ -201,6 +201,12 @@ const MS = StyleSheet.create({
 	tagText: {
 		marginTop: 3,
 		fontSize: 11,
+	},
+	tagIconCon: {
+		borderColor: borderColor,
+		borderWidth: 1,
+		borderRadius: 100,
+		padding: 10
 	},
 	reportList: {
 		borderWidth: 1,

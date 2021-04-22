@@ -14,6 +14,7 @@ import { borderColor, darkGray } from '../CommonVariable';
 import { Modal } from '.';
 import Logotitle from './Logotitle';
 import { NoticeScreen } from '../Screen';
+import { useUserState } from '../Main/Model/UserModel';
 import { useGetPadBox } from '../Main/ViewModel/PadBoxViewModel';
 
 type Props = {
@@ -23,6 +24,7 @@ type Props = {
 const MapWidget = ({getMyPosition} : Props) => {
 	const [infoModal, setInfoModal] = useState<boolean>(false);
 	const getPadBox = useGetPadBox();
+	const user = useUserState();
 
 	const handleInfoOpen = () => {
 		setInfoModal(true);
@@ -39,13 +41,17 @@ const MapWidget = ({getMyPosition} : Props) => {
 	return (
 		<>
 			<View style={WidgetStyle.wrap}>
-				<TouchableHighlight
-					style={WidgetStyle.whiteCircle}
-					onPress={handleInfoOpen}
-					underlayColor="transparent"
-				>
-					<NoticeIcon width={25} height={25} fill={darkGray} />
-				</TouchableHighlight>
+				{
+					user.auth === "admin" ?
+					null :
+					<TouchableHighlight
+						style={WidgetStyle.whiteCircle}
+						onPress={handleInfoOpen}
+						underlayColor="transparent"
+					>
+						<NoticeIcon width={25} height={25} fill={darkGray} />
+					</TouchableHighlight>
+				}
 				<TouchableHighlight
 					style={WidgetStyle.whiteCircle}
 					onPress={getPadBoxInfo}
