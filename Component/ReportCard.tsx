@@ -21,10 +21,11 @@ type Props = {
 	content: string,
 	isResolved: boolean,
 	createdDate: Date,
-	box_id: number
+	box_id: number,
+	reportPos: number
 }
 
-const ReportCard = ({ id, tag, content, isResolved, createdDate, box_id }: Props) => {
+const ReportCard = ({ id, tag, content, isResolved, createdDate, box_id, reportPos }: Props) => {
 	const report = useReportState();
 	const deleteReport = useDeleteReport();
 
@@ -35,26 +36,30 @@ const ReportCard = ({ id, tag, content, isResolved, createdDate, box_id }: Props
 
 	return (
 		<>
-			<BoxLayout>
-				<View
-					style={Report.wrap}
-				>
-						<View style={{ width: '100%'}}>
-							<Text style={Report.content}>{content}</Text>
-						</View>
-						<View style={Report.rowdatebtn}>
-							<View style={{ alignItems: 'center', justifyContent: 'center'}}>
-								<Text style={Report.date}>{createdDate && dateToString(createdDate)}</Text>
+			{
+				reportPos===box_id?
+				<BoxLayout>
+					<View
+						style={Report.wrap}
+					>
+							<View style={{ width: '100%'}}>
+								<Text style={Report.content}>{content}</Text>
 							</View>
-							<TouchableHighlight
-								underlayColor="transparent"
-								onPress={handleDelete}
-							>
-								<Text style={Report.btnText}>해결</Text>
-							</TouchableHighlight>
-						</View>
-				</View>
-			</BoxLayout>
+							<View style={Report.rowdatebtn}>
+								<View style={{ alignItems: 'center', justifyContent: 'center'}}>
+									<Text style={Report.date}>{createdDate && dateToString(createdDate)}</Text>
+								</View>
+								<TouchableHighlight
+									underlayColor="transparent"
+									onPress={handleDelete}
+								>
+									<Text style={Report.btnText}>해결</Text>
+								</TouchableHighlight>
+							</View>
+					</View>
+				</BoxLayout>
+				: null
+			}
 		</>
 	);
 }

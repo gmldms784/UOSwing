@@ -30,9 +30,11 @@ type Props = {
 	handleReportClose: () => void
 	reportPos : number
 	reportHandle : (idx:number) => void
+	posName: string
 }
 
-const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPos, reportHandle}) => {
+const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPos, reportHandle, posName}) => {
+	// reportPos는 현재 내가 누른 component(padbox)의 id임
 	const padBoxState = usePadBoxState();
 	const user = useUserState();
 	const reportData = useReportState();
@@ -44,6 +46,7 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 	const handleReportComplete= () => {
 		saveReport(-1, reportWhy, reportBody, reportPos);
 		handleReportClose();
+		// init
 		reportHandle(0);
 		setReportWhy("");
 		setReportBody("");
@@ -63,12 +66,10 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 						<Text style={MS.title}>장소</Text>
 						<Picker
 							selectedValue={reportPos}
-							// 희은 피드백 : ts 맞춰서 type 기재해주세요!
-							// 이제 마커 클릭해도 신고하기가 뜨는데 바로 클릭한 padBox가 select되게 해두었어요! 아래 map도 구현해두었습니다!
 							onValueChange={(v, i)=>reportHandle(v)}>
 							{
 								padBoxState.map((padBox : padBoxType, index : number) =>
-									<Picker.Item key={padBox.id} label={padBox.name} value={index}/>
+									<Picker.Item key={padBox.id} label={padBox.name} value={padBox.id}/>
 								)	
 							}
 						</Picker>
@@ -76,9 +77,9 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 						<Picker
 							selectedValue={reportWhy}
 							onValueChange={(v, i)=>setReportWhy(v)}>
-							<Picker.Item label="Test" value={0} />
-							<Picker.Item label="Test2" value={1} />
-							<Picker.Item label="Test3" value={2} />
+							<Picker.Item label="생리대함 키 분실" value="TAG_KEY_MISSED" />
+							<Picker.Item label="생리대함 파손" value="TAG_BROKEN" />
+							<Picker.Item label="생리대가 하나도 없음" value="TAG_NO_PAD" />
 						</Picker>
 						<Text style={MS.title}>기타사항</Text>
 						<TextInput
@@ -110,7 +111,7 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 					title={<Logotitle icon={<AlertIcon width={25} height={25} fill="black" />} name="신고내역"/>}
 				>
 					<View style={{width:270, height:'95%'}}>
-						<Text style={MS.title}>{padBoxState[reportPos].name}</Text>
+						<Text style={MS.title}>{posName}</Text>
 						<View style={MS.tagCon}>
 							<View style={MS.tagSet}>
 								<Text style={MS.tagIconCon}>
@@ -148,6 +149,7 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 										isResolved={report.isResolved}
 										createdDate={report.createdDate}
 										box_id={report.box_id}
+										reportPos={reportPos}
 									/>
 								)
 							}
@@ -201,12 +203,6 @@ const MS = StyleSheet.create({
 	tagText: {
 		marginTop: 3,
 		fontSize: 11,
-	},
-	tagIconCon: {
-		borderColor: borderColor,
-		borderWidth: 1,
-		borderRadius: 100,
-		padding: 10
 	},
 	reportList: {
 		borderWidth: 1,

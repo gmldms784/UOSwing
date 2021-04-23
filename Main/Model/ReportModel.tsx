@@ -25,44 +25,7 @@ export const ReportContextProvider = ({ children }: childrenObj) => {
 		content: "열쇠가 없네용 구구구 십십십 십이십 십삼삼 십사사 십오오 십육육 십칠칠 열하나 열두울 열세엣 열네엣",
 		isResolved: false,
 		createdDate: new Date("2021-04-08"),
-		box_id: 2
-	},{
-		id: 4,
-		tag: "열쇠 분실",
-		content: "열쇠가 없네용",
-		isResolved: false,
-		createdDate: new Date("2021-04-08"),
-		box_id: 2
-	},{
-		id: 5,
-		tag: "열쇠 분실",
-		content: "열쇠가 없네용",
-		isResolved: false,
-		createdDate: new Date("2021-04-08"),
-		box_id: 2
-	},{
-		id: 6,
-		tag: "열쇠 분실",
-		content: "열쇠가 없네용",
-		isResolved: false,
-		createdDate: new Date("2021-04-08"),
-		box_id: 2
-	},
-	{
-		id: 7,
-		tag: "열쇠 분실",
-		content: "열쇠가 없네용",
-		isResolved: false,
-		createdDate: new Date("2021-04-08"),
-		box_id: 2
-	},
-	{
-		id: 8,
-		tag: "열쇠 분실",
-		content: "열쇠가 없네용",
-		isResolved: false,
-		createdDate: new Date("2021-04-08"),
-		box_id: 2
+		box_id: 3
 	}];
 
 	const [reportData, setReportData] = useState<Array<reportType>>(initialState);

@@ -19,7 +19,7 @@ type Props = {
 	amount: number;
 	humidity?: number;
 	temperature?: number;
-	onPress: (idx : number) => void;
+	onPress: (idx : number, name:string) => void;
 }
 
 
@@ -49,7 +49,7 @@ const MarkerComponent = ({id, name, latitude, longitude, amount, humidity, tempe
 					longitude: longitude
 				}}
 				style={{ padding: 10 }}
-				onPress={() => onPress(id)}
+				onPress={() => onPress(id, name)}
 			>
 				{
 					user.auth === "admin" &&
@@ -65,6 +65,7 @@ const MarkerComponent = ({id, name, latitude, longitude, amount, humidity, tempe
 					{
 						// temperature && humidity &&
 						// 수빈 : 처음 생리대함을 만들때 temp, humid를 0으로 주니까 이부분에서 오류가 나서 주석 처리 했습니당
+						user.auth === "admin" &&
 						<Text style={MarkerStyle.whiteText}>{`${temperature}°C / ${humidity}%`}</Text>
 					}
 				</View>
