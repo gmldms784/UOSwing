@@ -61,19 +61,6 @@ const SettingScreen = ({ navigation } : Props) => {
 		setLongitude(filterData[0].longitude);
 	}
 
-	// <-- 삭제 눌렀을 때 뜨는 modal
-	const handleDeleteModal = (id:number) => {
-		setId(id);
-		setDeleteModal(true);
-	}
-	const handleDeleteModalClose = () => {
-		setDeleteModal(false);
-	}
-	const handleDeleteModalSave = () => {
-		deletePadBox(id);
-		setDeleteModal(false);
-	}
-	// 삭제 modal -->
 	return (
 		<>
 			<ScrollView contentContainerStyle={{flexGrow:1}}>
@@ -88,7 +75,6 @@ const SettingScreen = ({ navigation } : Props) => {
 							humidity={setting.humidity}
 							temperature={setting.temperature}
 							modalOpen={()=>handleModalOpen(setting)}
-							handleDeleteModal={()=>handleDeleteModal(setting.id)}
 						/>
 					)
 				}
@@ -125,38 +111,6 @@ const SettingScreen = ({ navigation } : Props) => {
 						</TouchableHighlight>
 					</View>
 				</Modal>
-				{
-					deleteModal &&
-					<View style={ModalStyle.wrap}>
-						<View style={ModalStyle.back} />
-						<View style={ModalStyle.modal}>
-							<View style={{ width: 270 }}>
-								<View style={{alignItems:'center', marginVertical:25}}>
-									<Text style={ModalStyle.content}>정말 삭제하시겠습니까?</Text>
-									<View style={{ flexDirection: 'row' }}>
-										<TouchableHighlight
-											underlayColor="transparent"
-											onPress={handleDeleteModalSave}
-											style={{ marginRight: 10 }}
-										>
-											<ButtonComponent border>
-												<Text>예</Text>
-											</ButtonComponent>
-										</TouchableHighlight>
-										<TouchableHighlight
-											underlayColor="transparent"
-											onPress={handleDeleteModalClose}
-										>
-											<ButtonComponent color="mint">
-												<Text>아니요</Text>
-											</ButtonComponent>
-										</TouchableHighlight>
-									</View>
-								</View>
-							</View>
-						</View>
-					</View>
-				}
 			</ScrollView>
 		</>
 	);

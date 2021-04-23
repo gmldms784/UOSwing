@@ -4,6 +4,7 @@ import {
 	StyleSheet,
 	View,
 	Text,
+	Alert,
 	TouchableHighlight
 } from 'react-native';
 
@@ -13,7 +14,7 @@ import DeleteIcon from '../assets/delete.svg';
 import { mint, borderColor } from '../CommonVariable';
 import SettingIcon from '../assets/square.svg';
 
-import { usePadBoxState } from '../Main/Model/PadBoxModel';
+import { useDeletePadBox } from '../Main/ViewModel/PadBoxViewModel';
 
 type Props = {
 	index: number;
@@ -23,11 +24,29 @@ type Props = {
 	humidity: Number;
 	temperature: Number;
 	modalOpen: any;
-	handleDeleteModal: any;
 }
 
-const SettingCard = ({ name, address, padAmount, humidity, temperature, index, modalOpen, handleDeleteModal }: Props) => {
-	const padBox = usePadBoxState();
+const SettingCard = ({ name, address, padAmount, humidity, temperature, index, modalOpen }: Props) => {
+	const deletePadBox = useDeletePadBox();
+
+	const handleDelete = () => {
+		// confirm
+		Alert.alert(
+			"정말 삭제하시겠습니까?",
+			"해당 작업은 되돌릴 수 없습니다.",
+			[
+				{
+					text: "네",
+					onPress: () => deletePadBox(index)
+				},
+				{
+					text: "아니요",
+					style: "cancel"
+				}
+			],
+			{ cancelable: false }
+		);
+	};
 
 	return (
 		<>
@@ -64,7 +83,7 @@ const SettingCard = ({ name, address, padAmount, humidity, temperature, index, m
 							<EditIcon width={20} height={20} fill="black" />
 						</TouchableHighlight>
 						<TouchableHighlight
-							onPress={handleDeleteModal}
+							onPress={handleDelete}
 							style={Setting.deleteBtn}
 							underlayColor="transparent"
 						>
