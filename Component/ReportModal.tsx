@@ -40,7 +40,7 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 	const reportData = useReportState();
 
 	const saveReport = useSaveReport();
-	const [reportWhy, setReportWhy] = useState<string>("");
+	const [reportWhy, setReportWhy] = useState<string>("KEY_MISSED");
 	const [reportBody, setReportBody] = useState<string>("");
 
 	const handleReportComplete= () => {
@@ -48,7 +48,7 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 		handleReportClose();
 		// init
 		reportHandle(0);
-		setReportWhy("");
+		setReportWhy("KEY_MISSED");
 		setReportBody("");
 		Alert.alert("신고가 성공적으로 접수되었습니다");
 	}
@@ -77,9 +77,11 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 						<Picker
 							selectedValue={reportWhy}
 							onValueChange={(v, i)=>setReportWhy(v)}>
-							<Picker.Item label="생리대함 키 분실" value="TAG_KEY_MISSED" />
-							<Picker.Item label="생리대함 파손" value="TAG_BROKEN" />
-							<Picker.Item label="생리대가 하나도 없음" value="TAG_NO_PAD" />
+							<Picker.Item label="생리대함 키 분실" value="KEY_MISSED" />
+							<Picker.Item label="생리대함 파손" value="BROKEN" />
+							<Picker.Item label="생리대가 하나도 없음" value="NO_PAD" />
+							<Picker.Item label="수량 오차" value="WRONG_QUANTITY" />
+							<Picker.Item label="기타 결함" value="DEFECT" />
 						</Picker>
 						<Text style={MS.title}>기타사항</Text>
 						<TextInput
@@ -110,6 +112,7 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 					onClose={handleReportClose}
 					title={<Logotitle icon={<AlertIcon width={25} height={25} fill="black" />} name="신고내역"/>}
 				>
+					{console.log(reportData)}
 					<View style={{width:270, height:'95%'}}>
 						<Text style={MS.title}>{posName}</Text>
 						<View style={MS.tagCon}>

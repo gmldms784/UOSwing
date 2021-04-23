@@ -14,6 +14,7 @@ import { ReportContextProvider, useReportState } from '../Main/Model/ReportModel
 import { useDeleteReport } from '../Main/ViewModel/ReportViewModel';
 
 import { dateToString } from '../Function/DateToString';
+import { reportType } from '../Main/Type';
 
 type Props = {
 	id: number,
@@ -30,8 +31,21 @@ const ReportCard = ({ id, tag, content, isResolved, createdDate, box_id, reportP
 	const deleteReport = useDeleteReport();
 
 	const handleDelete = () => {
-		//deleteReport(id);
-		Alert.alert('resolve!')
+		Alert.alert(
+			"해당 신고를 해결 처리 하시겠습니까?",
+			"해결 처리된 신고만 해결 처리 해주세요.",
+			[
+				{
+					text: "네",
+					onPress: () => deleteReport(id)
+				},
+				{
+					text: "아니요",
+					style: "cancel"
+				}
+			],
+			{ cancelable: false }
+		);
 	}
 
 	return (
