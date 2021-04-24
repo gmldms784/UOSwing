@@ -18,15 +18,16 @@ import { reportType } from '../Main/Type';
 
 type Props = {
 	id: number,
-	tag: string, // 추후 수정
+	tag: string,
 	content: string,
 	isResolved: boolean,
 	createdDate: Date,
 	box_id: number,
-	reportPos: number
+	reportPos: number,
+	tagString: string
 }
 
-const ReportCard = ({ id, tag, content, isResolved, createdDate, box_id, reportPos }: Props) => {
+const ReportCard = ({ id, tag, content, isResolved, createdDate, box_id, reportPos, tagString }: Props) => {
 	const report = useReportState();
 	const deleteReport = useDeleteReport();
 
@@ -51,7 +52,8 @@ const ReportCard = ({ id, tag, content, isResolved, createdDate, box_id, reportP
 	return (
 		<>
 			{
-				reportPos===box_id?
+				reportPos===box_id ?
+				(tag === tagString || tagString==="ALL") &&
 				<BoxLayout>
 					<View
 						style={Report.wrap}

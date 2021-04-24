@@ -42,6 +42,7 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 	const saveReport = useSaveReport();
 	const [reportWhy, setReportWhy] = useState<string>("KEY_MISSED");
 	const [reportBody, setReportBody] = useState<string>("");
+	const [tagString, setTagString] = useState<string>("ALL");
 
 	const handleReportComplete= () => {
 		saveReport(-1, reportWhy, reportBody, reportPos);
@@ -112,33 +113,39 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 					onClose={handleReportClose}
 					title={<Logotitle icon={<AlertIcon width={25} height={25} fill="black" />} name="신고내역"/>}
 				>
-					{console.log(reportData)}
-					<View style={{width:270, height:'95%'}}>
+					<View style={{width:'100%', height:'95%'}}>
 						<Text style={MS.title}>{posName}</Text>
 						<View style={MS.tagCon}>
 							<View style={MS.tagSet}>
-								<Text style={MS.tagIconCon}>
+								<Text style={MS.tagIconCon} onPress={() => setTagString("KEY_MISSED")}>
 									<KeyIcon width={30} height={30} fill="black" />
 								</Text>
 								<Text style={MS.tagText}>열쇠 분실</Text>
 							</View>
 							<View style={MS.tagSet}>
-								<Text style={MS.tagIconCon}>
+								<Text style={MS.tagIconCon} onPress={() => setTagString("BROKEN")}>
 									<BrokenIcon width={30} height={30} fill="black" />
 								</Text>
 								<Text style={MS.tagText}>생리대함 파손</Text>
 							</View>
 							<View style={MS.tagSet}>
-								<Text style={MS.tagIconCon}>
+								<Text style={MS.tagIconCon} onPress={() => setTagString("NO_PAD")}>
 									<WrongNumIcon width={30} height={30} fill="black" />
 								</Text>
 								<Text style={MS.tagText}>생리대 없음</Text>
 							</View>
 							<View style={MS.tagSet}>
-								<Text style={MS.tagIconCon}>
+								<Text style={MS.tagIconCon} onPress={() => setTagString("WRONG_QUANTITY")}>
 									<NoPadIcon width={30} height={30} fill="black" />
 								</Text>
 								<Text style={MS.tagText}>수량 오차</Text>
+							</View>
+							<View style={MS.tagSet}>
+								<Text style={MS.tagIconCon} onPress={() => setTagString("DEFECT")}>
+									<NoPadIcon width={30} height={30} fill="black" />
+									{/* 위의 icon 기타로 변경하기 */}
+								</Text>
+								<Text style={MS.tagText}>기타</Text>
 							</View>
 						</View>
 						<ScrollView style={MS.reportList} contentContainerStyle={{flexGrow:1}}>
@@ -153,6 +160,7 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 										createdDate={report.createdDate}
 										box_id={report.box_id}
 										reportPos={reportPos}
+										tagString={tagString}
 									/>
 								)
 							}
