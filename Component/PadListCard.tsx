@@ -16,6 +16,7 @@ import SettingIcon from '../assets/square.svg';
 
 import { useDeletePadBox } from '../Main/ViewModel/PadBoxViewModel';
 import ButtonComponent from './ButtonComponent';
+import { useUserState } from '../Main/Model/UserModel';
 
 type Props = {
 	index: number;
@@ -29,6 +30,7 @@ type Props = {
 }
 
 const PadListCard = ({ name, address, padAmount, humidity, temperature, index, modalOpen, compareAddress }: Props) => {
+	const user=useUserState();
 	return (
 		<>
 		{
@@ -59,11 +61,14 @@ const PadListCard = ({ name, address, padAmount, humidity, temperature, index, m
 								style={Setting.quantity}>잔량</Text>
 							<Text>{padAmount}개</Text>
 						</View>
-						<View style={{ flexDirection: 'row' }}>
-							<Text
-								style={Setting.humidity}>온습도</Text>
-							<Text>{temperature}℃ / {humidity}%</Text>
-						</View>
+						{
+							user.auth === "admin" &&
+							<View style={{ flexDirection: 'row' }}>
+								<Text
+									style={Setting.humidity}>온습도</Text>
+								<Text>{temperature}℃ / {humidity}%</Text>
+							</View>
+						}
 					</View>
 					</>
 				</TouchableHighlight>
