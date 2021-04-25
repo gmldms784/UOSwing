@@ -8,7 +8,7 @@ import { ErrorHandle } from '../../Function/ErrorHandling';
 import { useHeader, useUserState } from '../Model/UserModel';
 import { useReportState, useReportDispatch } from '../Model/ReportModel';
 
-const SaveReportContext = createContext<(id: number, tag: string, content: string, box_id: number)=> void>((id: number, tag: string, content : string, box_id: number) => {});
+const SaveReportContext = createContext<(id: number, tag: string, content: string, padBoxId: number)=> void>((id: number, tag: string, content : string, padBoxId: number) => {});
 const DeleteReportContext = createContext<(id: number)=> void>((id: number) => {});
 
 export const ReportLogicProvider = ({ children } : childrenObj) => {
@@ -26,17 +26,17 @@ export const ReportLogicProvider = ({ children } : childrenObj) => {
 			headers : header
 		})
 		.then(res => {
-			console.log("fetch 성공!" + res.data);
+			//console.log(res.data);
 			reportDispatch(res.data);
 		})
 	}
 
-	const saveReport = (id: number, tag: string, content : string, box_id: number) => {
+	const saveReport = (id: number, tag: string, content : string, padBoxId: number) => {
 		if(id === -1){
 			axios.post(`${API_URL}/api/v1/report`, {
 				"content": content,
 				"isResolved": false,
-				"padBoxId": box_id,
+				"padBoxId": padBoxId,
 				"tag": tag
 			})
 			.then(res => {

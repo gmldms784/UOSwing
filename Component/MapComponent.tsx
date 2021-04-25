@@ -42,8 +42,11 @@ const MapComponent = () => {
 	const [reportModal, setReportModal] = useState<boolean>(false);
 	const [reportPos, setReportPos] = useState<number>(0);
 	const [posName, setPosName] = useState<string>("");
+	const [tagString, setTagString] = useState<string>("ALL");
+	const tagHandle = (tag:string) => setTagString(tag);
 	const reportHandle = (idx:number) => setReportPos(idx);
 	const handleReportOpen = (idx : number, name : string) => {
+		tagHandle("ALL");
 		setPosName(name);
 		reportHandle(idx);
 		setReportModal(true);
@@ -161,6 +164,8 @@ const MapComponent = () => {
 				reportPos={reportPos}
 				reportHandle={reportHandle}
 				posName={posName}
+				tagString={tagString}
+				setTagString={tagHandle}
 			/>
 		</>
 	);

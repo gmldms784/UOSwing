@@ -35,7 +35,7 @@ export type reportType = {
 	content: string,
 	isResolved: boolean,
 	createdDate: Date,
-	box_id: number
+	padBoxId: number
 }
 
 type authArray = ["admin", "user"]

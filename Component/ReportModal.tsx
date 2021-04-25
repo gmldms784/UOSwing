@@ -31,9 +31,11 @@ type Props = {
 	reportPos : number
 	reportHandle : (idx:number) => void
 	posName: string
+	tagString: string
+	setTagString: (a:string) => void
 }
 
-const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPos, reportHandle, posName}) => {
+const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPos, reportHandle, posName, tagString, setTagString}) => {
 	// reportPos는 현재 내가 누른 component(padbox)의 id임
 	const padBoxState = usePadBoxState();
 	const user = useUserState();
@@ -42,7 +44,6 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 	const saveReport = useSaveReport();
 	const [reportWhy, setReportWhy] = useState<string>("KEY_MISSED");
 	const [reportBody, setReportBody] = useState<string>("");
-	const [tagString, setTagString] = useState<string>("ALL");
 
 	const handleReportComplete= () => {
 		saveReport(-1, reportWhy, reportBody, reportPos);
@@ -158,7 +159,7 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 										content={report.content}
 										isResolved={report.isResolved}
 										createdDate={report.createdDate}
-										box_id={report.box_id}
+										box_id={report.padBoxId}
 										reportPos={reportPos}
 										tagString={tagString}
 									/>
