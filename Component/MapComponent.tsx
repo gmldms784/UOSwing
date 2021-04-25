@@ -8,7 +8,7 @@ import {
 import Geolocation from 'react-native-geolocation-service';
 import MapView, { Marker } from 'react-native-maps';
 
-import {ReportModal } from '.';
+import { ReportModal, PadListModal } from '.';
 import AlertIcon from '../assets/warning.svg';
 
 import { useUserState } from '../Main/Model/UserModel';
@@ -55,6 +55,22 @@ const MapComponent = () => {
 		setReportModal(false);
 	}
 	// ----> report modal
+
+	// <--- Pad List Modal
+	const [listModal, setListModal] = useState<boolean>(false);
+	const [address, setAddress] = useState<string>("");
+
+	const handleListOpen = (idx:number, name:string, address:string) => {
+		setPosName(name);
+		reportHandle(idx);
+		setAddress(address);
+		setListModal(true);
+	}
+
+	const handleListClose = () => {
+		setListModal(false);
+	}
+	// ---> Pad List Modal
 
 	const getMyPosition = () => {
 		// 잘작동하는지 실제 디바이스로 테스트 필요
@@ -111,12 +127,13 @@ const MapComponent = () => {
 								key={index}
 								id={padBox.id}
 								name={padBox.name}
+								address={padBox.address}
 								latitude={padBox.latitude}
 								longitude={padBox.longitude}
 								amount={padBox.padAmount}
 								humidity={user.auth === "admin" ? padBox.humidity : undefined}
 								temperature={user.auth === "admin" ? padBox.temperature : undefined}
-								onPress={handleReportOpen}
+								onPress={handleListOpen}
 							/>
 						)
 					}
@@ -166,6 +183,12 @@ const MapComponent = () => {
 				posName={posName}
 				tagString={tagString}
 				setTagString={tagHandle}
+			/>
+			<PadListModal
+				listModal={listModal}
+				handleListClose={handleListClose}
+				address={address}
+				handleReportOpen={handleReportOpen}
 			/>
 		</>
 	);

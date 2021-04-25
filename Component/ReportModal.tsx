@@ -81,7 +81,7 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 							onValueChange={(v, i)=>setReportWhy(v)}>
 							<Picker.Item label="생리대함 키 분실" value="KEY_MISSED" />
 							<Picker.Item label="생리대함 파손" value="BROKEN" />
-							<Picker.Item label="생리대가 하나도 없음" value="NO_PAD" />
+							<Picker.Item label="생리대가 하나도 없음" value="EMPTY" />
 							<Picker.Item label="수량 오차" value="WRONG_QUANTITY" />
 							<Picker.Item label="기타 결함" value="DEFECT" />
 						</Picker>
@@ -130,7 +130,7 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 								<Text style={MS.tagText}>생리대함 파손</Text>
 							</View>
 							<View style={MS.tagSet}>
-								<Text style={MS.tagIconCon} onPress={() => setTagString("NO_PAD")}>
+								<Text style={MS.tagIconCon} onPress={() => setTagString("EMPTY")}>
 									<WrongNumIcon width={30} height={30} fill="black" />
 								</Text>
 								<Text style={MS.tagText}>생리대 없음</Text>

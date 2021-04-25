@@ -14,16 +14,17 @@ import AlertIcon from '../assets/warning.svg';
 type Props = {
 	id: number;
 	name: string;
+	address: string;
 	latitude: number;
 	longitude: number;
 	amount: number;
 	humidity?: number;
 	temperature?: number;
-	onPress: (idx : number, name:string) => void;
+	onPress: (idx : number, name:string, address: string) => void;
 }
 
 
-const MarkerComponent = ({id, name, latitude, longitude, amount, humidity, temperature, onPress} : Props) => {
+const MarkerComponent = ({id, name, address, latitude, longitude, amount, humidity, temperature, onPress} : Props) => {
 	const [markerColor, setMarkerColor] = useState<string>("yellow");
 	const user = useUserState();
 
@@ -49,7 +50,7 @@ const MarkerComponent = ({id, name, latitude, longitude, amount, humidity, tempe
 					longitude: longitude
 				}}
 				style={{ padding: 10 }}
-				onPress={() => onPress(id, name)}
+				onPress={() => onPress(id, name, address)}
 			>
 				{
 					user.auth === "admin" &&
@@ -60,7 +61,7 @@ const MarkerComponent = ({id, name, latitude, longitude, amount, humidity, tempe
 				<View
 					style={StyleSheet.flatten([{backgroundColor: markerColor}, MarkerStyle.marker])}
 				>
-					<Text style={MarkerStyle.info}>{name}</Text>
+					<Text style={MarkerStyle.info}>{address.replace("서울시립대학교 ", "")}</Text>
 					<Text style={StyleSheet.flatten([MarkerStyle.whiteText, MarkerStyle.margin])}>{amount}개</Text>
 					{
 						// temperature && humidity &&
