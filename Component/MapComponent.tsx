@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
 	StyleSheet,
 	TouchableHighlight,
@@ -13,8 +13,9 @@ import AlertIcon from '../assets/warning.svg';
 
 import { useUserState } from '../Main/Model/UserModel';
 import { usePadBoxState } from '../Main/Model/PadBoxModel';
-import { padBoxType } from '../Main/Type';
+import { padBoxType, markerType, markerValueType } from '../Main/Type';
 import { MarkerComponent, MapWidget, ButtonComponent } from '../Component';
+import padBoxToMarker from '../Function/PadBoxToMarker';
 
 type ILocation = {
 	latitude: number;
@@ -38,17 +39,28 @@ const MapComponent = () => {
 	const [location, setLocation] = useState<ILocation | undefined>(undefined);
 	const [locationInfo, setLocationInfo] = useState<boolean>(false);
 
+	// <--- make padBox to marker
+	const [markers, setMarkers] = useState<markerType>({});
+	useEffect(() => {
+		async function changePadBoxToMarker() {
+			const res = await padBoxToMarker(padBoxState);
+			setMarkers(res);
+		}
+		changePadBoxToMarker();
+	}, [padBoxState]);
+	// ---> make padBox to marker
+
 	// <---report modal
 	const [reportModal, setReportModal] = useState<boolean>(false);
 	const [reportPos, setReportPos] = useState<number>(0);
 	const [posName, setPosName] = useState<string>("");
 	const [tagString, setTagString] = useState<string>("ALL");
 	const tagHandle = (tag:string) => setTagString(tag);
-	const reportHandle = (idx:number) => setReportPos(idx);
-	const handleReportOpen = (idx : number, name : string) => {
+	const reportHandle = (id:number) => setReportPos(id);
+	const handleReportOpen = (id : number, name : string) => {
 		tagHandle("ALL");
 		setPosName(name);
-		reportHandle(idx);
+		reportHandle(id);
 		setReportModal(true);
 	}
 	const handleReportClose = () => {
@@ -60,9 +72,8 @@ const MapComponent = () => {
 	const [listModal, setListModal] = useState<boolean>(false);
 	const [address, setAddress] = useState<string>("");
 
-	const handleListOpen = (idx:number, name:string, address:string) => {
+	const handleListOpen = (name:string, address:string) => { // list open 할 때는 id를 set하지 않아도 됨
 		setPosName(name);
-		reportHandle(idx);
 		setAddress(address);
 		setListModal(true);
 	}
@@ -122,20 +133,22 @@ const MapComponent = () => {
 					moveOnMarkerPress={false}
 				>
 					{
-						padBoxState.map((padBox: padBoxType, index : number) =>
-							<MarkerComponent
-								key={index}
-								id={padBox.id}
-								name={padBox.name}
-								address={padBox.address}
-								latitude={padBox.latitude}
-								longitude={padBox.longitude}
-								amount={padBox.padAmount}
-								humidity={user.auth === "admin" ? padBox.humidity : undefined}
-								temperature={user.auth === "admin" ? padBox.temperature : undefined}
-								onPress={handleListOpen}
-							/>
-						)
+						Object.keys(markers).map((padBoxAddress : string, index : number) => {
+							let value : markerValueType = markers[padBoxAddress];
+							return (
+								<MarkerComponent
+									key={index}
+									number={value.number}
+									name={value.name}
+									address={padBoxAddress}
+									latitude={value.latitude}
+									longitude={value.longitude}
+									amount={value.padAmount}
+									onPress={handleListOpen}
+								/>
+
+							);
+						})
 					}
 					{
 						location &&
@@ -162,7 +175,7 @@ const MapComponent = () => {
 						style={
 							Map.alert
 						}
-						onPress = {handleReportOpen}
+						onPress = {() => setReportModal(true)}
 						underlayColor="transparent"
 					>
 						<ButtonComponent

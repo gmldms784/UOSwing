@@ -27,27 +27,36 @@ const PadListModal : React.FC<Props> = ({listModal, handleListClose, address, ha
 	// reportPos는 현재 내가 누른 component(padbox)의 id임
 	const padBoxState = usePadBoxState();
 
+	const handleModalOpen = (id : number, name : string, address : string) => {
+		handleReportOpen(id, name, address);
+		handleListClose();
+	}
+
 	return(
 		<Modal
 			view={listModal}
 			onClose={handleListClose}
-			title={<Logotitle icon={null} name={address.replace("서울시립대학교 ", "")} />}
+			title={<Logotitle icon={null} name={address.replace("서울시립대학교 ", "")} />} 
 		>
 			<View style={{ width: 270 }}>
 				<ScrollView style={PLM.padList} contentContainerStyle={{flexGrow:1}}>
 					{
-						padBoxState.map((setting: padBoxType, index: number) => 
-						<PadListCard
-							key={setting.id}
-							index={setting.id}
-							name={setting.name}
-							address={setting.address}
-							padAmount={setting.padAmount}
-							humidity={setting.humidity}
-							temperature={setting.temperature}
-							compareAddress={address}
-							modalOpen={()=>{handleReportOpen(setting.id, setting.name, setting.address); handleListClose()}}
-						/>)
+						padBoxState.map((setting: padBoxType, index: number) => {
+							if(setting.address === address){
+								return (
+									<PadListCard
+										key={setting.id}
+										index={setting.id}
+										name={setting.name}
+										address={setting.address}
+										padAmount={setting.padAmount}
+										humidity={setting.humidity}
+										temperature={setting.temperature}
+										modalOpen={() => handleModalOpen(setting.id, setting.name, setting.address)}
+									/>
+								);
+							}
+						})
 					}
 				</ScrollView>
 				
