@@ -26,15 +26,12 @@ type Props = {
 	humidity: Number;
 	temperature: Number;
 	modalOpen: any;
-	compareAddress: string;
 }
 
-const PadListCard = ({ name, address, padAmount, humidity, temperature, index, modalOpen, compareAddress }: Props) => {
+const PadListCard = ({ name, address, padAmount, humidity, temperature, index, modalOpen}: Props) => {
 	const user=useUserState();
 	return (
 		<>
-		{
-			address===compareAddress &&
 			<BoxLayout>
 				<TouchableHighlight
 					onPress={modalOpen}
@@ -73,7 +70,6 @@ const PadListCard = ({ name, address, padAmount, humidity, temperature, index, m
 					</>
 				</TouchableHighlight>
 			</BoxLayout>
-		}
 		</>
 	);
 }

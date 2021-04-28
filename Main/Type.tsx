@@ -17,6 +17,20 @@ export type padBoxType = {
 	temperature: number,
 };
 
+// 희은 ) marker를 합쳐서 표현하기 위해 type 추가
+export type markerType = {
+	[address : string ] : markerValueType
+};
+
+export type markerValueType = {
+	number: number, // 생리대 함 몇 개가 해당 건물에 속해있는지
+	isReported: boolean,
+	latitude: number,
+	longitude: number,
+	name: string,
+	padAmount: number
+}
+
 export type padBoxAddressType = {
 	address: string,
 	latitude: number,

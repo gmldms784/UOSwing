@@ -36,18 +36,22 @@ const PadListModal : React.FC<Props> = ({listModal, handleListClose, address, ha
 			<View style={{ width: 270 }}>
 				<ScrollView style={PLM.padList} contentContainerStyle={{flexGrow:1}}>
 					{
-						padBoxState.map((setting: padBoxType, index: number) => 
-						<PadListCard
-							key={setting.id}
-							index={setting.id}
-							name={setting.name}
-							address={setting.address}
-							padAmount={setting.padAmount}
-							humidity={setting.humidity}
-							temperature={setting.temperature}
-							compareAddress={address}
-							modalOpen={()=>{handleReportOpen(setting.id, setting.name, setting.address); handleListClose()}}
-						/>)
+						padBoxState.map((setting: padBoxType, index: number) => {
+							if(setting.address === address){
+								return (
+									<PadListCard
+										key={setting.id}
+										index={setting.id}
+										name={setting.name}
+										address={setting.address}
+										padAmount={setting.padAmount}
+										humidity={setting.humidity}
+										temperature={setting.temperature}
+										modalOpen={()=>{handleReportOpen(setting.id, setting.name, setting.address); handleListClose()}}
+									/>
+								);
+							}
+						})
 					}
 				</ScrollView>
 				
