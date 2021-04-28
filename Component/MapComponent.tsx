@@ -56,11 +56,11 @@ const MapComponent = () => {
 	const [posName, setPosName] = useState<string>("");
 	const [tagString, setTagString] = useState<string>("ALL");
 	const tagHandle = (tag:string) => setTagString(tag);
-	const reportHandle = (idx:number) => setReportPos(idx);
-	const handleReportOpen = (idx : number, name : string) => {
+	const reportHandle = (id:number) => setReportPos(id);
+	const handleReportOpen = (id : number, name : string) => {
 		tagHandle("ALL");
 		setPosName(name);
-		reportHandle(idx);
+		reportHandle(id);
 		setReportModal(true);
 	}
 	const handleReportClose = () => {
