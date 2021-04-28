@@ -51,6 +51,9 @@ const SettingRouter = ( { navigation }: Props) => {
 		setModal(true);
 	}
 	const handleModalClose = () => {
+		setModal(false);
+	}
+	const handleModalSave = () => {
 		saveSetting(pos,-1,latitude,longitude,name);
 		setModal(false);
 	}
@@ -74,6 +77,7 @@ const SettingRouter = ( { navigation }: Props) => {
 							<TouchableHighlight
 								onPress={handleModalOpen}
 								style={Setting.addBtn}
+								underlayColor={mint}
 							>
 								<Text style={{ fontSize: 20, color: 'white' }}>+</Text>
 							</TouchableHighlight>
@@ -106,7 +110,7 @@ const SettingRouter = ( { navigation }: Props) => {
 							marginTop: 20
 						}}
 						underlayColor="transparent"
-						onPress={handleModalClose}
+						onPress={handleModalSave}
 					>
 						<ButtonComponent color="mint">
 							<Text style={MS.btnText}>완료</Text>

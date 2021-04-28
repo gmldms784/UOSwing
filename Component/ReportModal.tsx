@@ -30,22 +30,27 @@ type Props = {
 	handleReportClose: () => void
 	reportPos : number
 	reportHandle : (idx:number) => void
+	posName: string
+	tagString: string
+	setTagString: (a:string) => void
 }
 
-const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPos, reportHandle}) => {
+const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPos, reportHandle, posName, tagString, setTagString}) => {
+	// reportPos는 현재 내가 누른 component(padbox)의 id임
 	const padBoxState = usePadBoxState();
 	const user = useUserState();
 	const reportData = useReportState();
 
 	const saveReport = useSaveReport();
-	const [reportWhy, setReportWhy] = useState<string>("");
+	const [reportWhy, setReportWhy] = useState<string>("KEY_MISSED");
 	const [reportBody, setReportBody] = useState<string>("");
 
 	const handleReportComplete= () => {
 		saveReport(-1, reportWhy, reportBody, reportPos);
 		handleReportClose();
+		// init
 		reportHandle(0);
-		setReportWhy("");
+		setReportWhy("KEY_MISSED");
 		setReportBody("");
 		Alert.alert("신고가 성공적으로 접수되었습니다");
 	}
@@ -63,12 +68,10 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 						<Text style={MS.title}>장소</Text>
 						<Picker
 							selectedValue={reportPos}
-							// 희은 피드백 : ts 맞춰서 type 기재해주세요!
-							// 이제 마커 클릭해도 신고하기가 뜨는데 바로 클릭한 padBox가 select되게 해두었어요! 아래 map도 구현해두었습니다!
 							onValueChange={(v, i)=>reportHandle(v)}>
 							{
 								padBoxState.map((padBox : padBoxType, index : number) =>
-									<Picker.Item key={padBox.id} label={padBox.name} value={index}/>
+									<Picker.Item key={padBox.id} label={padBox.name} value={padBox.id}/>
 								)	
 							}
 						</Picker>
@@ -76,9 +79,11 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 						<Picker
 							selectedValue={reportWhy}
 							onValueChange={(v, i)=>setReportWhy(v)}>
-							<Picker.Item label="Test" value={0} />
-							<Picker.Item label="Test2" value={1} />
-							<Picker.Item label="Test3" value={2} />
+							<Picker.Item label="생리대함 키 분실" value="KEY_MISSED" />
+							<Picker.Item label="생리대함 파손" value="BROKEN" />
+							<Picker.Item label="생리대가 하나도 없음" value="EMPTY" />
+							<Picker.Item label="수량 오차" value="WRONG_QUANTITY" />
+							<Picker.Item label="기타 결함" value="DEFECT" />
 						</Picker>
 						<Text style={MS.title}>기타사항</Text>
 						<TextInput
@@ -109,32 +114,39 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 					onClose={handleReportClose}
 					title={<Logotitle icon={<AlertIcon width={25} height={25} fill="black" />} name="신고내역"/>}
 				>
-					<View style={{width:270, height:'95%'}}>
-						<Text style={MS.title}>{padBoxState[reportPos].name}</Text>
+					<View style={{width:'100%', height:'95%'}}>
+						<Text style={MS.title}>{posName}</Text>
 						<View style={MS.tagCon}>
 							<View style={MS.tagSet}>
-								<Text style={MS.tagIconCon}>
+								<Text style={MS.tagIconCon} onPress={() => setTagString("KEY_MISSED")}>
 									<KeyIcon width={30} height={30} fill="black" />
 								</Text>
 								<Text style={MS.tagText}>열쇠 분실</Text>
 							</View>
 							<View style={MS.tagSet}>
-								<Text style={MS.tagIconCon}>
+								<Text style={MS.tagIconCon} onPress={() => setTagString("BROKEN")}>
 									<BrokenIcon width={30} height={30} fill="black" />
 								</Text>
 								<Text style={MS.tagText}>생리대함 파손</Text>
 							</View>
 							<View style={MS.tagSet}>
-								<Text style={MS.tagIconCon}>
+								<Text style={MS.tagIconCon} onPress={() => setTagString("EMPTY")}>
 									<WrongNumIcon width={30} height={30} fill="black" />
 								</Text>
 								<Text style={MS.tagText}>생리대 없음</Text>
 							</View>
 							<View style={MS.tagSet}>
-								<Text style={MS.tagIconCon}>
+								<Text style={MS.tagIconCon} onPress={() => setTagString("WRONG_QUANTITY")}>
 									<NoPadIcon width={30} height={30} fill="black" />
 								</Text>
 								<Text style={MS.tagText}>수량 오차</Text>
+							</View>
+							<View style={MS.tagSet}>
+								<Text style={MS.tagIconCon} onPress={() => setTagString("DEFECT")}>
+									<NoPadIcon width={30} height={30} fill="black" />
+									{/* 위의 icon 기타로 변경하기 */}
+								</Text>
+								<Text style={MS.tagText}>기타</Text>
 							</View>
 						</View>
 						<ScrollView style={MS.reportList} contentContainerStyle={{flexGrow:1}}>
@@ -147,7 +159,9 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 										content={report.content}
 										isResolved={report.isResolved}
 										createdDate={report.createdDate}
-										box_id={report.box_id}
+										box_id={report.padBoxId}
+										reportPos={reportPos}
+										tagString={tagString}
 									/>
 								)
 							}
@@ -201,12 +215,6 @@ const MS = StyleSheet.create({
 	tagText: {
 		marginTop: 3,
 		fontSize: 11,
-	},
-	tagIconCon: {
-		borderColor: borderColor,
-		borderWidth: 1,
-		borderRadius: 100,
-		padding: 10
 	},
 	reportList: {
 		borderWidth: 1,

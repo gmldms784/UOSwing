@@ -14,47 +14,68 @@ import { ReportContextProvider, useReportState } from '../Main/Model/ReportModel
 import { useDeleteReport } from '../Main/ViewModel/ReportViewModel';
 
 import { dateToString } from '../Function/DateToString';
+import { reportType } from '../Main/Type';
 
 type Props = {
 	id: number,
-	tag: string, // 추후 수정
+	tag: string,
 	content: string,
 	isResolved: boolean,
 	createdDate: Date,
-	box_id: number
+	box_id: number,
+	reportPos: number,
+	tagString: string
 }
 
-const ReportCard = ({ id, tag, content, isResolved, createdDate, box_id }: Props) => {
+const ReportCard = ({ id, tag, content, isResolved, createdDate, box_id, reportPos, tagString }: Props) => {
 	const report = useReportState();
 	const deleteReport = useDeleteReport();
 
 	const handleDelete = () => {
-		//deleteReport(id);
-		Alert.alert('resolve!')
+		Alert.alert(
+			"해당 신고를 해결 처리 하시겠습니까?",
+			"해결 처리된 신고만 해결 처리 해주세요.",
+			[
+				{
+					text: "네",
+					onPress: () => deleteReport(id)
+				},
+				{
+					text: "아니요",
+					style: "cancel"
+				}
+			],
+			{ cancelable: false }
+		);
 	}
 
 	return (
 		<>
-			<BoxLayout>
-				<View
-					style={Report.wrap}
-				>
-						<View style={{ width: '100%'}}>
-							<Text style={Report.content}>{content}</Text>
-						</View>
-						<View style={Report.rowdatebtn}>
-							<View style={{ alignItems: 'center', justifyContent: 'center'}}>
-								<Text style={Report.date}>{createdDate && dateToString(createdDate)}</Text>
+			{
+				reportPos===box_id ?
+				(tag === tagString || tagString==="ALL") &&
+				<BoxLayout>
+					<View
+						style={Report.wrap}
+					>
+							<View style={{ width: '100%'}}>
+								<Text style={Report.content}>{content}</Text>
 							</View>
-							<TouchableHighlight
-								underlayColor="transparent"
-								onPress={handleDelete}
-							>
-								<Text style={Report.btnText}>해결</Text>
-							</TouchableHighlight>
-						</View>
-				</View>
-			</BoxLayout>
+							<View style={Report.rowdatebtn}>
+								<View style={{ alignItems: 'center', justifyContent: 'center'}}>
+									<Text style={Report.date}>{createdDate && dateToString(createdDate)}</Text>
+								</View>
+								<TouchableHighlight
+									underlayColor="transparent"
+									onPress={handleDelete}
+								>
+									<Text style={Report.btnText}>해결</Text>
+								</TouchableHighlight>
+							</View>
+					</View>
+				</BoxLayout>
+				: null
+			}
 		</>
 	);
 }

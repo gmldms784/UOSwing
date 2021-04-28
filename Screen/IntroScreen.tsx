@@ -20,6 +20,7 @@ import { StackParamList } from '../Router/MainRouter';
 import { ButtonComponent } from '../Component';
 import { mint, purple } from '../CommonVariable';
 import { useLogin, useUserLogin } from '../Main/Model/UserModel';
+import { fetchReport } from '../Main/ViewModel/ReportViewModel';
 
 type Props = {
 	navigation: StackNavigationProp<StackParamList, 'Home'>;
@@ -71,7 +72,6 @@ const IntroScreen = ({ navigation }: Props) => {
 						onPress={() => {
 							userLogin();
 							navigation.navigate('User');
-							userLogin();
 						}}
 						underlayColor="transparent"
 						style={{ marginTop: 20, marginBottom: 16, zIndex: 2 }}

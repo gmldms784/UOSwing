@@ -31,11 +31,11 @@ export type statisticsType = {
 
 export type reportType = {
 	id: number,
-	tag: string, // 추후 수정
+	tag: string,
 	content: string,
 	isResolved: boolean,
 	createdDate: Date,
-	box_id: number
+	padBoxId: number
 }
 
 type authArray = ["admin", "user"]

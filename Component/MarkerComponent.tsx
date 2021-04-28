@@ -14,16 +14,17 @@ import AlertIcon from '../assets/warning.svg';
 type Props = {
 	id: number;
 	name: string;
+	address: string;
 	latitude: number;
 	longitude: number;
 	amount: number;
 	humidity?: number;
 	temperature?: number;
-	onPress: (idx : number) => void;
+	onPress: (idx : number, name:string, address: string) => void;
 }
 
 
-const MarkerComponent = ({id, name, latitude, longitude, amount, humidity, temperature, onPress} : Props) => {
+const MarkerComponent = ({id, name, address, latitude, longitude, amount, humidity, temperature, onPress} : Props) => {
 	const [markerColor, setMarkerColor] = useState<string>("yellow");
 	const user = useUserState();
 
@@ -49,7 +50,7 @@ const MarkerComponent = ({id, name, latitude, longitude, amount, humidity, tempe
 					longitude: longitude
 				}}
 				style={{ padding: 10 }}
-				onPress={() => onPress(id)}
+				onPress={() => onPress(id, name, address)}
 			>
 				{
 					user.auth === "admin" &&
@@ -60,11 +61,12 @@ const MarkerComponent = ({id, name, latitude, longitude, amount, humidity, tempe
 				<View
 					style={StyleSheet.flatten([{backgroundColor: markerColor}, MarkerStyle.marker])}
 				>
-					<Text style={MarkerStyle.info}>{name}</Text>
+					<Text style={MarkerStyle.info}>{address.replace("서울시립대학교 ", "")}</Text>
 					<Text style={StyleSheet.flatten([MarkerStyle.whiteText, MarkerStyle.margin])}>{amount}개</Text>
 					{
 						// temperature && humidity &&
 						// 수빈 : 처음 생리대함을 만들때 temp, humid를 0으로 주니까 이부분에서 오류가 나서 주석 처리 했습니당
+						user.auth === "admin" &&
 						<Text style={MarkerStyle.whiteText}>{`${temperature}°C / ${humidity}%`}</Text>
 					}
 				</View>

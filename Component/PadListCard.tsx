@@ -15,6 +15,8 @@ import { mint, borderColor } from '../CommonVariable';
 import SettingIcon from '../assets/square.svg';
 
 import { useDeletePadBox } from '../Main/ViewModel/PadBoxViewModel';
+import ButtonComponent from './ButtonComponent';
+import { useUserState } from '../Main/Model/UserModel';
 
 type Props = {
 	index: number;
@@ -24,86 +26,54 @@ type Props = {
 	humidity: Number;
 	temperature: Number;
 	modalOpen: any;
+	compareAddress: string;
 }
 
-const SettingCard = ({ name, address, padAmount, humidity, temperature, index, modalOpen }: Props) => {
-	const deletePadBox = useDeletePadBox();
-
-	const handleDelete = () => {
-		// confirm
-		Alert.alert(
-			"정말 삭제하시겠습니까?",
-			"해당 작업은 되돌릴 수 없습니다.",
-			[
-				{
-					text: "네",
-					onPress: () => deletePadBox(index)
-				},
-				{
-					text: "아니요",
-					style: "cancel"
-				}
-			],
-			{ cancelable: false }
-		);
-	};
-
+const PadListCard = ({ name, address, padAmount, humidity, temperature, index, modalOpen, compareAddress }: Props) => {
+	const user=useUserState();
 	return (
 		<>
+		{
+			address===compareAddress &&
 			<BoxLayout>
-				<View
-					style={Setting.wrap}
+				<TouchableHighlight
+					onPress={modalOpen}
+					underlayColor="transparent"
 				>
+					<>
 					<View
-						style={Setting.header}
+					style={Setting.wrap}
 					>
-						<View style={{ flexDirection: 'row' }}>
-							<SettingIcon width={30} height={30} fill="black" />
-							<Text
-								style={Setting.title}
-							>{name}</Text>
+						<View
+							style={Setting.header}
+						>
+							<View style={{ flexDirection: 'row' }}>
+								<SettingIcon width={30} height={30} fill="black" />
+								<Text
+									style={Setting.title}
+								>{name}</Text>
+							</View>
 						</View>
-						<Text
-							style={{
-								color: 'gray',
-								width: '100%'
-							}}
-						>
-							{address}
-						</Text>
 					</View>
-					<View
-						style={Setting.btnContainer}
-					>
-						<TouchableHighlight
-							onPress={modalOpen}
-							style={Setting.editBtn}
-							underlayColor="transparent"
-						>
-							<EditIcon width={20} height={20} fill="black" />
-						</TouchableHighlight>
-						<TouchableHighlight
-							onPress={handleDelete}
-							style={Setting.deleteBtn}
-							underlayColor="transparent"
-						>
-							<DeleteIcon width={20} height={20} fill="black" />
-						</TouchableHighlight>
+					<View>
+						<View style={{ flexDirection: 'row' }}>
+							<Text
+								style={Setting.quantity}>잔량</Text>
+							<Text>{padAmount}개</Text>
+						</View>
+						{
+							user.auth === "admin" &&
+							<View style={{ flexDirection: 'row' }}>
+								<Text
+									style={Setting.humidity}>온습도</Text>
+								<Text>{temperature}℃ / {humidity}%</Text>
+							</View>
+						}
 					</View>
-				</View>
-				<View>
-					<View style={{ flexDirection: 'row' }}>
-						<Text
-							style={Setting.quantity}>잔량</Text>
-						<Text>{padAmount}개</Text>
-					</View>
-					<View style={{ flexDirection: 'row' }}>
-						<Text
-							style={Setting.humidity}>온습도</Text>
-						<Text>{temperature}℃ / {humidity}%</Text>
-					</View>
-				</View>
+					</>
+				</TouchableHighlight>
 			</BoxLayout>
+		}
 		</>
 	);
 }
@@ -164,4 +134,4 @@ const Setting = StyleSheet.create({
 	}
 })
 
-export default SettingCard;
+export default PadListCard;

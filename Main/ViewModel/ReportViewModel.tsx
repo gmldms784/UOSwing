@@ -1,57 +1,76 @@
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useContext, useEffect } from 'react';
+import axios from 'axios';
+import { API_URL } from '../../CommonVariable';
+
 import { childrenObj } from '../Type';
+import { ErrorHandle } from '../../Function/ErrorHandling';
+
+import { useHeader, useUserState } from '../Model/UserModel';
 import { useReportState, useReportDispatch } from '../Model/ReportModel';
 
-const SaveReportContext = createContext<(id: number, tag: string, content: string, box_id: number)=> void>((id: number, tag: string, content : string, box_id: number) => {});
+const SaveReportContext = createContext<(id: number, tag: string, content: string, padBoxId: number)=> void>((id: number, tag: string, content : string, padBoxId: number) => {});
 const DeleteReportContext = createContext<(id: number)=> void>((id: number) => {});
 
 export const ReportLogicProvider = ({ children } : childrenObj) => {
 	const report = useReportState();
 	const reportDispatch = useReportDispatch();
+	const header = useHeader();
 
-	const saveReport = (id: number, tag: string, content : string, box_id: number) => {
+	useEffect(() => {
+		if(header['X-AUTH-TOKEN'] != "" )
+			fetchReport();
+	}, [header])
+
+	const fetchReport = () => {
+		axios.get(`${API_URL}/api/v1/report`,{
+			headers : header
+		})
+		.then(res => {
+			//console.log(res.data);
+			reportDispatch(res.data);
+		})
+	}
+
+	const saveReport = (id: number, tag: string, content : string, padBoxId: number) => {
 		if(id === -1){
-			// todo : add new report api call
-			// todo : get api call
-
-			// 임시코드
-			reportDispatch([
-				...report,
-				{
-					id: 3,
-					tag,
-					content,
-					createdDate: new Date(Date.now()),
-					isResolved: false,
-					box_id
-				}
-			]);
+			axios.post(`${API_URL}/api/v1/report`, {
+				"content": content,
+				"isResolved": false,
+				"padBoxId": padBoxId,
+				"tag": tag
+			})
+			.then(res => {
+				console.log("성공");
+			})
+			.catch(error => {
+				ErrorHandle.errorHandle(error, true, saveReport);
+			});
 		}else{
-			// todo : add update report api call
-			// todo : get api call
-
-			// 임시코드
-			const reportExcept = report.filter((value, index) => value.id !== id);
-			reportDispatch([
-				...reportExcept,
-				{
-					id: id,
-					tag,
-					content,
-					createdDate: new Date(Date.now()),
-					isResolved: false,
-					box_id
-				}
-			]);
+			axios.patch(`${API_URL}/api/v1/report/${id}`,{
+				"isResolved": true,
+			},{
+				headers: header
+			})
+			.then(res => {
+				fetchReport();
+			})
+			.catch(error => {
+				ErrorHandle.errorHandle(error, true, saveReport);
+			})
 		}
 	}
 
 	const deleteReport = (id : number) => {
-		// todo : delete report api call
-		// todo : get api call
-
-		// 임시코드
-		reportDispatch(report.filter((value, index) => value.id !== id));
+		axios.delete(`${API_URL}/api/v1/report/${id}`,{
+			headers: header
+		})
+		.then(res => {
+			console.log(res);
+			fetchReport();
+		})
+		.catch(error => {
+			ErrorHandle.errorHandle(error, true, deleteReport);
+		})
 	}
 
 	return (
