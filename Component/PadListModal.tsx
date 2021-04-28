@@ -52,7 +52,7 @@ const PadListModal : React.FC<Props> = ({listModal, handleListClose, address, ha
 										padAmount={setting.padAmount}
 										humidity={setting.humidity}
 										temperature={setting.temperature}
-										modalOpen={()=>{handleModalOpen(setting.id, setting.name, setting.address)}}
+										modalOpen={() => handleModalOpen(setting.id, setting.name, setting.address)}
 									/>
 								);
 							}

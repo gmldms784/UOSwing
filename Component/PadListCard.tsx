@@ -25,7 +25,7 @@ type Props = {
 	padAmount: Number;
 	humidity: Number;
 	temperature: Number;
-	modalOpen: any;
+	modalOpen: () => void;
 }
 
 const PadListCard = ({ name, address, padAmount, humidity, temperature, index, modalOpen}: Props) => {
