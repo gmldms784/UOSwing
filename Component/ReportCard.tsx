@@ -26,11 +26,7 @@ type Props = {
 	id: number,
 	tag: string,
 	content: string,
-	isResolved: boolean,
 	createdDate: Date,
-	box_id: number,
-	reportPos: number,
-	tagString: string
 }
 
 const IconProvider = ( tag : string ) => {
@@ -63,7 +59,7 @@ const TextProvider = ( tag : string ) => {
 	}
 }
 
-const ReportCard = ({ id, tag, content, createdDate, box_id, reportPos, tagString }: Props) => {
+const ReportCard = ({ id, tag, content, createdDate }: Props) => {
 	const report = useReportState();
 	const deleteReport = useDeleteReport();
 

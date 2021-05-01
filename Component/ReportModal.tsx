@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
 	StyleSheet,
 	TouchableHighlight,
@@ -24,7 +24,7 @@ import { useUserState } from '../Main/Model/UserModel';
 import { usePadBoxState } from '../Main/Model/PadBoxModel';
 import { padBoxType, reportType } from '../Main/Type';
 import { ButtonComponent } from '../Component';
-import { useSaveReport } from '../Main/ViewModel/ReportViewModel';
+import { useSaveReport} from '../Main/ViewModel/ReportViewModel';
 import { useReportState } from '../Main/Model/ReportModel';
 
 type Props = {
@@ -42,17 +42,17 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 	const padBoxState = usePadBoxState();
 	const user = useUserState();
 	const reportData = useReportState();
-
 	const saveReport = useSaveReport();
-	const [reportWhy, setReportWhy] = useState<string>("KEY_MISSED");
-	const [reportBody, setReportBody] = useState<string>("");
+	const tagData = ["KEY_MISSED", "BROKEN", "EMPTY", "WRONG_QUANTITY", "DEFECT"];
 
+	const [reportWhy, setReportWhy] = useState<string>(tagData[0]);
+	const [reportBody, setReportBody] = useState<string>("");
 	const handleReportComplete= () => {
 		saveReport(-1, reportWhy, reportBody, reportPos);
 		handleReportClose();
 		// init
 		reportHandle(0);
-		setReportWhy("KEY_MISSED");
+		setReportWhy(tagData[0]);
 		setReportBody("");
 		Alert.alert("신고가 성공적으로 접수되었습니다");
 	}
@@ -81,11 +81,11 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 						<Picker
 							selectedValue={reportWhy}
 							onValueChange={(v, i)=>setReportWhy(v)}>
-							<Picker.Item label="생리대함 키 분실" value="KEY_MISSED" />
-							<Picker.Item label="생리대함 파손" value="BROKEN" />
-							<Picker.Item label="생리대가 하나도 없음" value="EMPTY" />
-							<Picker.Item label="수량 오차" value="WRONG_QUANTITY" />
-							<Picker.Item label="기타 결함" value="DEFECT" />
+							<Picker.Item label="생리대함 키 분실" value={tagData[0]} />
+							<Picker.Item label="생리대함 파손" value={tagData[1]} />
+							<Picker.Item label="생리대가 하나도 없음" value={tagData[2]} />
+							<Picker.Item label="수량 오차" value={tagData[3]} />
+							<Picker.Item label="기타 결함" value={tagData[4]} />
 						</Picker>
 						<Text style={MS.title}>기타사항</Text>
 						<TextInput
@@ -123,7 +123,7 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 								<View style={MS.alert}>
 										<Text style={MS.alertText}>3</Text>
 								</View>
-								<Text style={MS.tagIconCon} onPress={() => setTagString("KEY_MISSED")}>
+								<Text style={MS.tagIconCon} onPress={() => setTagString(tagData[0])}>
 									<KeyIcon width={30} height={30} fill="black" />
 								</Text>
 								<Text style={MS.tagText}>열쇠 분실</Text>
@@ -132,7 +132,7 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 								<View style={MS.alert}>
 										<Text style={MS.alertText}>3</Text>
 								</View>
-								<Text style={MS.tagIconCon} onPress={() => setTagString("BROKEN")}>
+								<Text style={MS.tagIconCon} onPress={() => setTagString(tagData[1])}>
 									<BrokenIcon width={30} height={30} fill="black" />
 								</Text>
 								<Text style={MS.tagText}>파손</Text>
@@ -141,7 +141,7 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 								<View style={MS.alert}>
 										<Text style={MS.alertText}>3</Text>
 								</View>
-								<Text style={MS.tagIconCon} onPress={() => setTagString("EMPTY")}>
+								<Text style={MS.tagIconCon} onPress={() => setTagString(tagData[2])}>
 									<NoPadIcon width={30} height={30} fill="black" />
 								</Text>
 								<Text style={MS.tagText}>생리대 없음</Text>
@@ -150,7 +150,7 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 								<View style={MS.alert}>
 										<Text style={MS.alertText}>3</Text>
 								</View>
-								<Text style={MS.tagIconCon} onPress={() => setTagString("WRONG_QUANTITY")}>
+								<Text style={MS.tagIconCon} onPress={() => setTagString(tagData[3])}>
 									<WrongNumIcon width={30} height={30} fill="black" />
 								</Text>
 								<Text style={MS.tagText}>수량 오차</Text>
@@ -159,7 +159,7 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 								<View style={MS.alert}>
 										<Text style={MS.alertText}>3</Text>
 								</View>
-								<Text style={MS.tagIconCon} onPress={() => setTagString("DEFECT")}>
+								<Text style={MS.tagIconCon} onPress={() => setTagString(tagData[4])}>
 									<EtcIcon width={30} height={30} fill="black" />
 								</Text>
 								<Text style={MS.tagText}>기타</Text>
@@ -175,11 +175,7 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 										id={report.id}
 										tag={report.tag}
 										content={report.content}
-										isResolved={report.isResolved}
 										createdDate={report.createdDate}
-										box_id={report.padBoxId}
-										reportPos={reportPos}
-										tagString={tagString}
 									/>
 								)
 							}
