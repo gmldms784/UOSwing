@@ -11,7 +11,7 @@ import {
 import { Picker } from '@react-native-picker/picker';
 
 import { Modal, Logotitle, ReportCard } from '.';
-import { borderColor, darkGray } from '../CommonVariable';
+import { borderColor, alert } from '../CommonVariable';
 
 import AlertIcon from '../assets/warning.svg';
 import KeyIcon from '../assets/key(defill).svg';
@@ -120,30 +120,45 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 						<Text style={MS.title}>{posName}</Text>
 						<View style={MS.tagCon}>
 							<View style={MS.tagSet}>
+								<View style={MS.alert}>
+										<Text style={MS.alertText}>3</Text>
+								</View>
 								<Text style={MS.tagIconCon} onPress={() => setTagString("KEY_MISSED")}>
 									<KeyIcon width={30} height={30} fill="black" />
 								</Text>
 								<Text style={MS.tagText}>열쇠 분실</Text>
 							</View>
 							<View style={MS.tagSet}>
+								<View style={MS.alert}>
+										<Text style={MS.alertText}>3</Text>
+								</View>
 								<Text style={MS.tagIconCon} onPress={() => setTagString("BROKEN")}>
 									<BrokenIcon width={30} height={30} fill="black" />
 								</Text>
-								<Text style={MS.tagText}>생리대함 파손</Text>
+								<Text style={MS.tagText}>파손</Text>
 							</View>
 							<View style={MS.tagSet}>
+								<View style={MS.alert}>
+										<Text style={MS.alertText}>3</Text>
+								</View>
 								<Text style={MS.tagIconCon} onPress={() => setTagString("EMPTY")}>
-									<WrongNumIcon width={30} height={30} fill="black" />
+									<NoPadIcon width={30} height={30} fill="black" />
 								</Text>
 								<Text style={MS.tagText}>생리대 없음</Text>
 							</View>
 							<View style={MS.tagSet}>
+								<View style={MS.alert}>
+										<Text style={MS.alertText}>3</Text>
+								</View>
 								<Text style={MS.tagIconCon} onPress={() => setTagString("WRONG_QUANTITY")}>
-									<NoPadIcon width={30} height={30} fill="black" />
+									<WrongNumIcon width={30} height={30} fill="black" />
 								</Text>
 								<Text style={MS.tagText}>수량 오차</Text>
 							</View>
 							<View style={MS.tagSet}>
+								<View style={MS.alert}>
+										<Text style={MS.alertText}>3</Text>
+								</View>
 								<Text style={MS.tagIconCon} onPress={() => setTagString("DEFECT")}>
 									<EtcIcon width={30} height={30} fill="black" />
 								</Text>
@@ -153,6 +168,8 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 						<ScrollView style={MS.reportList} contentContainerStyle={{flexGrow:1}}>
 							{
 								reportData.map((report:reportType, index:number)=>
+									reportPos===report.padBoxId &&
+									(report.tag === tagString || tagString==="ALL") &&
 									<ReportCard
 										key={report.id}
 										id={report.id}
@@ -213,6 +230,22 @@ const MS = StyleSheet.create({
 		borderRadius: 100,
 		padding: 10,
 		textAlign: 'center',
+	},
+	alert: {
+		position: "absolute",
+		top: -3,
+		right: -5,
+		width: 20,
+		height: 20,
+		backgroundColor: alert,
+		borderRadius: 100,
+		zIndex: 1000,
+		alignItems: "center",
+		justifyContent: "center"
+	},
+	alertText: {
+		textAlign: "center",
+		color: "white",
 	},
 	tagText: {
 		marginTop: 3,

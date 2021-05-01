@@ -36,30 +36,30 @@ type Props = {
 const IconProvider = ( tag : string ) => {
 	switch(tag){
 		case "KEY_MISSED":
-			return <KeyIcon width={20} height={20} fill="black" />
+			return <KeyIcon width={25} height={25} fill="black" />
 		case "BROKEN":
-			return <BrokenIcon width={20} height={20} fill="black" />
+			return <BrokenIcon width={25} height={25} fill="black" />
 		case "EMPTY":
-			return <NoPadIcon width={20} height={20} fill="black" />
+			return <NoPadIcon width={25} height={25} fill="black" />
 		case "WRONG_QUANTITY":
-			return <WrongNumIcon width={20} height={20} fill="black" />
+			return <WrongNumIcon width={25} height={25} fill="black" />
 		case "DEFECT":
-			return <EtcIcon width={20} height={20} fill="black" />
+			return <EtcIcon width={25} height={25} fill="black" />
 	}
 }
 
 const TextProvider = ( tag : string ) => {
 	switch(tag){
 		case "KEY_MISSED":
-			return "[열쇠 분실]"
+			return "열쇠 분실"
 		case "BROKEN":
-			return "[생리대함 파손]"
+			return "생리대함 파손"
 		case "EMPTY":
-			return "[생리대 없음]"
+			return "생리대 없음"
 		case "WRONG_QUANTITY":
-			return "[수량 오차]"
+			return "수량 오차"
 		case "DEFECT":
-			return "[기타]"
+			return "기타"
 	}
 }
 
@@ -88,15 +88,15 @@ const ReportCard = ({ id, tag, content, createdDate, box_id, reportPos, tagStrin
 	return (
 		<>
 			{
-				reportPos===box_id ?
-				(tag === tagString || tagString==="ALL") &&
 				<BoxLayout>
 					<View
 						style={Report.wrap}
 					>
 							<View style={{ width: '100%'}}>
-								{/* <Text style={Report.tagIconCon}>{IconProvider(tag)}</Text> */}
-								<Text style={Report.tagText}>{TextProvider(tag)}</Text>
+								<View style={{ flexDirection:'row', alignItems:'center', marginBottom: 5}}>
+									<Text style={Report.tagIconCon}>{IconProvider(tag)}</Text>
+									<Text style={Report.tagText}>{TextProvider(tag)}</Text>
+								</View>
 								<Text style={Report.content}>{content}</Text>
 							</View>
 							<View style={Report.rowdatebtn}>
@@ -112,7 +112,6 @@ const ReportCard = ({ id, tag, content, createdDate, box_id, reportPos, tagStrin
 							</View>
 					</View>
 				</BoxLayout>
-				: null
 			}
 		</>
 	);
@@ -126,6 +125,7 @@ const Report = StyleSheet.create({
 		justifyContent: 'space-between'
 	},
 	content: {
+		paddingRight: 3,
 		marginBottom: 5,
 	},
 	date: {
@@ -150,14 +150,16 @@ const Report = StyleSheet.create({
 		borderColor: borderColor
 	},
 	tagIconCon: {
-		borderColor: borderColor,
-		borderWidth: 1,
-		borderRadius: 100,
-		padding: 5,
-		alignSelf: 'flex-start',
-		textAlign: 'center',
+		// borderColor: borderColor,
+		// borderWidth: 1,
+		// borderRadius: 100,
+		// padding: 5,
+		// alignSelf: 'flex-start',
+		// textAlign: 'center',
+		marginRight: 5,
 	},
 	tagText: {
+		fontSize: 16,
 		fontWeight: 'bold',
 	}
 })
