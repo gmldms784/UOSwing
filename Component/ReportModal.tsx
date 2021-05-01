@@ -12,11 +12,13 @@ import { Picker } from '@react-native-picker/picker';
 
 import { Modal, Logotitle, ReportCard } from '.';
 import { borderColor, darkGray } from '../CommonVariable';
+
 import AlertIcon from '../assets/warning.svg';
-import KeyIcon from '../assets/key.svg';
+import KeyIcon from '../assets/key(defill).svg';
 import BrokenIcon from '../assets/broken-link.svg';
 import WrongNumIcon from '../assets/decision.svg';
 import NoPadIcon from '../assets/lost.svg';
+import EtcIcon from '../assets/plus.svg';
 
 import { useUserState } from '../Main/Model/UserModel';
 import { usePadBoxState } from '../Main/Model/PadBoxModel';
@@ -143,8 +145,7 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 							</View>
 							<View style={MS.tagSet}>
 								<Text style={MS.tagIconCon} onPress={() => setTagString("DEFECT")}>
-									<NoPadIcon width={30} height={30} fill="black" />
-									{/* 위의 icon 기타로 변경하기 */}
+									<EtcIcon width={30} height={30} fill="black" />
 								</Text>
 								<Text style={MS.tagText}>기타</Text>
 							</View>
@@ -154,7 +155,7 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 								reportData.map((report:reportType, index:number)=>
 									<ReportCard
 										key={report.id}
-										id={index}
+										id={report.id}
 										tag={report.tag}
 										content={report.content}
 										isResolved={report.isResolved}
@@ -210,7 +211,8 @@ const MS = StyleSheet.create({
 		borderColor: borderColor,
 		borderWidth: 1,
 		borderRadius: 100,
-		padding: 10
+		padding: 10,
+		textAlign: 'center',
 	},
 	tagText: {
 		marginTop: 3,
