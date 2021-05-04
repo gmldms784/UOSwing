@@ -136,6 +136,9 @@ const MapComponent = () => {
 		}, 2000);
 	};
 
+	// ---> location
+
+	
 	return (
 		<>
 			<View style={Map.wrap}>
