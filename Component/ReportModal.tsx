@@ -24,7 +24,7 @@ import { useUserState } from '../Main/Model/UserModel';
 import { usePadBoxState } from '../Main/Model/PadBoxModel';
 import { padBoxType, reportType } from '../Main/Type';
 import { ButtonComponent } from '../Component';
-import { useSaveReport} from '../Main/ViewModel/ReportViewModel';
+import { useSaveReport, useAmountReport } from '../Main/ViewModel/ReportViewModel';
 import { useReportState } from '../Main/Model/ReportModel';
 
 type Props = {
@@ -43,10 +43,22 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 	const user = useUserState();
 	const reportData = useReportState();
 	const saveReport = useSaveReport();
+	const amountReport = useAmountReport();
 	const tagData = ["KEY_MISSED", "BROKEN", "EMPTY", "WRONG_QUANTITY", "DEFECT"];
 
 	const [reportWhy, setReportWhy] = useState<string>(tagData[0]);
 	const [reportBody, setReportBody] = useState<string>("");
+	const [amount0, setAmount0] = useState<number>(0);
+
+	useEffect(() => {
+		async function counting(){
+			const res = await amountReport(tagData[0]);
+			setAmount0(res);
+			console.log(amount0);
+		}
+		counting();
+	}, [reportData])
+
 	const handleReportComplete= () => {
 		saveReport(-1, reportWhy, reportBody, reportPos);
 		handleReportClose();
