@@ -138,11 +138,11 @@ android {
         versionCode 1
         versionName "1.0"
 
-        // // deploy below
+        // // deploy mode below
         // applicationId "com.uoswing"
         // minSdkVersion rootProject.ext.minSdkVersion
         // targetSdkVersion rootProject.ext.targetSdkVersion
-        // versionCode 2
+        // versionCode 3
         // versionName "1.1"
 
         // map api

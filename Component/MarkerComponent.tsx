@@ -68,6 +68,7 @@ const MarkerComponent = ({number, name, address, latitude, longitude, amount, on
 						// 마커에 온습도 필요 없어서 지움
 					}
 				</View>
+				<Text style={StyleSheet.flatten([MarkerStyle.arrow, {borderTopColor: markerColor}])}></Text>
 			</Marker>
 		</>
 	);
@@ -115,6 +116,19 @@ const MarkerStyle = StyleSheet.create({
 		textAlign: "center",
 		color: "white",
 		fontWeight: "bold"
+	},
+	arrow : {
+		position: 'absolute',
+		bottom: 0,
+		right: '50%',
+		width: 0,
+		height: 0,
+		borderLeftColor : 'transparent',
+		borderLeftWidth : 10,
+		borderRightColor : 'transparent',
+		borderRightWidth : 10,
+		borderTopColor : 'black',
+		borderTopWidth : 10
 	}
 })
 

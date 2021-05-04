@@ -4,6 +4,9 @@ import {
 	TouchableHighlight,
 	Text,
 	View,
+	Platform,
+	PermissionsAndroid,
+	Alert,
 } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import MapView, { Marker } from 'react-native-maps';
@@ -17,17 +20,18 @@ import { padBoxType, markerType, markerValueType } from '../Main/Type';
 import { MarkerComponent, MapWidget, ButtonComponent } from '../Component';
 import padBoxToMarker from '../Function/PadBoxToMarker';
 
+
 type ILocation = {
 	latitude: number;
 	longitude: number;
 }
 
 const range = {
-	start : {
+	start: {
 		latitude: 37.5777,
 		longitude: 127.0518,
 	},
-	end : {
+	end: {
 		latitude: 37.5874,
 		longitude: 127.0682,
 	}
@@ -55,9 +59,9 @@ const MapComponent = () => {
 	const [reportPos, setReportPos] = useState<number>(0);
 	const [posName, setPosName] = useState<string>("");
 	const [tagString, setTagString] = useState<string>("ALL");
-	const tagHandle = (tag:string) => setTagString(tag);
-	const reportHandle = (id:number) => setReportPos(id);
-	const handleReportOpen = (id : number, name : string) => {
+	const tagHandle = (tag: string) => setTagString(tag);
+	const reportHandle = (id: number) => setReportPos(id);
+	const handleReportOpen = (id: number, name: string) => {
 		tagHandle("ALL");
 		setPosName(name);
 		reportHandle(id);
@@ -72,7 +76,7 @@ const MapComponent = () => {
 	const [listModal, setListModal] = useState<boolean>(false);
 	const [address, setAddress] = useState<string>("");
 
-	const handleListOpen = (name:string, address:string) => { // list open 할 때는 id를 set하지 않아도 됨
+	const handleListOpen = (name: string, address: string) => { // list open 할 때는 id를 set하지 않아도 됨
 		setPosName(name);
 		setAddress(address);
 		setListModal(true);
@@ -83,7 +87,25 @@ const MapComponent = () => {
 	}
 	// ---> Pad List Modal
 
+	// <--- location
+
 	const getMyPosition = () => {
+		if (Platform.OS === 'android') {
+			PermissionsAndroid.request(
+				PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
+			).then(granted => {
+				if (granted) {
+					watchLocation();
+				}else{
+					Alert.alert('내 위치 권한이 없습니다.');
+				}
+			});
+		} else {
+			watchLocation();
+		}
+	};
+
+	const watchLocation = () => {
 		// 잘작동하는지 실제 디바이스로 테스트 필요
 		// todo : 학교 밖에 위치하면 alert?
 		// 37.5777~37.5874 , 127.0518~127.0682
@@ -95,7 +117,7 @@ const MapComponent = () => {
 					latitude,
 					longitude,
 				});
-				if(latitude < range.start.latitude || latitude > range.end.latitude || longitude < range.start.longitude || longitude > range.end.longitude){
+				if (latitude < range.start.latitude || latitude > range.end.latitude || longitude < range.start.longitude || longitude > range.end.longitude) {
 					// 학교 범위 안에 있지 않으면
 					handleInfoShow();
 				}
@@ -128,13 +150,13 @@ const MapComponent = () => {
 					zoomEnabled={true}
 					minZoomLevel={15.8}
 					maxZoomLevel={18}
-					scrollEnabled={false}
+					scrollEnabled={true}
 					loadingEnabled={true}
 					moveOnMarkerPress={false}
 				>
 					{
-						Object.keys(markers).map((padBoxAddress : string, index : number) => {
-							let value : markerValueType = markers[padBoxAddress];
+						Object.keys(markers).map((padBoxAddress: string, index: number) => {
+							let value: markerValueType = markers[padBoxAddress];
 							return (
 								<MarkerComponent
 									key={index}
@@ -163,7 +185,7 @@ const MapComponent = () => {
 				{
 					locationInfo &&
 					<View style={Map.info}>
-						<Text style={{textAlign: "center"}}>😅 학교 내에 있지 않으시군요!</Text>
+						<Text style={{ textAlign: "center" }}>😅 학교 내에 있지 않으시군요! {`${location?.latitude},${location?.longitude}`}</Text>
 					</View>
 				}
 				<MapWidget
@@ -175,7 +197,7 @@ const MapComponent = () => {
 						style={
 							Map.alert
 						}
-						onPress = {() => setReportModal(true)}
+						onPress={() => setReportModal(true)}
 						underlayColor="transparent"
 					>
 						<ButtonComponent
