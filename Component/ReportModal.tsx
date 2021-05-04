@@ -50,7 +50,7 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 	const [reportBody, setReportBody] = useState<string>("");
 
 	// <--- report by tag
-	const [reports, setReports] = useState<reportbyTagType>({});
+	const [reports, setReports] = useState<reportbyTagType>({"BROKEN": {"amount": 0}, "DEFECT": {"amount": 0}, "EMPTY": {"amount": 0}, "KEY_MISSED": {"amount": 0}, "WRONG_QUANTITY": {"amount": 0}});
 	useEffect(() => {
 		async function ApplyReportByTag() {
 			const res = await ReportByTag(reportData, reportPos, tagData);
