@@ -138,7 +138,7 @@ const MapComponent = () => {
 
 	// ---> location
 
-	
+
 	return (
 		<>
 			<View style={Map.wrap}>
@@ -169,6 +169,7 @@ const MapComponent = () => {
 									latitude={value.latitude}
 									longitude={value.longitude}
 									amount={value.padAmount}
+									isReported={value.isReported}
 									onPress={handleListOpen}
 								/>
 

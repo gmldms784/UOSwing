@@ -12,19 +12,18 @@ import { useUserLogin, useUserState } from '../Main/Model/UserModel';
 import AlertIcon from '../assets/warning.svg';
 
 type Props = {
-	// 희은 : 마커에는 id 필요없어서 지움
 	number: number;
 	name: string;
 	address: string;
 	latitude: number;
 	longitude: number;
 	amount: number;
-	// 희은 : 마커에는 온습도 필요없어서 지움
+	isReported: boolean;
 	onPress: (name:string, address: string) => void;
 }
 
 
-const MarkerComponent = ({number, name, address, latitude, longitude, amount, onPress} : Props) => {
+const MarkerComponent = ({number, name, address, latitude, longitude, amount, isReported, onPress} : Props) => {
 	const [markerColor, setMarkerColor] = useState<string>("yellow");
 	const user = useUserState();
 
@@ -54,7 +53,7 @@ const MarkerComponent = ({number, name, address, latitude, longitude, amount, on
 				onPress={() => onPress(name, address)}
 			>
 				{
-					user.auth === "admin" &&
+					isReported &&
 					<View style={MarkerStyle.alert}>
 						<Text style={MarkerStyle.alertText}>!</Text>
 					</View>
@@ -64,9 +63,6 @@ const MarkerComponent = ({number, name, address, latitude, longitude, amount, on
 				>
 					<Text style={MarkerStyle.info}>{address.replace("서울시립대학교 ", "")}</Text>
 					<Text style={StyleSheet.flatten([MarkerStyle.whiteText, MarkerStyle.margin])}>{amount}개</Text>
-					{
-						// 마커에 온습도 필요 없어서 지움
-					}
 				</View>
 				<Text style={StyleSheet.flatten([MarkerStyle.arrow, {borderTopColor: markerColor}])}></Text>
 			</Marker>
