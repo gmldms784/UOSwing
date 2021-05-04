@@ -9,13 +9,9 @@ import {
 } from 'react-native';
 
 import { BoxLayout } from '.';
-import EditIcon from '../assets/edit.svg';
-import DeleteIcon from '../assets/delete.svg';
-import { mint, borderColor } from '../CommonVariable';
+import { alert, borderColor } from '../CommonVariable';
 import SettingIcon from '../assets/square.svg';
 
-import { useDeletePadBox } from '../Main/ViewModel/PadBoxViewModel';
-import ButtonComponent from './ButtonComponent';
 import { useUserState } from '../Main/Model/UserModel';
 
 type Props = {
@@ -25,10 +21,11 @@ type Props = {
 	padAmount: Number;
 	humidity: Number;
 	temperature: Number;
+	isReported: boolean;
 	modalOpen: () => void;
 }
 
-const PadListCard = ({ name, address, padAmount, humidity, temperature, index, modalOpen}: Props) => {
+const PadListCard = ({ name, address, padAmount, humidity, temperature, isReported, index, modalOpen}: Props) => {
 	const user=useUserState();
 	return (
 		<>
@@ -44,11 +41,19 @@ const PadListCard = ({ name, address, padAmount, humidity, temperature, index, m
 						<View
 							style={Setting.header}
 						>
-							<View style={{ flexDirection: 'row' }}>
-								<SettingIcon width={30} height={30} fill="black" />
-								<Text
-									style={Setting.title}
-								>{name}</Text>
+							<View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+								<View style={{flexDirection: 'row'}}>
+									<SettingIcon width={30} height={30} fill="black" />
+									<Text
+										style={Setting.title}
+									>{name}</Text>
+								</View>
+								{
+									user.auth==="admin" && isReported?
+									<View style={Setting.alert}>
+										<Text style={Setting.alertText}>!</Text>
+									</View>:null
+								}
 							</View>
 						</View>
 					</View>
@@ -127,7 +132,24 @@ const Setting = StyleSheet.create({
 		paddingLeft: 7,
 		borderLeftWidth: 2,
 		borderLeftColor: 'black'
-	}
+	},
+	reported: {
+		borderColor : 'red'
+	},
+	alert: {
+		width: 25,
+		height: 25,
+		backgroundColor: alert,
+		borderRadius: 100,
+		zIndex: 1000,
+		alignItems: "center",
+		justifyContent: "center"
+	},
+	alertText: {
+		textAlign: "center",
+		color: "white",
+		fontWeight: "bold"
+	},
 })
 
 export default PadListCard;
