@@ -7,7 +7,7 @@ import { MapComponent } from '../Component';
 const MapScreen = () => {
 	return (
 		<View>
-			<MapComponent />
+			<MapComponent/>
 		</View>
 	);
 }
