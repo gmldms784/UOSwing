@@ -49,7 +49,7 @@ const PadListCard = ({ name, address, padAmount, humidity, temperature, isReport
 									>{name}</Text>
 								</View>
 								{
-									isReported?
+									user.auth==="admin" && isReported?
 									<View style={Setting.alert}>
 										<Text style={Setting.alertText}>!</Text>
 									</View>:null
