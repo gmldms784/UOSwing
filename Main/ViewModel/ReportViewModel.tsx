@@ -2,7 +2,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { API_URL } from '../../CommonVariable';
 
-import { childrenObj, reportType } from '../Type';
+import { childrenObj } from '../Type';
 import { ErrorHandle } from '../../Function/ErrorHandling';
 
 import { useHeader } from '../Model/UserModel';
@@ -11,7 +11,6 @@ import { Alert } from 'react-native';
 
 const SaveReportContext = createContext<(id: number, tag: string, content: string, padBoxId: number)=> void>((id: number, tag: string, content : string, padBoxId: number) => {});
 const DeleteReportContext = createContext<(id: number)=> void>((id: number) => {});
-const AmountReportContext = createContext<(tag:string)=> number>((tag:string) => 0);
 
 export const ReportLogicProvider = ({ children } : childrenObj) => {
 	const report = useReportState();
@@ -76,21 +75,10 @@ export const ReportLogicProvider = ({ children } : childrenObj) => {
 		})
 	}
 
-	const amountReport = (tag:string) => {
-		const [amount, setAmount] = useState<number>(0)
-		report.map((report:reportType)=>{
-			if(report.tag===tag) setAmount(amount+1);
-		})
-		console.log(amount);
-		return amount;
-	}
-
 	return (
 		<SaveReportContext.Provider value={saveReport}>
 			<DeleteReportContext.Provider value={deleteReport}>
-				<AmountReportContext.Provider value={amountReport}>
-					{children}
-				</AmountReportContext.Provider>
+				{children}
 			</DeleteReportContext.Provider>
 		</SaveReportContext.Provider>
 	);
@@ -102,9 +90,5 @@ export function useSaveReport() {
 }
 export function useDeleteReport() {
 	const context = useContext(DeleteReportContext);
-	return context;
-}
-export function useAmountReport() {
-	const context = useContext(AmountReportContext);
 	return context;
 }

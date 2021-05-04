@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
 	StyleSheet,
 	TouchableHighlight,
@@ -22,9 +22,10 @@ import EtcIcon from '../assets/plus.svg';
 
 import { useUserState } from '../Main/Model/UserModel';
 import { usePadBoxState } from '../Main/Model/PadBoxModel';
-import { padBoxType, reportType } from '../Main/Type';
+import { padBoxType, reportbyTagType, reportType } from '../Main/Type';
 import { ButtonComponent } from '../Component';
-import { useSaveReport, useAmountReport } from '../Main/ViewModel/ReportViewModel';
+import ReportByTag from '../Function/ReportByTag';
+import { useSaveReport } from '../Main/ViewModel/ReportViewModel';
 import { useReportState } from '../Main/Model/ReportModel';
 
 type Props = {
@@ -43,21 +44,27 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 	const user = useUserState();
 	const reportData = useReportState();
 	const saveReport = useSaveReport();
-	const amountReport = useAmountReport();
 	const tagData = ["KEY_MISSED", "BROKEN", "EMPTY", "WRONG_QUANTITY", "DEFECT"];
 
 	const [reportWhy, setReportWhy] = useState<string>(tagData[0]);
 	const [reportBody, setReportBody] = useState<string>("");
-	const [amount0, setAmount0] = useState<number>(0);
 
+	// <--- report by tag
+	const [reports, setReports] = useState<reportbyTagType>({});
 	useEffect(() => {
-		async function counting(){
-			const res = await amountReport(tagData[0]);
-			setAmount0(res);
-			console.log(amount0);
+		async function ApplyReportByTag() {
+			const res = await ReportByTag(reportData, reportPos, tagData);
+			console.log("res");
+			console.log(res);
+	
+			setReports(res);
 		}
-		counting();
-	}, [reportData])
+		ApplyReportByTag();
+		const key = new Date;
+		console.log("after set");
+		console.log(reports);
+	}, [reportPos]);
+	// ---> report by tag
 
 	const handleReportComplete= () => {
 		saveReport(-1, reportWhy, reportBody, reportPos);
@@ -133,7 +140,7 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 						<View style={MS.tagCon}>
 							<View style={MS.tagSet}>
 								<View style={MS.alert}>
-										<Text style={MS.alertText}>3</Text>
+										<Text style={MS.alertText}>{reports[tagData[0]].amount}</Text>
 								</View>
 								<Text style={MS.tagIconCon} onPress={() => setTagString(tagData[0])}>
 									<KeyIcon width={30} height={30} fill="black" />
@@ -142,7 +149,7 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 							</View>
 							<View style={MS.tagSet}>
 								<View style={MS.alert}>
-										<Text style={MS.alertText}>3</Text>
+										<Text style={MS.alertText}>{reports[tagData[1]].amount}</Text>
 								</View>
 								<Text style={MS.tagIconCon} onPress={() => setTagString(tagData[1])}>
 									<BrokenIcon width={30} height={30} fill="black" />
@@ -151,7 +158,7 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 							</View>
 							<View style={MS.tagSet}>
 								<View style={MS.alert}>
-										<Text style={MS.alertText}>3</Text>
+										<Text style={MS.alertText}>{reports[tagData[2]].amount}</Text>
 								</View>
 								<Text style={MS.tagIconCon} onPress={() => setTagString(tagData[2])}>
 									<NoPadIcon width={30} height={30} fill="black" />
@@ -160,7 +167,7 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 							</View>
 							<View style={MS.tagSet}>
 								<View style={MS.alert}>
-										<Text style={MS.alertText}>3</Text>
+										<Text style={MS.alertText}>{reports[tagData[3]].amount}</Text>
 								</View>
 								<Text style={MS.tagIconCon} onPress={() => setTagString(tagData[3])}>
 									<WrongNumIcon width={30} height={30} fill="black" />
@@ -169,7 +176,7 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 							</View>
 							<View style={MS.tagSet}>
 								<View style={MS.alert}>
-										<Text style={MS.alertText}>3</Text>
+										<Text style={MS.alertText}>{reports[tagData[4]].amount}</Text>
 								</View>
 								<Text style={MS.tagIconCon} onPress={() => setTagString(tagData[4])}>
 									<EtcIcon width={30} height={30} fill="black" />
