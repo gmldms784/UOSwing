@@ -53,7 +53,7 @@ const MarkerComponent = ({number, name, address, latitude, longitude, amount, is
 				onPress={() => onPress(name, address)}
 			>
 				{
-					isReported &&
+					user.auth === "admin" && isReported &&
 					<View style={MarkerStyle.alert}>
 						<Text style={MarkerStyle.alertText}>!</Text>
 					</View>
