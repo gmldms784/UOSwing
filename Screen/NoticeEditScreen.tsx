@@ -48,6 +48,7 @@ const NoticeEditScreen = ({ route, navigation }: Props) => {
 				<TouchableHighlight
 					style={Notice.buttonPlace}
 					onPress={save}
+					underlayColor="transparent"
 				>
 					<ButtonComponent
 						size="fit"
