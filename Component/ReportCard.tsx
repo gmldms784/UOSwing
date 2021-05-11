@@ -125,10 +125,9 @@ const Report = StyleSheet.create({
 		marginBottom: 5,
 	},
 	date: {
-		paddingLeft: 5,
+		paddingHorizontal: 5,
 		backgroundColor: mint,
 		borderRadius: 4,
-		width: 85,
 	},
 	rowdatebtn: {
 		display: 'flex',

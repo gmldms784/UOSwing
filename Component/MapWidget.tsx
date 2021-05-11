@@ -72,7 +72,9 @@ const MapWidget = ({getMyPosition} : Props) => {
 				onClose={handleInfoClose}
 				title={<Logotitle icon={<NoticeIcon width={25} height={25} fill="black" />} name="공지사항"/>}
 			>
-				<NoticeScreen type="modal"/>
+				<View style={{width:270, maxHeight: 500}}>
+					<NoticeScreen type="modal" />
+				</View>
 			</Modal>
 		</>
 	);
