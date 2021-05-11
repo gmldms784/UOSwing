@@ -54,15 +54,10 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 	useEffect(() => {
 		async function ApplyReportByTag() {
 			const res = await ReportByTag(reportData, reportPos, tagData);
-			console.log("res");
-			console.log(res);
-	
 			setReports(res);
 		}
 		ApplyReportByTag();
 		const key = new Date;
-		console.log("after set");
-		console.log(reports);
 	}, [reportPos]);
 	// ---> report by tag
 
