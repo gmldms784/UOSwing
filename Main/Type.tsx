@@ -52,6 +52,16 @@ export type reportType = {
 	padBoxId: number
 }
 
+// <--- ReportByTag
+export type reportbyTagType = {
+	[tag : string] : reportValueType
+};
+
+export type reportValueType = {
+	amount : number
+}
+// ReportByTag --->
+
 type authArray = ["admin", "user"]
 
 export type userType = {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
 	StyleSheet,
 	TouchableHighlight,
@@ -11,17 +11,20 @@ import {
 import { Picker } from '@react-native-picker/picker';
 
 import { Modal, Logotitle, ReportCard } from '.';
-import { borderColor, darkGray } from '../CommonVariable';
+import { borderColor, alert } from '../CommonVariable';
+
 import AlertIcon from '../assets/warning.svg';
-import KeyIcon from '../assets/key.svg';
+import KeyIcon from '../assets/key(defill).svg';
 import BrokenIcon from '../assets/broken-link.svg';
 import WrongNumIcon from '../assets/decision.svg';
 import NoPadIcon from '../assets/lost.svg';
+import EtcIcon from '../assets/plus.svg';
 
 import { useUserState } from '../Main/Model/UserModel';
 import { usePadBoxState } from '../Main/Model/PadBoxModel';
-import { padBoxType, reportType } from '../Main/Type';
+import { padBoxType, reportbyTagType, reportType } from '../Main/Type';
 import { ButtonComponent } from '../Component';
+import ReportByTag from '../Function/ReportByTag';
 import { useSaveReport } from '../Main/ViewModel/ReportViewModel';
 import { useReportState } from '../Main/Model/ReportModel';
 
@@ -40,17 +43,35 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 	const padBoxState = usePadBoxState();
 	const user = useUserState();
 	const reportData = useReportState();
-
 	const saveReport = useSaveReport();
-	const [reportWhy, setReportWhy] = useState<string>("KEY_MISSED");
+	const tagData = ["KEY_MISSED", "BROKEN", "EMPTY", "WRONG_QUANTITY", "DEFECT"];
+
+	const [reportWhy, setReportWhy] = useState<string>(tagData[0]);
 	const [reportBody, setReportBody] = useState<string>("");
+
+	// <--- report by tag
+	const [reports, setReports] = useState<reportbyTagType>({"BROKEN": {"amount": 0}, "DEFECT": {"amount": 0}, "EMPTY": {"amount": 0}, "KEY_MISSED": {"amount": 0}, "WRONG_QUANTITY": {"amount": 0}});
+	useEffect(() => {
+		async function ApplyReportByTag() {
+			const res = await ReportByTag(reportData, reportPos, tagData);
+			console.log("res");
+			console.log(res);
+	
+			setReports(res);
+		}
+		ApplyReportByTag();
+		const key = new Date;
+		console.log("after set");
+		console.log(reports);
+	}, [reportPos]);
+	// ---> report by tag
 
 	const handleReportComplete= () => {
 		saveReport(-1, reportWhy, reportBody, reportPos);
 		handleReportClose();
 		// init
 		reportHandle(0);
-		setReportWhy("KEY_MISSED");
+		setReportWhy(tagData[0]);
 		setReportBody("");
 		Alert.alert("신고가 성공적으로 접수되었습니다");
 	}
@@ -79,11 +100,11 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 						<Picker
 							selectedValue={reportWhy}
 							onValueChange={(v, i)=>setReportWhy(v)}>
-							<Picker.Item label="생리대함 키 분실" value="KEY_MISSED" />
-							<Picker.Item label="생리대함 파손" value="BROKEN" />
-							<Picker.Item label="생리대가 하나도 없음" value="EMPTY" />
-							<Picker.Item label="수량 오차" value="WRONG_QUANTITY" />
-							<Picker.Item label="기타 결함" value="DEFECT" />
+							<Picker.Item label="생리대함 키 분실" value={tagData[0]} />
+							<Picker.Item label="생리대함 파손" value={tagData[1]} />
+							<Picker.Item label="생리대가 하나도 없음" value={tagData[2]} />
+							<Picker.Item label="수량 오차" value={tagData[3]} />
+							<Picker.Item label="기타 결함" value={tagData[4]} />
 						</Picker>
 						<Text style={MS.title}>기타사항</Text>
 						<TextInput
@@ -118,33 +139,47 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 						<Text style={MS.title}>{posName}</Text>
 						<View style={MS.tagCon}>
 							<View style={MS.tagSet}>
-								<Text style={MS.tagIconCon} onPress={() => setTagString("KEY_MISSED")}>
+								<View style={MS.alert}>
+										<Text style={MS.alertText}>{reports[tagData[0]].amount}</Text>
+								</View>
+								<Text style={MS.tagIconCon} onPress={() => setTagString(tagData[0])}>
 									<KeyIcon width={30} height={30} fill="black" />
 								</Text>
 								<Text style={MS.tagText}>열쇠 분실</Text>
 							</View>
 							<View style={MS.tagSet}>
-								<Text style={MS.tagIconCon} onPress={() => setTagString("BROKEN")}>
+								<View style={MS.alert}>
+										<Text style={MS.alertText}>{reports[tagData[1]].amount}</Text>
+								</View>
+								<Text style={MS.tagIconCon} onPress={() => setTagString(tagData[1])}>
 									<BrokenIcon width={30} height={30} fill="black" />
 								</Text>
-								<Text style={MS.tagText}>생리대함 파손</Text>
+								<Text style={MS.tagText}>파손</Text>
 							</View>
 							<View style={MS.tagSet}>
-								<Text style={MS.tagIconCon} onPress={() => setTagString("EMPTY")}>
-									<WrongNumIcon width={30} height={30} fill="black" />
+								<View style={MS.alert}>
+										<Text style={MS.alertText}>{reports[tagData[2]].amount}</Text>
+								</View>
+								<Text style={MS.tagIconCon} onPress={() => setTagString(tagData[2])}>
+									<NoPadIcon width={30} height={30} fill="black" />
 								</Text>
 								<Text style={MS.tagText}>생리대 없음</Text>
 							</View>
 							<View style={MS.tagSet}>
-								<Text style={MS.tagIconCon} onPress={() => setTagString("WRONG_QUANTITY")}>
-									<NoPadIcon width={30} height={30} fill="black" />
+								<View style={MS.alert}>
+										<Text style={MS.alertText}>{reports[tagData[3]].amount}</Text>
+								</View>
+								<Text style={MS.tagIconCon} onPress={() => setTagString(tagData[3])}>
+									<WrongNumIcon width={30} height={30} fill="black" />
 								</Text>
 								<Text style={MS.tagText}>수량 오차</Text>
 							</View>
 							<View style={MS.tagSet}>
-								<Text style={MS.tagIconCon} onPress={() => setTagString("DEFECT")}>
-									<NoPadIcon width={30} height={30} fill="black" />
-									{/* 위의 icon 기타로 변경하기 */}
+								<View style={MS.alert}>
+										<Text style={MS.alertText}>{reports[tagData[4]].amount}</Text>
+								</View>
+								<Text style={MS.tagIconCon} onPress={() => setTagString(tagData[4])}>
+									<EtcIcon width={30} height={30} fill="black" />
 								</Text>
 								<Text style={MS.tagText}>기타</Text>
 							</View>
@@ -152,16 +187,14 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 						<ScrollView style={MS.reportList} contentContainerStyle={{flexGrow:1}}>
 							{
 								reportData.map((report:reportType, index:number)=>
+									reportPos===report.padBoxId &&
+									(report.tag === tagString || tagString==="ALL") &&
 									<ReportCard
 										key={report.id}
-										id={index}
+										id={report.id}
 										tag={report.tag}
 										content={report.content}
-										isResolved={report.isResolved}
 										createdDate={report.createdDate}
-										box_id={report.padBoxId}
-										reportPos={reportPos}
-										tagString={tagString}
 									/>
 								)
 							}
@@ -210,7 +243,24 @@ const MS = StyleSheet.create({
 		borderColor: borderColor,
 		borderWidth: 1,
 		borderRadius: 100,
-		padding: 10
+		padding: 10,
+		textAlign: 'center',
+	},
+	alert: {
+		position: "absolute",
+		top: -3,
+		right: -5,
+		width: 20,
+		height: 20,
+		backgroundColor: alert,
+		borderRadius: 100,
+		zIndex: 1000,
+		alignItems: "center",
+		justifyContent: "center"
+	},
+	alertText: {
+		textAlign: "center",
+		color: "white",
 	},
 	tagText: {
 		marginTop: 3,
