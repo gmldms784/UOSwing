@@ -100,7 +100,7 @@ const IntroScreen = ({ navigation }: Props) => {
 					onClose={handleModalClose}
 					title="관리자 키를 입력해주세요."
 				>
-					<TextInput value={key} onChangeText={setKey} placeholder="관리자 키"/>
+					<TextInput value={key} secureTextEntry={true} onChangeText={setKey} placeholder="관리자 키"/>
 					<TouchableHighlight
 						onPress={loginAdmin}
 						underlayColor="transparent"

@@ -18,7 +18,7 @@ const NoticeScreen = ({ navigation, type } : Props) => {
 	const noticeData = useNoticeState();
 
 	return (
-		<ScrollView>
+		<ScrollView style={{paddingHorizontal: 10}}>
 			{
 				noticeData.map((notice : noticeType, index: number) => 
 					<NoticeCard

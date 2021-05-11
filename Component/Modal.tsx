@@ -71,7 +71,9 @@ const ModalStyle = StyleSheet.create({
 		shadowOpacity: 1,
 		shadowRadius: 4,
 		elevation: 6,
-		margin: 60
+		marginVertical : 50,
+		marginHorizontal: 30,
+		overflow:"hidden"
 	},
 	header : {
 		display: "flex",
