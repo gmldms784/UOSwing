@@ -189,7 +189,7 @@ const MapComponent = () => {
 				{
 					locationInfo &&
 					<View style={Map.info}>
-						<Text style={{ textAlign: "center" }}>😅 학교 내에 있지 않으시군요! {`${location?.latitude},${location?.longitude}`}</Text>
+						<Text style={{ textAlign: "center" }}>😅 학교 내에 있지 않으시군요!</Text>
 					</View>
 				}
 				<MapWidget
