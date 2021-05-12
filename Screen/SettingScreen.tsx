@@ -81,7 +81,7 @@ const SettingScreen = ({ navigation } : Props) => {
 					onClose={handleModalClose}
 					title={<Logotitle icon={<SquareIcon width={30} height={30} fill="black" />} name="개별 생리대함 관리" />}
 				>
-					<View style={{ width: 270 }}>
+					<View style={{ width: '100%' }}>
 						<Text style={MS.title}>이름</Text>
 						<TextInput value={name} onChangeText={setName} style={MS.input} />
 						<Text style={MS.title}>장소</Text>
@@ -134,45 +134,6 @@ const MS = StyleSheet.create({
 		fontFamily: 'DOHYEON',
 		marginVertical: 7,
 	}
-})
-const ModalStyle = StyleSheet.create({
-	wrap: {
-		position: "absolute",
-		top: 0,
-		left: 0,
-		width: "100%",
-		height: "100%",
-		display: "flex",
-		justifyContent: "center",
-		alignItems: "center"
-	},
-	back: {
-		position: "absolute",
-		width: "100%",
-		height: "100%",
-		backgroundColor: "black",
-		opacity: 0.5,
-		zIndex: 11,
-	},
-	modal: {
-		zIndex: 12,
-		backgroundColor: "white",
-		padding: 20,
-		shadowColor: "#000",
-		shadowOffset: {
-			width: 0,
-			height: 3,
-		},
-		shadowOpacity: 1,
-		shadowRadius: 4,
-		elevation: 6,
-		margin: 60
-	},
-	content: {
-		fontSize: 16,
-		fontWeight: 'bold',
-		marginBottom: 20,
-	},
-})
+});
 
 export default SettingScreen;

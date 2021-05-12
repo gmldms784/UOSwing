@@ -48,7 +48,7 @@ export const PadBoxContextProvider = ({ children }: childrenObj) => {
 		longitude: 127.05661576585634,
 		address: "서울시립대학교 경농관",
 	},{
-		latitude: 127.05679360272518,
+		latitude: 37.5822190395178,
 		longitude: 127.05679360272518,
 		address: "서울시립대학교 법학관"
 	},{

@@ -98,7 +98,7 @@ const SettingRouter = ( { navigation }: Props) => {
 				onClose={handleModalClose}
 				title={<Logotitle icon={<SquareIcon width={30} height={30} fill="black" />} name="생리대함 생성" />}
 			>
-				<View style={{ width: 270 }}>
+				<View style={{ width: '100%' }}>
 				<Text style={MS.title}>이름</Text>
 					<TextInput value={name} onChangeText={setName} style={MS.input} />
 					<Text style={MS.title}>장소</Text>
