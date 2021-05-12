@@ -11,7 +11,7 @@ import { TouchableHighlight } from 'react-native-gesture-handler';
 import { Picker } from '@react-native-picker/picker';
 
 import { usePadBoxAddress, usePadBoxState } from '../Main/Model/PadBoxModel'
-import { useSavePadBox, useDeletePadBox } from '../Main/ViewModel/PadBoxViewModel';
+import { useSavePadBox } from '../Main/ViewModel/PadBoxViewModel';
 import { padBoxType, padBoxAddressType } from '../Main/Type';
 import { Logotitle, Modal, SettingCard, ButtonComponent } from '../Component';
 import SquareIcon from '../assets/square.svg';
@@ -25,9 +25,7 @@ const SettingScreen = ({ navigation } : Props) => {
 	const settingData = usePadBoxState();
 	const settingAddress = usePadBoxAddress();
 	const saveSetting = useSavePadBox();
-	const deletePadBox = useDeletePadBox();
 	const [modal, setModal] = useState<boolean>(false);
-	const [deleteModal, setDeleteModal] = useState<boolean>(false);
 
 	// <-- 넘겨줄 데이터(주소, id, 위도, 경도, 이름)
 	const [name, setName] = useState<string>("");
