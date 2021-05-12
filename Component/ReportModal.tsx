@@ -227,6 +227,7 @@ const MS = StyleSheet.create({
 		display: 'flex',
 		flexDirection: 'row',
 		paddingVertical: 10,
+		justifyContent: 'space-between'
 	},
 	tagSet: {
 		display: 'flex',
