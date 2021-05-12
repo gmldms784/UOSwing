@@ -47,15 +47,23 @@ const SettingRouter = ( { navigation }: Props) => {
 	const [longitude, setLongitude] = useState<number>(127.0562571);
 	// -->
 
+	const initState = () => {
+		setName("");
+		setPos("서울시립대학교 미래관");
+		setLatitude(37.5842410);
+		setLongitude(127.0562571);
+	}
 	const handleModalOpen = () => {
 		setModal(true);
 	}
 	const handleModalClose = () => {
 		setModal(false);
+		initState();
 	}
 	const handleModalSave = () => {
 		saveSetting(pos,-1,latitude,longitude,name);
 		setModal(false);
+		initState();
 	}
 	const posChangeHandler = (pos: string) => {
 		setPos(pos);

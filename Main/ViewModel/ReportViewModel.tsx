@@ -1,19 +1,21 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect } from 'react';
 import axios from 'axios';
-import { API_URL } from '../../CommonVariable';
+import { Alert } from 'react-native';
 
+import { API_URL } from '../../CommonVariable';
 import { childrenObj } from '../Type';
 import { ErrorHandle } from '../../Function/ErrorHandling';
 
 import { useHeader } from '../Model/UserModel';
 import { useReportState, useReportDispatch } from '../Model/ReportModel';
-import { Alert } from 'react-native';
+import { useGetPadBox } from './PadBoxViewModel';
 
 const SaveReportContext = createContext<(id: number, tag: string, content: string, padBoxId: number)=> void>((id: number, tag: string, content : string, padBoxId: number) => {});
 const DeleteReportContext = createContext<(id: number)=> void>((id: number) => {});
 
 export const ReportLogicProvider = ({ children } : childrenObj) => {
 	const report = useReportState();
+	const fetchPadBox = useGetPadBox();
 	const reportDispatch = useReportDispatch();
 	const header = useHeader();
 
@@ -41,7 +43,7 @@ export const ReportLogicProvider = ({ children } : childrenObj) => {
 				"tag": tag
 			})
 			.then(res => {
-				console.log("성공");
+				fetchPadBox();
 			})
 			.catch(error => {
 				ErrorHandle.errorHandle(error, true, saveReport);
@@ -68,6 +70,7 @@ export const ReportLogicProvider = ({ children } : childrenObj) => {
 		.then(res => {
 			console.log(res);
 			fetchReport();
+			fetchPadBox();
 			Alert.alert("정상 처리되었습니다. 다른 관리자에게도 해결한 내용을 공유해주세요.")
 		})
 		.catch(error => {
