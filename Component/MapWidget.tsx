@@ -11,7 +11,7 @@ import RefreshIcon from '../assets/refresh.svg';
 import GPSIcon from '../assets/gps.svg';
 
 import { borderColor, darkGray } from '../CommonVariable';
-import { Modal } from '.';
+import { Modal, NoticeModal } from '.';
 import Logotitle from './Logotitle';
 import { NoticeScreen } from '../Screen';
 import { useUserState } from '../Main/Model/UserModel';
@@ -72,9 +72,7 @@ const MapWidget = ({getMyPosition} : Props) => {
 				onClose={handleInfoClose}
 				title={<Logotitle icon={<NoticeIcon width={25} height={25} fill="black" />} name="공지사항"/>}
 			>
-				<View style={{width:300, maxHeight: 500}}>
-					<NoticeScreen type="modal" />
-				</View>
+				<NoticeModal/>
 			</Modal>
 		</>
 	);

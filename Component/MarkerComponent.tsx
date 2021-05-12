@@ -4,12 +4,9 @@ import { green, yellow, red, alert } from '../CommonVariable';
 import {
 	StyleSheet,
 	View,
-	Text,
-	TextInput
+	Text
 } from 'react-native';
-import { Modal, Logotitle } from '../Component';
-import { useUserLogin, useUserState } from '../Main/Model/UserModel';
-import AlertIcon from '../assets/warning.svg';
+import { useUserState } from '../Main/Model/UserModel';
 
 type Props = {
 	number: number;
@@ -39,8 +36,6 @@ const MarkerComponent = ({number, name, address, latitude, longitude, amount, is
 			setMarkerColor(green);
 		}
 	}, [amount]);
-
-	// todo: marker arrow 만들기
 
 	return (
 		<>

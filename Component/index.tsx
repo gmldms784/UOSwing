@@ -11,3 +11,5 @@ export { default as ReportModal } from './ReportModal';
 export { default as ReportCard } from './ReportCard';
 export { default as PadListModal } from './PadListModal';
 export { default as PadListCard } from './PadListCard';
+export { default as NoticeModal } from './NoticeModal';
+

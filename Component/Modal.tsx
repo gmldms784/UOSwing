@@ -28,7 +28,7 @@ const Modal : React.FC<Props> = ({children, view, onClose, title}) => {
 						underlayColor="transparent"
 					>
 						<Text style={{
-							fontSize: 18
+							fontSize: 20
 						}}>X</Text>
 					</TouchableHighlight>
 				</View>
@@ -71,8 +71,8 @@ const ModalStyle = StyleSheet.create({
 		shadowOpacity: 1,
 		shadowRadius: 4,
 		elevation: 6,
-		marginVertical : 50,
-		marginHorizontal: 30,
+		width : '80%',
+		maxHeight : '95%',
 		overflow:"hidden"
 	},
 	header : {
@@ -80,7 +80,7 @@ const ModalStyle = StyleSheet.create({
 		justifyContent: "space-between",
 		flexDirection: "row",
 		alignItems: "flex-start",
-		height: 40
+		height: 25
 	},
 	title : {
 		fontSize: 16,
@@ -88,7 +88,7 @@ const ModalStyle = StyleSheet.create({
 		flexDirection: "row"
 	},
 	xbtn : {
-		marginLeft: 15,
+		marginTop : -3,
 		marginRight: 5,
 	}
 })

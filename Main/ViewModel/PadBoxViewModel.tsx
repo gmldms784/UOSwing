@@ -43,7 +43,7 @@ export const PadBoxLogicProvider = ({ children } : childrenObj) => {
 	const fetchPadBox = () => {
 		axios.get(`${API_URL}/api/v1/padbox`)
 		.then(res => {
-			padBoxDispatch(res.data)
+			padBoxDispatch(res.data);
 		})
 		.catch(error => {
 			ErrorHandle.errorHandle(error, true, fetchPadBox);

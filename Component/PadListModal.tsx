@@ -38,7 +38,7 @@ const PadListModal : React.FC<Props> = ({listModal, handleListClose, address, ha
 			onClose={handleListClose}
 			title={<Logotitle icon={null} name={address.replace("서울시립대학교 ", "")} />} 
 		>
-			<View style={{ width: 270 }}>
+			<View style={{ width: '100%' }}>
 				<ScrollView style={PLM.padList} contentContainerStyle={{flexGrow:1}}>
 					{
 						padBoxState.map((setting: padBoxType, index: number) => {
@@ -72,6 +72,7 @@ const PLM = StyleSheet.create({
 		borderRadius: 5,
 		borderColor: borderColor,
 		maxHeight: 500,
+		marginTop : 20,
 	}
 })
 

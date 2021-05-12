@@ -80,7 +80,7 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 					onClose={handleReportClose}
 					title={<Logotitle icon={<AlertIcon width={30} height={30} style={{ marginRight: 7 }} />}name="신고하기" />}
 				>
-					<View style={{ width: 270 }}>
+					<View style={{ width: '100%' }}>
 						<Text style={MS.title}>장소</Text>
 						<Picker
 							selectedValue={reportPos}
@@ -130,7 +130,7 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 					onClose={handleReportClose}
 					title={<Logotitle icon={<AlertIcon width={25} height={25} fill="black" />} name="신고내역"/>}
 				>
-					<View style={{width:'100%', height:'95%'}}>
+					<View style={{ width: 290, maxHeight: '97%' }}>
 						<Text style={MS.title}>{posName}</Text>
 						<View style={MS.tagCon}>
 							<View style={MS.tagSet}>
@@ -205,6 +205,7 @@ const MS = StyleSheet.create({
 	title: {
 		paddingLeft: 10,
 		marginTop: 25,
+		marginBottom : 10,
 		borderLeftColor: 'black',
 		borderLeftWidth: 3,
 		fontSize: 18,
@@ -262,6 +263,7 @@ const MS = StyleSheet.create({
 		fontSize: 11,
 	},
 	reportList: {
+		width: '100%',
 		borderWidth: 1,
 		borderRadius: 5,
 		borderColor: borderColor,
