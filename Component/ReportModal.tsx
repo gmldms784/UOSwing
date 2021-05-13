@@ -130,7 +130,7 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 					onClose={handleReportClose}
 					title={<Logotitle icon={<AlertIcon width={25} height={25} fill="black" />} name="신고내역"/>}
 				>
-					<View style={{ width: 290, maxHeight: '97%' }}>
+					<View style={{ width: '100%', height: '97%' }}>
 						<Text style={MS.title}>{posName}</Text>
 						<View style={MS.tagCon}>
 							<View style={MS.tagSet}>
@@ -234,7 +234,7 @@ const MS = StyleSheet.create({
 		flexDirection: 'column',
 		alignItems: 'center',
 		justifyContent: 'center',
-		marginRight: 5
+		//marginRight: 5
 	},
 	tagIconCon: {
 		borderColor: borderColor,
