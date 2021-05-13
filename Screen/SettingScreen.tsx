@@ -76,40 +76,41 @@ const SettingScreen = ({ navigation } : Props) => {
 						/>
 					)
 				}
-				<Modal
-					view={modal}
-					onClose={handleModalClose}
-					title={<Logotitle icon={<SquareIcon width={30} height={30} fill="black" />} name="개별 생리대함 관리" />}
-				>
-					<View style={{ width: '100%' }}>
-						<Text style={MS.title}>이름</Text>
-						<TextInput value={name} onChangeText={setName} style={MS.input} />
-						<Text style={MS.title}>장소</Text>
-						<Picker 
-							selectedValue={pos}
-							onValueChange={(v, i)=>posChangeHandler(v)}>
-							{
-								settingAddress.map((padBox : padBoxAddressType, index : number) =>
-									<Picker.Item key={index} label={padBox.address} value={padBox.address}/>
-								)	
-							}
-						</Picker>
-						<TouchableHighlight
-							style={{
-								width: "50%",
-								left: "25%",
-								marginTop: 20
-							}}
-							underlayColor="transparent"
-							onPress={handleModalSave}
-						>
-							<ButtonComponent color="mint">
-								<Text style={MS.btnText}>완료</Text>
-							</ButtonComponent>
-						</TouchableHighlight>
-					</View>
-				</Modal>
+				
 			</ScrollView>
+			<Modal
+				view={modal}
+				onClose={handleModalClose}
+				title={<Logotitle icon={<SquareIcon width={30} height={30} fill="black" />} name="개별 생리대함 관리" />}
+			>
+				<View style={{ width: '100%' }}>
+					<Text style={MS.title}>이름</Text>
+					<TextInput value={name} onChangeText={setName} style={MS.input} />
+					<Text style={MS.title}>장소</Text>
+					<Picker 
+						selectedValue={pos}
+						onValueChange={(v, i)=>posChangeHandler(v)}>
+						{
+							settingAddress.map((padBox : padBoxAddressType, index : number) =>
+								<Picker.Item key={index} label={padBox.address} value={padBox.address}/>
+							)	
+						}
+					</Picker>
+					<TouchableHighlight
+						style={{
+							width: "50%",
+							left: "25%",
+							marginTop: 20
+						}}
+						underlayColor="transparent"
+						onPress={handleModalSave}
+					>
+						<ButtonComponent color="mint">
+							<Text style={MS.btnText}>완료</Text>
+						</ButtonComponent>
+					</TouchableHighlight>
+				</View>
+			</Modal>
 		</>
 	);
 }
