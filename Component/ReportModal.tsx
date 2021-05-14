@@ -11,7 +11,7 @@ import {
 import { Picker } from '@react-native-picker/picker';
 
 import { Modal, Logotitle, ReportCard } from '.';
-import { borderColor, alert } from '../CommonVariable';
+import { borderColor, alert, mint } from '../CommonVariable';
 
 import AlertIcon from '../assets/warning.svg';
 import KeyIcon from '../assets/key(defill).svg';
@@ -59,6 +59,10 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 		}
 		ApplyReportByTag();
 	}, [reportPos, reportData]);
+	
+	const tagToggleHandler = () => {
+		if(tagString != "ALL") setTagString("ALL");
+	}
 	// ---> report by tag
 
 	const handleReportComplete= () => {
@@ -131,13 +135,27 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 					title={<Logotitle icon={<AlertIcon width={25} height={25} fill="black" />} name="신고내역"/>}
 				>
 					<View style={{ width: '100%', height: '97%' }}>
-						<Text style={MS.title}>{posName}</Text>
+						<View style={MS.headerCon}>
+							<Text style={MS.title}>{posName}</Text>
+							<TouchableHighlight
+								underlayColor="transparent"
+								style={{ position: 'absolute', right: 0, top: 23 }}
+								onPress={tagToggleHandler}
+							>
+								<View style={tagString==="ALL" ? MS.tagALL : MS.tagELSE}>
+									<Text>ALL</Text>
+								</View>
+							</TouchableHighlight>
+						</View>
 						<View style={MS.tagCon}>
 							<View style={MS.tagSet}>
 								<View style={MS.alert}>
 										<Text style={MS.alertText}>{reports[tagData[0]].amount}</Text>
 								</View>
-								<Text style={MS.tagIconCon} onPress={() => setTagString(tagData[0])}>
+								<Text
+									style={tagString===tagData[0] ? MS.tagIconConSELECT : MS.tagIconCon}
+									onPress={() => setTagString(tagData[0])}
+								>
 									<KeyIcon width={30} height={30} fill="black" />
 								</Text>
 								<Text style={MS.tagText}>열쇠 분실</Text>
@@ -146,7 +164,10 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 								<View style={MS.alert}>
 										<Text style={MS.alertText}>{reports[tagData[1]].amount}</Text>
 								</View>
-								<Text style={MS.tagIconCon} onPress={() => setTagString(tagData[1])}>
+								<Text
+									style={tagString===tagData[1] ? MS.tagIconConSELECT : MS.tagIconCon}
+									onPress={() => setTagString(tagData[1])}
+								>
 									<BrokenIcon width={30} height={30} fill="black" />
 								</Text>
 								<Text style={MS.tagText}>파손</Text>
@@ -155,7 +176,10 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 								<View style={MS.alert}>
 										<Text style={MS.alertText}>{reports[tagData[2]].amount}</Text>
 								</View>
-								<Text style={MS.tagIconCon} onPress={() => setTagString(tagData[2])}>
+								<Text
+									style={tagString===tagData[2] ? MS.tagIconConSELECT : MS.tagIconCon}
+									onPress={() => setTagString(tagData[2])}
+								>
 									<NoPadIcon width={30} height={30} fill="black" />
 								</Text>
 								<Text style={MS.tagText}>생리대 없음</Text>
@@ -164,7 +188,10 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 								<View style={MS.alert}>
 										<Text style={MS.alertText}>{reports[tagData[3]].amount}</Text>
 								</View>
-								<Text style={MS.tagIconCon} onPress={() => setTagString(tagData[3])}>
+								<Text
+									style={tagString===tagData[3] ? MS.tagIconConSELECT : MS.tagIconCon}
+									onPress={() => setTagString(tagData[3])}
+								>
 									<WrongNumIcon width={30} height={30} fill="black" />
 								</Text>
 								<Text style={MS.tagText}>수량 오차</Text>
@@ -173,7 +200,10 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 								<View style={MS.alert}>
 										<Text style={MS.alertText}>{reports[tagData[4]].amount}</Text>
 								</View>
-								<Text style={MS.tagIconCon} onPress={() => setTagString(tagData[4])}>
+								<Text
+									style={tagString===tagData[4] ? MS.tagIconConSELECT : MS.tagIconCon}
+									onPress={() => setTagString(tagData[4])}
+								>
 									<EtcIcon width={30} height={30} fill="black" />
 								</Text>
 								<Text style={MS.tagText}>기타</Text>
@@ -223,6 +253,40 @@ const MS = StyleSheet.create({
 		fontFamily: 'DOHYEON',
 		marginVertical: 7,
 	},
+	headerCon: {
+		display: 'flex',
+		flexDirection: 'row',
+		alignItems: 'center',
+		justifyContent: 'space-between',
+	},
+	toggleText: {
+		fontSize: 13,
+		paddingVertical: 5,
+		paddingHorizontal: 10,
+		borderWidth: 1,
+		borderRadius: 14,
+		borderColor: borderColor,
+		textAlign: 'center',
+	},
+	tagALL: {
+		fontSize: 13,
+		paddingVertical: 5,
+		paddingHorizontal: 10,
+		borderWidth: 1,
+		borderRadius: 14,
+		borderColor: borderColor,
+		textAlign: 'center',
+		backgroundColor: mint,
+	},
+	tagELSE: {
+		fontSize: 13,
+		paddingVertical: 5,
+		paddingHorizontal: 10,
+		borderWidth: 1,
+		borderRadius: 14,
+		borderColor: borderColor,
+		textAlign: 'center',
+	},
 	tagCon: {
 		display: 'flex',
 		flexDirection: 'row',
@@ -234,7 +298,6 @@ const MS = StyleSheet.create({
 		flexDirection: 'column',
 		alignItems: 'center',
 		justifyContent: 'center',
-		//marginRight: 5
 	},
 	tagIconCon: {
 		borderColor: borderColor,
@@ -242,6 +305,14 @@ const MS = StyleSheet.create({
 		borderRadius: 100,
 		padding: 10,
 		textAlign: 'center',
+	},
+	tagIconConSELECT: {
+		borderColor: borderColor,
+		borderWidth: 1,
+		borderRadius: 100,
+		padding: 10,
+		textAlign: 'center',
+		backgroundColor: mint,
 	},
 	alert: {
 		position: "absolute",
