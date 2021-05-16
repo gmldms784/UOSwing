@@ -9,6 +9,8 @@ import {
 import NoticeIcon from '../assets/information.svg';
 import RefreshIcon from '../assets/refresh.svg';
 import GPSIcon from '../assets/gps.svg';
+import PositionIcon from '../assets/placeholder.svg';
+import BackIcon from '../assets/back.svg';
 
 import { borderColor, darkGray } from '../CommonVariable';
 import { Modal, NoticeModal } from '.';
@@ -18,7 +20,7 @@ import { useUserState } from '../Main/Model/UserModel';
 import { useGetPadBox } from '../Main/ViewModel/PadBoxViewModel';
 
 type Props = {
-	getMyPosition : () => void
+	getMyPosition : () => void;
 }
 
 const MapWidget = ({getMyPosition} : Props) => {
@@ -64,7 +66,7 @@ const MapWidget = ({getMyPosition} : Props) => {
 					onPress={getMyPosition}
 					underlayColor="transparent"
 				>
-					<GPSIcon width={25} height={25} fill={darkGray} />
+					<PositionIcon width={25} height={25} fill={darkGray} />
 				</TouchableHighlight>
 			</View>
 			<Modal

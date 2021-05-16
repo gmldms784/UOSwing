@@ -56,7 +56,7 @@ const MarkerComponent = ({number, name, address, latitude, longitude, amount, is
 				<View
 					style={StyleSheet.flatten([{backgroundColor: markerColor}, MarkerStyle.marker])}
 				>
-					<Text style={MarkerStyle.info}>{address.replace("서울시립대학교 ", "")}</Text>
+					{/* <Text style={MarkerStyle.info}>{address.replace("서울시립대학교 ", "")}</Text> */}
 					<Text style={StyleSheet.flatten([MarkerStyle.whiteText, MarkerStyle.margin])}>{amount}개</Text>
 				</View>
 				<Text style={StyleSheet.flatten([MarkerStyle.arrow, {borderTopColor: markerColor}])}></Text>
