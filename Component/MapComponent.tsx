@@ -151,7 +151,7 @@ const MapComponent = () => {
 					initialRegion={school}
 					region={appCenter}
 					zoomEnabled={true}
-					minZoomLevel={15.8}
+					minZoomLevel={16.3}
 					maxZoomLevel={18}
 					scrollEnabled={true}
 					loadingEnabled={true}
