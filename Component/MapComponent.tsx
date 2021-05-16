@@ -9,7 +9,7 @@ import {
 	Alert,
 } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
-import MapView, { Marker } from 'react-native-maps';
+import MapView, { Marker, Region } from 'react-native-maps';
 
 import { ReportModal, PadListModal } from '.';
 import AlertIcon from '../assets/warning.svg';
@@ -20,10 +20,11 @@ import { padBoxType, markerType, markerValueType } from '../Main/Type';
 import { MarkerComponent, MapWidget, ButtonComponent } from '../Component';
 import padBoxToMarker from '../Function/PadBoxToMarker';
 
-
-type ILocation = {
-	latitude: number;
-	longitude: number;
+const school : Region = {
+	latitude: 37.5833427,
+	longitude: 127.0590842,
+	latitudeDelta: 0.2,
+	longitudeDelta: 0.2
 }
 
 const range = {
@@ -40,7 +41,8 @@ const range = {
 const MapComponent = () => {
 	const padBoxState = usePadBoxState();
 	const user = useUserState();
-	const [location, setLocation] = useState<ILocation | undefined>(undefined);
+	const [userLocation, setUserLocation] = useState<Region | undefined>(undefined);
+	const [appCenter, setAppCenter] = useState<Region>(school);
 	const [locationInfo, setLocationInfo] = useState<boolean>(false);
 
 	// <--- make padBox to marker
@@ -113,9 +115,11 @@ const MapComponent = () => {
 		Geolocation.getCurrentPosition(
 			position => {
 				const { latitude, longitude } = position.coords;
-				setLocation({
+				setUserLocation({
 					latitude,
 					longitude,
+					latitudeDelta: 0.2,
+					longitudeDelta: 0.2
 				});
 				if (latitude < range.start.latitude || latitude > range.end.latitude || longitude < range.start.longitude || longitude > range.end.longitude) {
 					// 학교 범위 안에 있지 않으면
@@ -144,12 +148,8 @@ const MapComponent = () => {
 			<View style={Map.wrap}>
 				<MapView
 					style={Map.map}
-					initialRegion={{
-						latitude: 37.5833427,
-						longitude: 127.0590842,
-						latitudeDelta: 0.2,
-						longitudeDelta: 0.2,
-					}}
+					initialRegion={school}
+					region={appCenter}
 					zoomEnabled={true}
 					minZoomLevel={15.8}
 					maxZoomLevel={18}
@@ -177,11 +177,11 @@ const MapComponent = () => {
 						})
 					}
 					{
-						location &&
+						userLocation &&
 						<Marker
 							coordinate={{
-								latitude: location.latitude,
-								longitude: location.longitude
+								latitude: userLocation.latitude,
+								longitude: userLocation.longitude
 							}}
 						/>
 					}
