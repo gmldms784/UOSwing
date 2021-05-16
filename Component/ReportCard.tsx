@@ -136,21 +136,17 @@ const Report = StyleSheet.create({
 		justifyContent: 'space-between'
 	},
 	btnText: {
-		fontSize: 12,
-		fontFamily: 'DOHYEON',
-		paddingVertical: 5,
+		fontSize: 13,
 		paddingHorizontal: 10,
+		paddingTop: 7,
+		paddingBottom: 4,
+		fontFamily: 'DOHYEON',
 		borderWidth: 1,
 		borderRadius: 7,
-		borderColor: borderColor
+		borderColor: borderColor,
+		textAlign: 'center',
 	},
 	tagIconCon: {
-		// borderColor: borderColor,
-		// borderWidth: 1,
-		// borderRadius: 100,
-		// padding: 5,
-		// alignSelf: 'flex-start',
-		// textAlign: 'center',
 		marginRight: 5,
 	},
 	tagText: {
