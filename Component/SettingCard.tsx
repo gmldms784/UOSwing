@@ -32,7 +32,7 @@ const SettingCard = ({ name, address, padAmount, humidity, temperature, index, m
 	const handleDelete = () => {
 		// confirm
 		Alert.alert(
-			"삭제 확인",
+			"생리대함 삭제",
 			"정말 삭제하시겠습니까?\n해당 작업은 되돌릴 수 없습니다.",
 			[
 				{

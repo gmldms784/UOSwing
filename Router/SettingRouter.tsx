@@ -8,6 +8,7 @@ import {
 	Text,
 	TextInput,
 	TouchableHighlight,
+	Alert,
 } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 
@@ -61,6 +62,10 @@ const SettingRouter = ( { navigation }: Props) => {
 		initState();
 	}
 	const handleModalSave = () => {
+		if(name===""){
+			Alert.alert("이름 오류", "이름이 비어있습니다.\n이름을 입력해주세요.");
+			return;
+		}
 		saveSetting(pos,-1,latitude,longitude,name);
 		setModal(false);
 		initState();

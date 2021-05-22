@@ -32,6 +32,10 @@ const NoticeEditScreen = ({ route, navigation }: Props) => {
 	}, [route.params]);
 
 	const save = () => {
+		if(titleState === ""){
+			Alert.alert("제목 오류", "제목이 비어있습니다.\n제목을 입력해주세요.");
+			return;
+		}
 		saveNotice(id, titleState, contentsState);
 		navigation.navigate("Notice");
 	}
