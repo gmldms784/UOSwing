@@ -4,7 +4,8 @@ import {
 	View,
 	Text,
 	TextInput,
-	TouchableHighlight
+	TouchableHighlight,
+	Alert
 } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RouteProp } from '@react-navigation/native';
@@ -36,7 +37,7 @@ const NoticeEditScreen = ({ route, navigation }: Props) => {
 	}
 
 	return (
-		<View>
+		<View style={{height: "100%"}}>
 			<View style={Notice.header}>
 				<TextInput
 					onChangeText={setTitleState}
@@ -44,6 +45,7 @@ const NoticeEditScreen = ({ route, navigation }: Props) => {
 					multiline={true}
 					placeholder="제목"
 					style={Notice.title}
+					maxLength={40}
 				/>
 				<TouchableHighlight
 					style={Notice.buttonPlace}
@@ -64,6 +66,7 @@ const NoticeEditScreen = ({ route, navigation }: Props) => {
 				multiline={true}
 				placeholder="내용을 입력해주세요."
 				style={Notice.content}
+				maxLength={300}
 			/>
 		</View>
 	);
@@ -72,7 +75,9 @@ const NoticeEditScreen = ({ route, navigation }: Props) => {
 const Notice = StyleSheet.create({
 	header: {
 		flexDirection: "row",
-		alignItems: "center"
+		alignItems: "center",
+		flexShrink: 0,
+		minHeight: 60
 	},
 	title: {
 		flex: 8,
@@ -86,8 +91,9 @@ const Notice = StyleSheet.create({
 		marginRight: 20
 	},
 	content: {
-		marginLeft: 20,
-		marginRight: 20
+		flexShrink : 1,
+		marginBottom: 15,
+		marginHorizontal: 20
 	}
 })
 

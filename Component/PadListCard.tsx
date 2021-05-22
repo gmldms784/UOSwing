@@ -28,34 +28,28 @@ type Props = {
 const PadListCard = ({ name, address, padAmount, humidity, temperature, isReported, index, modalOpen}: Props) => {
 	const user=useUserState();
 	return (
-		<>
-			<BoxLayout>
-				<TouchableHighlight
-					onPress={modalOpen}
-					underlayColor="transparent"
-				>
-					<>
+		<BoxLayout>
+			<TouchableHighlight
+				onPress={modalOpen}
+				underlayColor="transparent"
+				style={{width: "100%"}}
+			>
+				<>
 					<View
-					style={Setting.wrap}
+						style={Setting.header}
 					>
-						<View
-							style={Setting.header}
-						>
-							<View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-								<View style={{flexDirection: 'row'}}>
-									<SettingIcon width={30} height={30} fill="black" />
-									<Text
-										style={Setting.title}
-									>{name}</Text>
-								</View>
-								{
-									user.auth==="admin" && isReported?
-									<View style={Setting.alert}>
-										<Text style={Setting.alertText}>!</Text>
-									</View>:null
-								}
-							</View>
+						<View style={{flexDirection: 'row'}}>
+							<SettingIcon width={30} height={30} fill="black" />
+							<Text
+								style={Setting.title}
+							>{name}</Text>
 						</View>
+						{
+							user.auth==="admin" && isReported?
+							<View style={Setting.alert}>
+								<Text style={Setting.alertText}>!</Text>
+							</View>:null
+						}
 					</View>
 					<View>
 						<View style={{ flexDirection: 'row' }}>
@@ -72,24 +66,16 @@ const PadListCard = ({ name, address, padAmount, humidity, temperature, isReport
 							</View>
 						}
 					</View>
-					</>
-				</TouchableHighlight>
-			</BoxLayout>
-		</>
+				</>
+			</TouchableHighlight>
+		</BoxLayout>
 	);
 }
 
 const Setting = StyleSheet.create({
-	wrap: {
-		display: 'flex',
-		flexWrap: 'nowrap',
-		flexDirection: 'row',
-		justifyContent: 'space-between'
-	},
 	header: {
-		flexWrap: 'wrap',
-		justifyContent: 'flex-start',
-		width: '75%',
+		flexDirection: 'row',
+		justifyContent: 'space-between',
 		marginBottom: 10
 	},
 	titleContainer: {
@@ -98,7 +84,6 @@ const Setting = StyleSheet.create({
 	title: {
 		fontSize: 20,
 		fontWeight: 'bold',
-		width: '100%',
 		marginBottom: 10
 	},
 	btnContainer: {
@@ -141,7 +126,6 @@ const Setting = StyleSheet.create({
 		height: 25,
 		backgroundColor: alert,
 		borderRadius: 100,
-		zIndex: 1000,
 		alignItems: "center",
 		justifyContent: "center"
 	},

@@ -38,8 +38,8 @@ const NoticeCard = ({ navigation, title, date, contents, id, type }: Props) => {
 	const handleDelete = () => {
 		// confirm
 		Alert.alert(
-			"정말 삭제하시겠습니까?",
-			"사용자에게 공지가 노출되지 않도록 하려면 삭제하세요.",
+			"삭제 확인",
+			"정말 삭제하시겠습니까?\n해당 작업은 되돌릴 수 없습니다.",
 			[
 				{
 					text: "네",
@@ -83,12 +83,14 @@ const NoticeCard = ({ navigation, title, date, contents, id, type }: Props) => {
 								id
 							})}
 							style={Notice.editBtn}
+							underlayColor="transparent"
 						>
 							<EditIcon width={20} height={20} fill="black" />
 						</TouchableHighlight>
 						<TouchableHighlight
 							onPress={handleDelete}
 							style={Notice.deleteBtn}
+							underlayColor="transparent"
 						>
 							<DeleteIcon width={20} height={20} fill="black" />
 						</TouchableHighlight>
@@ -105,6 +107,7 @@ const NoticeCard = ({ navigation, title, date, contents, id, type }: Props) => {
 				>
 					<TouchableHighlight
 						onPress={() => setTextHide(!textHide)}
+						underlayColor="transparent"
 					>
 						{
 							textHide ?
@@ -148,7 +151,7 @@ const Notice = StyleSheet.create({
 		paddingBottom: 3,
 		paddingLeft: 10,
 		backgroundColor: mint,
-		borderRadius: 4,
+		borderRadius: 5,
 		width: 97
 	},
 	btnContainer: {
@@ -161,14 +164,14 @@ const Notice = StyleSheet.create({
 		borderWidth: 1,
 		borderStyle: 'solid',
 		borderColor: borderColor,
-		borderRadius: 6
+		borderRadius: 5,
 	},
 	deleteBtn: {
 		padding: 6,
 		borderWidth: 1,
 		borderStyle: 'solid',
 		borderColor: borderColor,
-		borderRadius: 6,
+		borderRadius: 5,
 		marginLeft: 6
 	},
 	arrowContainer: {

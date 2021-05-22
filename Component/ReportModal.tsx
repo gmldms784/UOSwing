@@ -72,7 +72,7 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 		reportHandle(0);
 		setReportWhy(tagData[0]);
 		setReportBody("");
-		Alert.alert("신고가 성공적으로 접수되었습니다");
+		Alert.alert("신고 완료", "신고가 성공적으로 접수되었습니다");
 	}
 
 	return(
@@ -82,7 +82,7 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 				<Modal
 					view={reportModal}
 					onClose={handleReportClose}
-					title={<Logotitle icon={<AlertIcon width={30} height={30} style={{ marginRight: 7 }} />}name="신고하기" />}
+					title={<Logotitle icon={<AlertIcon width={30} height={30} style={{ marginRight: 7 }} />} name="신고하기" />}
 				>
 					<View style={{ width: '100%' }}>
 						<Text style={MS.title}>장소</Text>
@@ -249,7 +249,7 @@ const MS = StyleSheet.create({
 	},
 	input: {
 		borderWidth: 1,
-		borderRadius: 15,
+		borderRadius: 5,
 		paddingVertical: 10,
 		paddingHorizontal: 15,
 		borderColor : borderColor
@@ -270,7 +270,7 @@ const MS = StyleSheet.create({
 		paddingVertical: 5,
 		paddingHorizontal: 10,
 		borderWidth: 1,
-		borderRadius: 14,
+		borderRadius: 5,
 		borderColor: borderColor,
 		textAlign: 'center',
 	},
@@ -279,7 +279,7 @@ const MS = StyleSheet.create({
 		paddingVertical: 5,
 		paddingHorizontal: 10,
 		borderWidth: 1,
-		borderRadius: 14,
+		borderRadius: 5,
 		borderColor: borderColor,
 		textAlign: 'center',
 		backgroundColor: mint,
@@ -289,7 +289,7 @@ const MS = StyleSheet.create({
 		paddingVertical: 5,
 		paddingHorizontal: 10,
 		borderWidth: 1,
-		borderRadius: 14,
+		borderRadius: 5,
 		borderColor: borderColor,
 		textAlign: 'center',
 	},
@@ -348,7 +348,7 @@ const MS = StyleSheet.create({
 	},
 	picker : {
 		borderColor : borderColor,
-		borderRadius: 15,
+		borderRadius: 5,
 		borderWidth: 1
 	}
 })

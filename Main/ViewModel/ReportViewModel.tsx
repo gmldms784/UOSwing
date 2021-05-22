@@ -71,7 +71,7 @@ export const ReportLogicProvider = ({ children } : childrenObj) => {
 			console.log(res);
 			fetchReport();
 			fetchPadBox();
-			Alert.alert("정상 처리되었습니다. 다른 관리자에게도 해결한 내용을 공유해주세요.")
+			Alert.alert("해결 완료", "해당 신고가 해결 처리되었습니다.\n다른 관리자에게도 해결한 내용을 공유해주세요.")
 		})
 		.catch(error => {
 			ErrorHandle.errorHandle(error, true, deleteReport);

@@ -18,7 +18,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { Modal } from '../Component';
 import { StackParamList } from '../Router/MainRouter';
 import { ButtonComponent } from '../Component';
-import { mint, purple } from '../CommonVariable';
+import { borderColor, mint, purple } from '../CommonVariable';
 import { useLogin, useUserLogin } from '../Main/Model/UserModel';
 
 type Props = {
@@ -45,7 +45,7 @@ const IntroScreen = ({ navigation }: Props) => {
 			navigation.navigate("Home");
 			setModal(false);
 		}else{
-			Alert.alert("key를 잘못 입력하셨습니다.");
+			Alert.alert("키 오류", "관리자 키를 잘못 입력하셨습니다.");
 		}
 	}
 
@@ -100,7 +100,7 @@ const IntroScreen = ({ navigation }: Props) => {
 					title="관리자 키를 입력해주세요."
 				>
 					<View style={{width: '100%'}}>
-						<TextInput value={key} secureTextEntry={true} onChangeText={setKey} placeholder="관리자 키"/>
+						<TextInput style={Intro.input} value={key} secureTextEntry={true} onChangeText={setKey} placeholder="관리자 키"/>
 						<TouchableHighlight
 							onPress={loginAdmin}
 							underlayColor="transparent"
@@ -160,6 +160,14 @@ const Intro = StyleSheet.create({
 		fontSize: 16,
 		marginBottom: 20
 	},
+	input : {
+		borderWidth: 1,
+		borderRadius: 5,
+		paddingVertical: 10,
+		paddingHorizontal: 15,
+		borderColor : borderColor,
+		marginVertical : 10
+	}
 })
 
 export default IntroScreen;

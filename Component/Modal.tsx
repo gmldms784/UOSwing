@@ -6,6 +6,7 @@ import {
 	Text,
 	TouchableHighlight
 } from 'react-native';
+import { borderColor, red } from '../CommonVariable';
 
 type Props = {
 	view : boolean
@@ -28,7 +29,7 @@ const Modal : React.FC<Props> = ({children, view, onClose, title}) => {
 						underlayColor="transparent"
 					>
 						<Text style={{
-							fontSize: 20
+							fontSize: 24
 						}}>X</Text>
 					</TouchableHighlight>
 				</View>
@@ -78,17 +79,23 @@ const ModalStyle = StyleSheet.create({
 		display: "flex",
 		justifyContent: "space-between",
 		flexDirection: "row",
-		alignItems: "flex-start",
-		height: 25
+		alignItems: "center"
 	},
 	title : {
-		fontSize: 16,
-		fontFamily: 'DOHYEON',
-		flexDirection: "row"
+		flex: 9,
+		fontSize: 18,
+		fontFamily: 'DOHYEON'
 	},
 	xbtn : {
-		marginTop : -3,
-		marginRight: 5,
+		flex: 1,
+		flexShrink: 0,
+		marginLeft: 5,
+		marginBottom: 5,
+		alignItems: "center",
+		justifyContent: "center",
+		borderColor : borderColor,
+		borderRadius : 5,
+		borderWidth : 1
 	}
 })
 

@@ -68,7 +68,7 @@ const MarkerComponent = ({number, name, address, latitude, longitude, amount, is
 const MarkerStyle = StyleSheet.create({
 	marker: {
 		padding: 8,
-		borderRadius: 20,
+		borderRadius: 5,
 		position: "relative",
 		flexDirection: "column",
 		alignItems: "center"
@@ -81,7 +81,7 @@ const MarkerStyle = StyleSheet.create({
 	},
 	whiteText: {
 		backgroundColor: "white",
-		borderRadius: 15,
+		borderRadius: 5,
 		padding: 10,
 		paddingTop: 5,
 		paddingBottom: 5,

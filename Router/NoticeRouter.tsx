@@ -41,6 +41,7 @@ const NoticeRouter = ({ navigation }: Props) => {
 								title: "",
 								contents: ""
 							})}
+							underlayColor={mint}
 							style={Notice.addBtn}
 						>
 							<Text
