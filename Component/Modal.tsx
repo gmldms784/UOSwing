@@ -72,7 +72,6 @@ const ModalStyle = StyleSheet.create({
 		shadowRadius: 4,
 		elevation: 6,
 		width : '80%',
-		maxHeight : '95%',
 		overflow:"hidden"
 	},
 	header : {

@@ -86,25 +86,29 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 				>
 					<View style={{ width: '100%' }}>
 						<Text style={MS.title}>장소</Text>
-						<Picker
-							selectedValue={reportPos}
-							onValueChange={(v, i)=>reportHandle(v)}>
-							{
-								padBoxState.map((padBox : padBoxType, index : number) =>
-									<Picker.Item key={padBox.id} label={padBox.name} value={padBox.id}/>
-								)	
-							}
-						</Picker>
+						<View style={MS.picker}>
+							<Picker
+								selectedValue={reportPos}
+								onValueChange={(v, i)=>reportHandle(v)}>
+								{
+									padBoxState.map((padBox : padBoxType, index : number) =>
+										<Picker.Item key={padBox.id} label={padBox.name} value={padBox.id}/>
+									)	
+								}
+							</Picker>
+						</View>
 						<Text style={MS.title}>신고사유</Text>
-						<Picker
-							selectedValue={reportWhy}
-							onValueChange={(v, i)=>setReportWhy(v)}>
-							<Picker.Item label="생리대함 키 분실" value={tagData[0]} />
-							<Picker.Item label="생리대함 파손" value={tagData[1]} />
-							<Picker.Item label="생리대가 하나도 없음" value={tagData[2]} />
-							<Picker.Item label="수량 오차" value={tagData[3]} />
-							<Picker.Item label="기타 결함" value={tagData[4]} />
-						</Picker>
+						<View style={MS.picker}>
+							<Picker
+								selectedValue={reportWhy}
+								onValueChange={(v, i)=>setReportWhy(v)}>
+								<Picker.Item label="생리대함 키 분실" value={tagData[0]} />
+								<Picker.Item label="생리대함 파손" value={tagData[1]} />
+								<Picker.Item label="생리대가 하나도 없음" value={tagData[2]} />
+								<Picker.Item label="수량 오차" value={tagData[3]} />
+								<Picker.Item label="기타 결함" value={tagData[4]} />
+							</Picker>
+						</View>
 						<Text style={MS.title}>기타사항</Text>
 						<TextInput
 							style={MS.input}
@@ -247,6 +251,7 @@ const MS = StyleSheet.create({
 		borderRadius: 7,
 		padding: 5,
 		marginTop: 10,
+		borderColor : borderColor
 	},
 	btnText: {
 		fontSize: 15,
@@ -339,6 +344,11 @@ const MS = StyleSheet.create({
 		borderWidth: 1,
 		borderRadius: 5,
 		borderColor: borderColor,
+	},
+	picker : {
+		borderColor : borderColor,
+		borderRadius: 15,
+		borderWidth: 1
 	}
 })
 
