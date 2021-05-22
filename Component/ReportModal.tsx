@@ -114,7 +114,8 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 							style={MS.input}
 							value={reportBody}
 							onChangeText={setReportBody}
-							maxLength={40}
+							maxLength={100}
+							multiline={true}
 						/>
 						<TouchableHighlight
 							style={{
@@ -248,9 +249,9 @@ const MS = StyleSheet.create({
 	},
 	input: {
 		borderWidth: 1,
-		borderRadius: 7,
-		padding: 5,
-		marginTop: 10,
+		borderRadius: 15,
+		paddingVertical: 10,
+		paddingHorizontal: 15,
 		borderColor : borderColor
 	},
 	btnText: {
