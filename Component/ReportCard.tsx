@@ -65,8 +65,8 @@ const ReportCard = ({ id, tag, content, createdDate }: Props) => {
 
 	const handleDelete = () => {
 		Alert.alert(
-			"해당 신고를 해결 처리 하시겠습니까?",
-			"해결 처리된 신고만 해결 처리 해주세요.",
+			"신고 해결",
+			"해당 신고를 해결 처리하시겠습니까?\n해결 완료된 신고만 해결 처리 해주세요.",
 			[
 				{
 					text: "네",

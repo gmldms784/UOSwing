@@ -8,6 +8,7 @@ import {
 	Text,
 	TextInput,
 	TouchableHighlight,
+	Alert,
 } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 
@@ -15,7 +16,7 @@ import { usePadBoxAddress } from '../Main/Model/PadBoxModel'
 import { padBoxAddressType } from '../Main/Type';
 import {  Logotitle, Modal, ButtonComponent } from '../Component';
 import { SettingScreen } from '../Screen';
-import { mint } from '../CommonVariable';
+import { borderColor, mint } from '../CommonVariable';
 import SquaresIcon from '../assets/squares.svg';
 import SquareIcon from '../assets/square.svg';
 import { useSavePadBox } from '../Main/ViewModel/PadBoxViewModel';
@@ -61,6 +62,10 @@ const SettingRouter = ( { navigation }: Props) => {
 		initState();
 	}
 	const handleModalSave = () => {
+		if(name===""){
+			Alert.alert("이름 오류", "이름이 비어있습니다.\n이름을 입력해주세요.");
+			return;
+		}
 		saveSetting(pos,-1,latitude,longitude,name);
 		setModal(false);
 		initState();
@@ -102,15 +107,17 @@ const SettingRouter = ( { navigation }: Props) => {
 				<Text style={MS.title}>이름</Text>
 					<TextInput value={name} onChangeText={setName} style={MS.input} />
 					<Text style={MS.title}>장소</Text>
-					<Picker 
-							selectedValue={pos}
-							onValueChange={(v, i)=>posChangeHandler(v)}>
-							{
-								settingAddress.map((padBox : padBoxAddressType, index : number) =>
-									<Picker.Item key={index} label={padBox.address} value={padBox.address} />
-								)	
-							}
-					</Picker>
+					<View style={MS.picker}>
+						<Picker 
+								selectedValue={pos}
+								onValueChange={(v, i)=>posChangeHandler(v)}>
+								{
+									settingAddress.map((padBox : padBoxAddressType, index : number) =>
+										<Picker.Item key={index} label={padBox.address} value={padBox.address} />
+									)	
+								}
+						</Picker>
+					</View>
 					<TouchableHighlight
 						style={{
 							width: "50%",
@@ -162,14 +169,22 @@ const MS = StyleSheet.create({
 	},
 	input: {
 		borderWidth: 1,
-		borderRadius: 7,
-		padding: 5,
-		marginTop: 10,
+		borderRadius: 10,
+		paddingVertical: 10,
+		paddingHorizontal: 15,
+		borderColor : borderColor,
+		marginTop : 10
 	},
 	btnText: {
 		fontSize: 15,
 		fontFamily: 'DOHYEON',
 		marginVertical: 7,
+	},
+	picker : {
+		borderColor : borderColor,
+		borderRadius: 10,
+		borderWidth: 1,
+		marginTop : 10
 	}
 })
 

@@ -72,7 +72,7 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 		reportHandle(0);
 		setReportWhy(tagData[0]);
 		setReportBody("");
-		Alert.alert("신고가 성공적으로 접수되었습니다");
+		Alert.alert("신고 완료", "신고가 성공적으로 접수되었습니다");
 	}
 
 	return(
@@ -82,35 +82,40 @@ const ReportModal : React.FC<Props> = ({reportModal, handleReportClose, reportPo
 				<Modal
 					view={reportModal}
 					onClose={handleReportClose}
-					title={<Logotitle icon={<AlertIcon width={30} height={30} style={{ marginRight: 7 }} />}name="신고하기" />}
+					title={<Logotitle icon={<AlertIcon width={30} height={30} style={{ marginRight: 7 }} />} name="신고하기" />}
 				>
 					<View style={{ width: '100%' }}>
 						<Text style={MS.title}>장소</Text>
-						<Picker
-							selectedValue={reportPos}
-							onValueChange={(v, i)=>reportHandle(v)}>
-							{
-								padBoxState.map((padBox : padBoxType, index : number) =>
-									<Picker.Item key={padBox.id} label={padBox.name} value={padBox.id}/>
-								)	
-							}
-						</Picker>
+						<View style={MS.picker}>
+							<Picker
+								selectedValue={reportPos}
+								onValueChange={(v, i)=>reportHandle(v)}>
+								{
+									padBoxState.map((padBox : padBoxType, index : number) =>
+										<Picker.Item key={padBox.id} label={padBox.name} value={padBox.id}/>
+									)	
+								}
+							</Picker>
+						</View>
 						<Text style={MS.title}>신고사유</Text>
-						<Picker
-							selectedValue={reportWhy}
-							onValueChange={(v, i)=>setReportWhy(v)}>
-							<Picker.Item label="생리대함 키 분실" value={tagData[0]} />
-							<Picker.Item label="생리대함 파손" value={tagData[1]} />
-							<Picker.Item label="생리대가 하나도 없음" value={tagData[2]} />
-							<Picker.Item label="수량 오차" value={tagData[3]} />
-							<Picker.Item label="기타 결함" value={tagData[4]} />
-						</Picker>
+						<View style={MS.picker}>
+							<Picker
+								selectedValue={reportWhy}
+								onValueChange={(v, i)=>setReportWhy(v)}>
+								<Picker.Item label="생리대함 키 분실" value={tagData[0]} />
+								<Picker.Item label="생리대함 파손" value={tagData[1]} />
+								<Picker.Item label="생리대가 하나도 없음" value={tagData[2]} />
+								<Picker.Item label="수량 오차" value={tagData[3]} />
+								<Picker.Item label="기타 결함" value={tagData[4]} />
+							</Picker>
+						</View>
 						<Text style={MS.title}>기타사항</Text>
 						<TextInput
 							style={MS.input}
 							value={reportBody}
 							onChangeText={setReportBody}
-							maxLength={40}
+							maxLength={100}
+							multiline={true}
 						/>
 						<TouchableHighlight
 							style={{
@@ -244,9 +249,10 @@ const MS = StyleSheet.create({
 	},
 	input: {
 		borderWidth: 1,
-		borderRadius: 7,
-		padding: 5,
-		marginTop: 10,
+		borderRadius: 5,
+		paddingVertical: 10,
+		paddingHorizontal: 15,
+		borderColor : borderColor
 	},
 	btnText: {
 		fontSize: 15,
@@ -264,7 +270,7 @@ const MS = StyleSheet.create({
 		paddingVertical: 5,
 		paddingHorizontal: 10,
 		borderWidth: 1,
-		borderRadius: 14,
+		borderRadius: 5,
 		borderColor: borderColor,
 		textAlign: 'center',
 	},
@@ -273,7 +279,7 @@ const MS = StyleSheet.create({
 		paddingVertical: 5,
 		paddingHorizontal: 10,
 		borderWidth: 1,
-		borderRadius: 14,
+		borderRadius: 5,
 		borderColor: borderColor,
 		textAlign: 'center',
 		backgroundColor: mint,
@@ -283,7 +289,7 @@ const MS = StyleSheet.create({
 		paddingVertical: 5,
 		paddingHorizontal: 10,
 		borderWidth: 1,
-		borderRadius: 14,
+		borderRadius: 5,
 		borderColor: borderColor,
 		textAlign: 'center',
 	},
@@ -339,6 +345,11 @@ const MS = StyleSheet.create({
 		borderWidth: 1,
 		borderRadius: 5,
 		borderColor: borderColor,
+	},
+	picker : {
+		borderColor : borderColor,
+		borderRadius: 5,
+		borderWidth: 1
 	}
 })
 

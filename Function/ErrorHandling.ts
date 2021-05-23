@@ -41,7 +41,7 @@ export class ErrorHandle{
 		else if(error.request) {
 			// 요청이 이루어 졌으나 응답을 받지 못했습니다.
 			// `error.request`는 XMLHttpRequest 인스턴스입니다.
-			if(ErrorHandle._callNum < 2){
+			if(ErrorHandle._callNum < 1){
 				// 1번 더 서버에 요청!
 				Alert.alert("서버에 다시 요청합니다...");
 				callback?.();

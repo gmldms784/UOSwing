@@ -73,6 +73,7 @@ const PLM = StyleSheet.create({
 		borderColor: borderColor,
 		maxHeight: 500,
 		marginTop : 20,
+		width: "100%"
 	}
 })
 
