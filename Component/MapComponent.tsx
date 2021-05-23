@@ -58,7 +58,7 @@ const MapComponent = () => {
 
 	// <---report modal
 	const [reportModal, setReportModal] = useState<boolean>(false);
-	const [reportPos, setReportPos] = useState<number>(0);
+	const [reportPos, setReportPos] = useState<number>(padBoxState[0].id);
 	const [posName, setPosName] = useState<string>("");
 	const [tagString, setTagString] = useState<string>("ALL");
 	const tagHandle = (tag: string) => setTagString(tag);
