@@ -68,7 +68,7 @@ const NoticeCard = ({ navigation, title, date, contents, id, type }: Props) => {
 					<Text
 						style={Notice.date}
 					>
-						{date && dateToString(date)}
+						{date && dateToString(date.toString())}
 					</Text>
 				</View>
 				{
