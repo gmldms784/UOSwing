@@ -97,26 +97,28 @@ const NoticeCard = ({ navigation, title, date, contents, id, type }: Props) => {
 					</View>
 				}
 			</View>
-			<View>
-				<Text>{textHide && contents.length > 50 ? contents.substr(0, 50) + "..." : contents}</Text>
-			</View>
-			{
-				contents.length > 50 &&
-				<View
-					style={Notice.arrowContainer}
-				>
-					<TouchableHighlight
+			<TouchableHighlight
 						onPress={() => setTextHide(!textHide)}
 						underlayColor="transparent"
-					>
-						{
-							textHide ?
-								<ArrowDownIcon width={20} height={20} fill="black" />
-								: <ArrowUpIcon width={20} height={20} fill="black" />
-						}
-					</TouchableHighlight>
-				</View>
-			}
+			>
+				<>
+					<View>
+						<Text>{textHide && contents.length > 50 ? contents.substr(0, 50) + "..." : contents}</Text>
+					</View>
+					{
+						contents.length > 50 &&
+						<View
+							style={Notice.arrowContainer}
+						>
+								{
+									textHide ?
+										<ArrowDownIcon width={20} height={20} fill="black" />
+										: <ArrowUpIcon width={20} height={20} fill="black" />
+								}
+						</View>
+					}
+				</>
+			</TouchableHighlight>
 		</BoxLayout>
 	);
 }
