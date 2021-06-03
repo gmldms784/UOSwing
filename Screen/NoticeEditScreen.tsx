@@ -70,7 +70,6 @@ const NoticeEditScreen = ({ route, navigation }: Props) => {
 				multiline={true}
 				placeholder="내용을 입력해주세요."
 				style={Notice.content}
-				maxLength={300}
 			/>
 		</View>
 	);

@@ -57,7 +57,7 @@ const MarkerComponent = ({number, name, address, latitude, longitude, amount, is
 					style={StyleSheet.flatten([{backgroundColor: markerColor}, MarkerStyle.marker])}
 				>
 					{/* <Text style={MarkerStyle.info}>{address.replace("서울시립대학교 ", "")}</Text> */}
-					<Text style={StyleSheet.flatten([MarkerStyle.whiteText, MarkerStyle.margin])}>{amount}개</Text>
+					{/* <Text style={StyleSheet.flatten([MarkerStyle.whiteText, MarkerStyle.margin])}>{amount}개</Text> */}
 				</View>
 				<Text style={StyleSheet.flatten([MarkerStyle.arrow, {borderTopColor: markerColor}])}></Text>
 			</Marker>
@@ -67,8 +67,8 @@ const MarkerComponent = ({number, name, address, latitude, longitude, amount, is
 
 const MarkerStyle = StyleSheet.create({
 	marker: {
-		padding: 8,
-		borderRadius: 5,
+		padding: 20,
+		borderRadius: 100,
 		position: "relative",
 		flexDirection: "column",
 		alignItems: "center"
