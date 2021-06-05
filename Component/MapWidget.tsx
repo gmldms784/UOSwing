@@ -21,9 +21,10 @@ import { useGetPadBox } from '../Main/ViewModel/PadBoxViewModel';
 
 type Props = {
 	getMyPosition : () => void;
+	InitializePosition : () => void;
 }
 
-const MapWidget = ({getMyPosition} : Props) => {
+const MapWidget = ({getMyPosition, InitializePosition} : Props) => {
 	const [infoModal, setInfoModal] = useState<boolean>(false);
 	const getPadBox = useGetPadBox();
 	const user = useUserState();
@@ -38,6 +39,7 @@ const MapWidget = ({getMyPosition} : Props) => {
 
 	const getPadBoxInfo = () => {
 		getPadBox();
+		InitializePosition();
 	}
 
 	return (

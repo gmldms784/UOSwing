@@ -140,6 +140,11 @@ const MapComponent = () => {
 		}, 2000);
 	};
 
+	const mapView = React.createRef();
+	const InitalizeRegion = () => {
+		mapView.current.animateToRegion(school,1000);
+	}
+
 	// ---> location
 
 
@@ -148,7 +153,8 @@ const MapComponent = () => {
 			<View style={Map.wrap}>
 				<MapView
 					style={Map.map}
-					initialRegion={school}
+					initialRegion={appCenter}
+					ref={mapView}
 					zoomEnabled={true}
 					minZoomLevel={16.1}
 					maxZoomLevel={18}
@@ -193,6 +199,7 @@ const MapComponent = () => {
 				}
 				<MapWidget
 					getMyPosition={getMyPosition}
+					InitializePosition={InitalizeRegion}
 				/>
 				{
 					user.auth === "user" &&
