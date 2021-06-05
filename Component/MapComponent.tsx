@@ -149,9 +149,8 @@ const MapComponent = () => {
 				<MapView
 					style={Map.map}
 					initialRegion={school}
-					region={appCenter}
 					zoomEnabled={true}
-					minZoomLevel={16.3}
+					minZoomLevel={16.1}
 					maxZoomLevel={18}
 					scrollEnabled={true}
 					loadingEnabled={true}
