@@ -14,6 +14,8 @@ import SettingIcon from '../assets/square.svg';
 
 import { useUserState } from '../Main/Model/UserModel';
 
+import { getPadNumber } from '../Function/GetPadNumber';
+
 type Props = {
 	index: number;
 	name: string;
@@ -55,7 +57,7 @@ const PadListCard = ({ name, address, padAmount, humidity, temperature, isReport
 						<View style={{ flexDirection: 'row' }}>
 							<Text
 								style={Setting.quantity}>잔량</Text>
-							<Text>{padAmount}개</Text>
+							<Text>{getPadNumber(padAmount)}</Text>
 						</View>
 						{
 							user.auth === "admin" &&

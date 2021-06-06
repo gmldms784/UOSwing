@@ -44,7 +44,6 @@ const MarkerComponent = ({number, name, address, latitude, longitude, amount, is
 					latitude: latitude,
 					longitude: longitude
 				}}
-				style={{ padding: 10 }}
 				onPress={() => onPress(name, address)}
 			>
 				{
@@ -69,14 +68,15 @@ const MarkerComponent = ({number, name, address, latitude, longitude, amount, is
 
 const MarkerStyle = StyleSheet.create({
 	marker2: {
-		padding: 11,
+		padding: 15,
 		borderRadius: 15,
-		borderColor: 'black',
-		borderWidth:1,
+		borderColor: '#535353',
+		borderWidth:3,
+		margin: 5
 	},
 	marker: {
-		padding: 8,
-		borderRadius: 5,
+		padding: 20,
+		borderRadius: 100,
 		position: "relative",
 		flexDirection: "column",
 		alignItems: "center"

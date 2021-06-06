@@ -179,7 +179,7 @@ const Notice = StyleSheet.create({
 	arrowContainer: {
 		alignItems: 'center',
 		justifyContent: 'center',
-		marginTop: 20
+		marginTop: 20,
 	}
 })
 
