@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Marker } from 'react-native-maps';
-import { green, yellow, red, alert } from '../CommonVariable';
+import { green, yellow, red, alert, borderColor } from '../CommonVariable';
 import {
 	StyleSheet,
 	View,
-	Text
+	Text,
 } from 'react-native';
 import { useUserState } from '../Main/Model/UserModel';
 
@@ -54,18 +54,26 @@ const MarkerComponent = ({number, name, address, latitude, longitude, amount, is
 					</View>
 				}
 				<View
+					style={StyleSheet.flatten([{backgroundColor: markerColor}, MarkerStyle.marker2])}
+				 />
+				{/* <View
 					style={StyleSheet.flatten([{backgroundColor: markerColor}, MarkerStyle.marker])}
 				>
-					{/* <Text style={MarkerStyle.info}>{address.replace("서울시립대학교 ", "")}</Text> */}
 					<Text style={StyleSheet.flatten([MarkerStyle.whiteText, MarkerStyle.margin])}>{amount}개</Text>
 				</View>
-				<Text style={StyleSheet.flatten([MarkerStyle.arrow, {borderTopColor: markerColor}])}></Text>
+				<Text style={StyleSheet.flatten([MarkerStyle.arrow, {borderTopColor: markerColor}])}></Text> */}
 			</Marker>
 		</>
 	);
 };
 
 const MarkerStyle = StyleSheet.create({
+	marker2: {
+		padding: 11,
+		borderRadius: 15,
+		borderColor: 'black',
+		borderWidth:1,
+	},
 	marker: {
 		padding: 8,
 		borderRadius: 5,
@@ -95,8 +103,8 @@ const MarkerStyle = StyleSheet.create({
 		position: "absolute",
 		top: 0,
 		right: 0,
-		width: 25,
-		height: 25,
+		width: 20,
+		height: 20,
 		backgroundColor: alert,
 		borderRadius: 100,
 		zIndex: 1000,
