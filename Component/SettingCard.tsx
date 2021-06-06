@@ -15,6 +15,7 @@ import { mint, borderColor } from '../CommonVariable';
 import SettingIcon from '../assets/square.svg';
 
 import { useDeletePadBox } from '../Main/ViewModel/PadBoxViewModel';
+import { getPadNumber } from '../Function/GetPadNumber';
 
 type Props = {
 	index: number;
@@ -95,7 +96,7 @@ const SettingCard = ({ name, address, padAmount, humidity, temperature, index, m
 					<View style={{ flexDirection: 'row' }}>
 						<Text
 							style={Setting.quantity}>잔량</Text>
-						<Text>{padAmount}개</Text>
+						<Text>{getPadNumber(padAmount)}</Text>
 					</View>
 					<View style={{ flexDirection: 'row' }}>
 						<Text
