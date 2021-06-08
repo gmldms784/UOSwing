@@ -5,8 +5,10 @@ import {
 	StyleSheet,
 	View,
 	Text,
+	Image
 } from 'react-native';
 import { useUserState } from '../Main/Model/UserModel';
+import flagPinkImg from '../assets/img/circle.png';
 
 type Props = {
 	number: number;
@@ -16,88 +18,55 @@ type Props = {
 	longitude: number;
 	amount: number;
 	isReported: boolean;
-	onPress: (name:string, address: string) => void;
+	onPress: (name: string, address: string) => void;
 }
 
 
-const MarkerComponent = ({number, name, address, latitude, longitude, amount, isReported, onPress} : Props) => {
+const MarkerComponent = ({ number, name, address, latitude, longitude, amount, isReported, onPress }: Props) => {
 	const [markerColor, setMarkerColor] = useState<string>("yellow");
 	const user = useUserState();
 
-	useEffect(()=> {
+	useEffect(() => {
 		const unitAmount = amount / number;
-		if(unitAmount == 0){
+		if (unitAmount == 0) {
 			setMarkerColor(red);
 			return;
-		}else if (unitAmount < 11){
+		} else if (unitAmount < 11) {
 			setMarkerColor(yellow);
 			return;
-		}else {
+		} else {
 			setMarkerColor(green);
 		}
 	}, [amount]);
 
 	return (
-		<>
-			<Marker
-				coordinate={{
-					latitude: latitude,
-					longitude: longitude
-				}}
-				onPress={() => onPress(name, address)}
-			>
-				{
-					user.auth === "admin" && isReported &&
-					<View style={MarkerStyle.alert}>
-						<Text style={MarkerStyle.alertText}>!</Text>
-					</View>
-				}
-				<View
-					style={StyleSheet.flatten([{backgroundColor: markerColor}, MarkerStyle.marker2])}
-				 />
-				{/* <View
-					style={StyleSheet.flatten([{backgroundColor: markerColor}, MarkerStyle.marker])}
-				>
-					<Text style={StyleSheet.flatten([MarkerStyle.whiteText, MarkerStyle.margin])}>{amount}개</Text>
+		<Marker
+			coordinate={{
+				latitude: latitude,
+				longitude: longitude
+			}}
+			onPress={() => onPress(name, address)}
+		>
+			<View
+				style={StyleSheet.flatten([{backgroundColor: markerColor}, MarkerStyle.marker2])}
+			/>
+			{
+				user.auth === "admin" && isReported &&
+				<View style={MarkerStyle.alert}>
+					<Text style={MarkerStyle.alertText}>!</Text>
 				</View>
-				<Text style={StyleSheet.flatten([MarkerStyle.arrow, {borderTopColor: markerColor}])}></Text> */}
-			</Marker>
-		</>
+			}
+		</Marker>
 	);
 };
 
 const MarkerStyle = StyleSheet.create({
-	marker2: {
-		padding: 15,
-		borderRadius: 15,
-		borderColor: '#535353',
-		borderWidth:3,
-		margin: 5
-	},
-	marker: {
-		padding: 20,
+	marker2:{
+		width: 30, height: 30,
 		borderRadius: 100,
-		position: "relative",
-		flexDirection: "column",
-		alignItems: "center"
-	},
-	info: {
-		textAlign: "center",
-		marginTop: 5,
-		marginBottom: 8,
-		fontFamily: 'GmarketMedium'
-	},
-	whiteText: {
-		backgroundColor: "white",
-		borderRadius: 5,
-		padding: 10,
-		paddingTop: 5,
-		paddingBottom: 5,
-		textAlign: "center",
-		fontFamily: 'GmarketMedium'
-	},
-	margin: {
-		marginBottom: 5
+		borderColor: '#535353',
+		borderWidth: 3,
+		resizeMode :"contain"
 	},
 	alert: {
 		position: "absolute",
@@ -109,25 +78,12 @@ const MarkerStyle = StyleSheet.create({
 		borderRadius: 100,
 		zIndex: 1000,
 		alignItems: "center",
-		justifyContent: "center"
+		justifyContent: "center",
 	},
 	alertText: {
 		textAlign: "center",
 		color: "white",
 		fontWeight: "bold"
-	},
-	arrow : {
-		position: 'absolute',
-		bottom: 0,
-		right: '50%',
-		width: 0,
-		height: 0,
-		borderLeftColor : 'transparent',
-		borderLeftWidth : 10,
-		borderRightColor : 'transparent',
-		borderRightWidth : 10,
-		borderTopColor : 'black',
-		borderTopWidth : 10
 	}
 })
 

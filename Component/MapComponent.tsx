@@ -156,7 +156,7 @@ const MapComponent = () => {
 					initialRegion={appCenter}
 					ref={mapView}
 					zoomEnabled={true}
-					minZoomLevel={16.1}
+					minZoomLevel={16.35}
 					maxZoomLevel={18}
 					scrollEnabled={true}
 					loadingEnabled={true}
@@ -181,6 +181,7 @@ const MapComponent = () => {
 							);
 						})
 					}
+				</MapView>
 					{
 						userLocation &&
 						<Marker
@@ -190,7 +191,6 @@ const MapComponent = () => {
 							}}
 						/>
 					}
-				</MapView>
 				{
 					locationInfo &&
 					<View style={Map.info}>
@@ -252,7 +252,8 @@ const Map = StyleSheet.create({
 		height: "100%",
 		flexDirection: "column",
 		alignItems: "center",
-		position: "relative"
+		position: "relative",
+		...StyleSheet.absoluteFillObject,
 	},
 	alert: {
 		position: "absolute",
