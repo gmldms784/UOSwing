@@ -24,6 +24,7 @@ type Props = {
 	InitializePosition : () => void;
 }
 
+// 맵 컴포넌트에서 이용할 수 있는 위젯 컴포넌트
 const MapWidget = ({getMyPosition, InitializePosition} : Props) => {
 	const [infoModal, setInfoModal] = useState<boolean>(false);
 	const getPadBox = useGetPadBox();
@@ -53,7 +54,8 @@ const MapWidget = ({getMyPosition, InitializePosition} : Props) => {
 						onPress={handleInfoOpen}
 						underlayColor="transparent"
 					>
-						<NoticeIcon width={25} height={25} fill={darkGray} />
+						<NoticeIcon width={25} height={25} fill={darkGray} /> 
+						{/* 공지사항 */}
 					</TouchableHighlight>
 				}
 				<TouchableHighlight
@@ -62,6 +64,7 @@ const MapWidget = ({getMyPosition, InitializePosition} : Props) => {
 					underlayColor="transparent"
 				>
 					<RefreshIcon width={25} height={25} fill={darkGray} />
+					{/* 새로고침 */}
 				</TouchableHighlight>
 				<TouchableHighlight
 					style={WidgetStyle.whiteCircle}
@@ -69,6 +72,7 @@ const MapWidget = ({getMyPosition, InitializePosition} : Props) => {
 					underlayColor="transparent"
 				>
 					<PositionIcon width={25} height={25} fill={darkGray} />
+					{/* 내 위치 받아오기 */}
 				</TouchableHighlight>
 			</View>
 			<Modal

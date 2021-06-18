@@ -30,6 +30,7 @@ type Props = {
 	type?: string;
 }
 
+// 공지사항 카드 컴포넌트
 const NoticeCard = ({ navigation, title, date, contents, id, type }: Props) => {
 	const [textHide, setTextHide] = useState<boolean>(true);
 	const user = useUserState();
@@ -125,6 +126,7 @@ const NoticeCard = ({ navigation, title, date, contents, id, type }: Props) => {
 
 const Notice = StyleSheet.create({
 	wrap: {
+		width: '100%',
 		display: 'flex',
 		flexWrap: 'nowrap',
 		flexDirection: 'row',
@@ -133,7 +135,8 @@ const Notice = StyleSheet.create({
 	header: {
 		flexWrap: 'wrap',
 		justifyContent: 'flex-start',
-		width: '75%',
+		width: '100%',
+		flexShrink: 1,
 		marginBottom: 10
 	},
 	userHeader: {
@@ -157,7 +160,7 @@ const Notice = StyleSheet.create({
 		width: 97
 	},
 	btnContainer: {
-		width: '20%',
+		flexShrink: 0,
 		flexDirection: 'row',
 		alignItems: 'flex-start'
 	},

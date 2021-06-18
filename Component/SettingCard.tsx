@@ -27,11 +27,12 @@ type Props = {
 	modalOpen: any;
 }
 
+// 생리대함 설정 페이지의 카드 컴포넌트 
 const SettingCard = ({ name, address, padAmount, humidity, temperature, index, modalOpen }: Props) => {
 	const deletePadBox = useDeletePadBox();
 
 	const handleDelete = () => {
-		// confirm
+		// 생리대함 삭제
 		Alert.alert(
 			"생리대함 삭제",
 			"정말 삭제하시겠습니까?\n해당 작업은 되돌릴 수 없습니다.",
@@ -111,6 +112,7 @@ const SettingCard = ({ name, address, padAmount, humidity, temperature, index, m
 
 const Setting = StyleSheet.create({
 	wrap: {
+		width: '100%',
 		display: 'flex',
 		flexWrap: 'nowrap',
 		flexDirection: 'row',
@@ -119,7 +121,8 @@ const Setting = StyleSheet.create({
 	header: {
 		flexWrap: 'wrap',
 		justifyContent: 'flex-start',
-		width: '75%',
+		width: '100%',
+		flexShrink: 1,
 		marginBottom: 10
 	},
 	titleContainer: {
@@ -132,7 +135,7 @@ const Setting = StyleSheet.create({
 		marginBottom: 10
 	},
 	btnContainer: {
-		width: '20%',
+		flexShrink: 0,
 		flexDirection: 'row',
 		alignItems: 'flex-start'
 	},

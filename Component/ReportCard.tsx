@@ -30,6 +30,7 @@ type Props = {
 }
 
 const IconProvider = ( tag : string ) => {
+	// 신고 종류에 따른 아이콘 세팅
 	switch(tag){
 		case "KEY_MISSED":
 			return <KeyIcon width={25} height={25} fill="black" />
@@ -45,6 +46,7 @@ const IconProvider = ( tag : string ) => {
 }
 
 const TextProvider = ( tag : string ) => {
+	// 신고 종류에 따른 tag 이름 세팅
 	switch(tag){
 		case "KEY_MISSED":
 			return "열쇠 분실"
@@ -59,6 +61,7 @@ const TextProvider = ( tag : string ) => {
 	}
 }
 
+// 신고 카드 컴포넌트
 const ReportCard = ({ id, tag, content, createdDate }: Props) => {
 	const report = useReportState();
 	const deleteReport = useDeleteReport();

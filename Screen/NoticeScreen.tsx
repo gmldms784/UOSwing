@@ -14,6 +14,7 @@ type Props = {
 	type? : string;
 }
 
+// 공지사항 관리 페이지
 const NoticeScreen = ({ navigation, type } : Props) => {
 	const noticeData = useNoticeState();
 

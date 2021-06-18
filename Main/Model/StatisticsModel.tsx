@@ -6,6 +6,7 @@ const statisticsWeekDispatch = createContext<Dispatch<statisticsType[]>>(() => {
 const statisticsMonthContext = createContext<statisticsType[]>([]);
 const statisticsMonthDispatch = createContext<Dispatch<statisticsType[]>>(() => {});
 
+// 통계 저장 모델
 export const StatisticsContextProvider = ({ children }: childrenObj) => {
 	const [statisticsWeek, setStatisticsWeek] = useState<statisticsType[]>([]);
 	const [statisticsMonth, setStatisticsMonth] = useState<statisticsType[]>([]);

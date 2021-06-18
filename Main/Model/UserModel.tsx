@@ -11,6 +11,7 @@ const headerContext = createContext<{"X-AUTH-TOKEN": string}>({"X-AUTH-TOKEN": "
 const loginContext = createContext<(key: string) => boolean>((key: string) => { return true });
 const userLoginContext = createContext<() => void>(() => { });
 
+// 유저 저장 모델
 export const UserContextProvider = ({ children }: childrenObj) => {
 	const [user, setUser] = useState<userType>({
 		auth: "user"
@@ -18,6 +19,7 @@ export const UserContextProvider = ({ children }: childrenObj) => {
 	const [header, setHeader] = useState<{"X-AUTH-TOKEN": string }>({ "X-AUTH-TOKEN": "" });
 
 	const login = async (key: string): boolean => {
+		// 관리자 로그인
 		const status = await axios.post(`${API_URL}/api/v1/admin/login`, {
 			"email": "samsam-uos@gmail.com",
 			"password": key
@@ -25,7 +27,7 @@ export const UserContextProvider = ({ children }: childrenObj) => {
 			.then(res => {
 				const resKey: string = res.data;
 				setHeader({
-					"X-AUTH-TOKEN" : resKey
+					"X-AUTH-TOKEN" : resKey // 토큰 저장해두기
 				});
 				setUser({
 					...user,

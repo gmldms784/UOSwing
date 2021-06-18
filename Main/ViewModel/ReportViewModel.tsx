@@ -36,6 +36,7 @@ export const ReportLogicProvider = ({ children } : childrenObj) => {
 
 	const saveReport = (id: number, tag: string, content : string, padBoxId: number) => {
 		if(id === -1){
+			// 새로운 공지사항 추가
 			axios.post(`${API_URL}/api/v1/report`, {
 				"content": content,
 				"isResolved": false,
@@ -49,6 +50,7 @@ export const ReportLogicProvider = ({ children } : childrenObj) => {
 				ErrorHandle.errorHandle(error, true, saveReport);
 			});
 		}else{
+			// 기존 공지사항 변경
 			axios.patch(`${API_URL}/api/v1/report/${id}`,{
 				"isResolved": true,
 			},{

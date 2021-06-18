@@ -18,6 +18,7 @@ type barDataType = {
 	label: string
 }
 
+// 통계 페이지
 const StatisticsScreen = () => {
 	const weekData = useStatisticsWeekState();
 	const monthData = useStatisticsMonthState();

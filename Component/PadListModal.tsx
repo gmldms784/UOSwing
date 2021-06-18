@@ -23,6 +23,7 @@ type Props = {
 	handleReportOpen: (idx : number, name : string, address : string) => void
 }
 
+// 생리대 함 리스트 모달
 const PadListModal : React.FC<Props> = ({listModal, handleListClose, address, handleReportOpen}) => {
 	// reportPos는 현재 내가 누른 component(padbox)의 id임
 	const padBoxState = usePadBoxState();
@@ -37,6 +38,7 @@ const PadListModal : React.FC<Props> = ({listModal, handleListClose, address, ha
 			view={listModal}
 			onClose={handleListClose}
 			title={<Logotitle icon={null} name={address.replace("서울시립대학교 ", "")} />} 
+			// 이름은 대학교 명칭 빼고 표현
 		>
 			<View style={{ width: '100%' }}>
 				<ScrollView style={PLM.padList} contentContainerStyle={{flexGrow:1}}>

@@ -14,6 +14,7 @@ type Props = {
 	title: React.ReactNode
 }
 
+// 모달 컴포넌트 (제목, 모달 닫기 공통 정의)
 const Modal : React.FC<Props> = ({children, view, onClose, title}) => {
 	if(!view)
 		return null;

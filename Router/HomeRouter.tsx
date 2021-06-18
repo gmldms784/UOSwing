@@ -17,6 +17,8 @@ export type HomeStackParamList = {
 
 const Tab = createBottomTabNavigator();
 
+// 관리자 페이지 라우팅
+// 1. 맵 페이지 2. 통계 페이지 3. 공지사항 페이지 4. 관리 페이지
 const HomeScreen = () => {
 	const icons : { [key: string] : ReactNode } = {
 		"Map" : <MapIcon />,

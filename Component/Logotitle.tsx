@@ -10,6 +10,7 @@ type Props = {
 	name : string;
 }
 
+// Page 상단의 Logo가 있는 Title 컴포넌트
 const Logotitle = ({ icon, name } : Props) => {
 	return (
 		<View

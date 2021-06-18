@@ -1,4 +1,5 @@
 export const dateToString = (dateString : string) => {
+	// string을 받아서 yyyy/mm/dd 형태로 출력
 	const date = new Date(dateString);
 
 	if(!date)

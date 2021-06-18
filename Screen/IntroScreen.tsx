@@ -26,6 +26,7 @@ type Props = {
 	route: RouteProp<StackParamList, 'Home'>;
 }
 
+// 초기 페이지
 const IntroScreen = ({ navigation }: Props) => {
 	const [modal, setModal] = useState<boolean>(false);
 	const [key, setKey] = useState<string>("");

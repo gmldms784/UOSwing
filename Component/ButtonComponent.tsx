@@ -25,6 +25,7 @@ type Props = {
 //   </ButtonComponent>
 // </TouchableHighlight>
 
+// Button 컴포넌트
 const ButtonComponent : React.FC<Props> = ({color, size, border, children}) => {
 	const style = [{}];
 	switch(color){

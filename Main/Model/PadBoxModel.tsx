@@ -5,6 +5,7 @@ const padBoxAddress = createContext<Array<padBoxAddressType>>([]);
 const padBoxState = createContext<Array<padBoxType>>([]);
 const padBoxDispatch = createContext<Dispatch<Array<padBoxType>>>(()=>{});
 
+// 생리대함 저장 모델
 export const PadBoxContextProvider = ({ children }: childrenObj) => {
 	const [padBoxData, setPadBoxData] = useState<Array<padBoxType>>([]);
 	const padBoxAddressData:Array<padBoxAddressType> = [{

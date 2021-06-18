@@ -38,6 +38,7 @@ const range = {
 	}
 };
 
+// 맵 컴포넌트
 const MapComponent = () => {
 	const padBoxState = usePadBoxState();
 	const user = useUserState();
@@ -108,9 +109,7 @@ const MapComponent = () => {
 	};
 
 	const watchLocation = () => {
-		// 잘작동하는지 실제 디바이스로 테스트 필요
-		// todo : 학교 밖에 위치하면 alert?
-		// 37.5777~37.5874 , 127.0518~127.0682
+		// 37.5777~37.5874 , 127.0518~127.0682 (학교 범위)
 
 		Geolocation.getCurrentPosition(
 			position => {
@@ -163,6 +162,15 @@ const MapComponent = () => {
 					moveOnMarkerPress={false}
 				>
 					{
+						userLocation &&
+						<Marker
+							coordinate={{
+								latitude: userLocation.latitude,
+								longitude: userLocation.longitude
+							}}
+						/>
+					}
+					{
 						Object.keys(markers).map((padBoxAddress: string, index: number) => {
 							let value: markerValueType = markers[padBoxAddress];
 							return (
@@ -182,15 +190,6 @@ const MapComponent = () => {
 						})
 					}
 				</MapView>
-					{
-						userLocation &&
-						<Marker
-							coordinate={{
-								latitude: userLocation.latitude,
-								longitude: userLocation.longitude
-							}}
-						/>
-					}
 				{
 					locationInfo &&
 					<View style={Map.info}>

@@ -5,6 +5,7 @@ import { noticeType, childrenObj } from '../Type';
 const noticeState = createContext<Array<noticeType>>([]);
 const noticeDispatch = createContext<Dispatch<Array<noticeType>>>(()=>{});
 
+// 공지사항 저장 모델
 export const NoticeContextProvider = ({ children }: childrenObj) => {
 	const [noticeData, setNoticeDate] = useState<Array<noticeType>>([]);
 

@@ -4,6 +4,7 @@ import { reportType, childrenObj } from '../Type';
 const reportState = createContext<Array<reportType>>([]);
 const reportDispatch = createContext<Dispatch<Array<reportType>>>(()=>{});
 
+// 신고 저장 모델
 export const ReportContextProvider = ({ children }: childrenObj) => {
 
 	const [reportData, setReportData] = useState<Array<reportType>>([]);

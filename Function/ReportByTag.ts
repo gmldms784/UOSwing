@@ -1,7 +1,8 @@
 import { reportType, reportbyTagType } from '../Main/Type';
 
 export default function reportByTag(reportArr : reportType[], padBoxId:number, tagData:string[]) : reportbyTagType {
-
+	// tag 별 신고 개수 판단 함수
+	
 	const reportbytag: reportbyTagType = {};
 
 	//reportbytag 초기화

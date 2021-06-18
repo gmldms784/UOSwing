@@ -5,6 +5,7 @@ import {
 } from 'react-native';
 import { MapComponent } from '../Component';
 
+// 사용자 페이지
 const UserScreen = () => {
 	return (
 		<View>

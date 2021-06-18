@@ -1,6 +1,7 @@
 const MAX_PAD = 22;
 const BASE = Math.ceil(MAX_PAD / 5);
 export function getPadNumber(num : number){
+	// 생리대 개수를 범위로 표현하는 함수
 	if(num >= MAX_PAD){
 		return `${MAX_PAD}개`;
 	}else if (num > BASE*4){

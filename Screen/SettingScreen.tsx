@@ -21,6 +21,7 @@ type Props = {
 	navigation: StackNavigationProp<SettingStackParamList, 'SettingCreate'>;
 }
 
+// 생리대 함 관리 페이지
 const SettingScreen = ({ navigation } : Props) => {
 	const settingData = usePadBoxState();
 	const settingAddress = usePadBoxAddress();

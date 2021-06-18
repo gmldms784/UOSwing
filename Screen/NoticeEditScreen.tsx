@@ -19,6 +19,7 @@ type Props = {
 	navigation: StackNavigationProp<NoticeStackParamList, 'NoticeEdit'>;
 }
 
+// 공지사항 수정 페이지
 const NoticeEditScreen = ({ route, navigation }: Props) => {
 	const [id, setId] = useState<number>(-1);
 	const [titleState, setTitleState] = useState<string>("");

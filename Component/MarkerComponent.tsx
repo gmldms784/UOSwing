@@ -21,12 +21,16 @@ type Props = {
 	onPress: (name: string, address: string) => void;
 }
 
-
+// 맵 컴포넌트에 표시되는 마커 컴포넌트
 const MarkerComponent = ({ number, name, address, latitude, longitude, amount, isReported, onPress }: Props) => {
 	const [markerColor, setMarkerColor] = useState<string>("yellow");
 	const user = useUserState();
 
 	useEffect(() => {
+		setColorByAmount();
+	}, [amount]);
+
+	const setColorByAmount = () => { // 생리대 개수에 따라 색상 변경
 		const unitAmount = amount / number;
 		if (unitAmount == 0) {
 			setMarkerColor(red);
@@ -37,7 +41,7 @@ const MarkerComponent = ({ number, name, address, latitude, longitude, amount, i
 		} else {
 			setMarkerColor(green);
 		}
-	}, [amount]);
+	}
 
 	return (
 		<Marker
@@ -46,6 +50,7 @@ const MarkerComponent = ({ number, name, address, latitude, longitude, amount, i
 				longitude: longitude
 			}}
 			onPress={() => onPress(name, address)}
+			style={{padding: 5}}
 		>
 			<View
 				style={StyleSheet.flatten([{backgroundColor: markerColor}, MarkerStyle.marker2])}

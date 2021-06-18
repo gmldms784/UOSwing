@@ -12,6 +12,8 @@ export type StackParamList = {
 
 const Stack = createStackNavigator<StackParamList>();
 
+// 최상위 라우팅
+// 1. Intro 페이지 2. 유저 페이지 3. 관리자 페이지
 const Main = () => {
   return (
     <NavigationContainer>

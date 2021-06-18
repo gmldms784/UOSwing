@@ -35,9 +35,7 @@ export const PadBoxLogicProvider = ({ children } : childrenObj) => {
 	const header = useHeader();
 
 	useEffect(()=>{
-		// padBox 데이터 읽어오기
 		fetchPadBox();
-
 	}, []);
 
 	const fetchPadBox = () => {
@@ -57,7 +55,7 @@ export const PadBoxLogicProvider = ({ children } : childrenObj) => {
 		longitude: number,
 		name: string,) => {
 		if(id === -1){
-			// 새로운 padbox
+			// 새로운 padbox 추가
 			axios.post(`${API_URL}/api/v1/padbox`, {
 				"address": address,
 				"humidity": 0,
@@ -78,6 +76,7 @@ export const PadBoxLogicProvider = ({ children } : childrenObj) => {
 				ErrorHandle.errorHandle(error, true, savepadBox);
 			});
 		}else{
+			// 기존 padbox 수정
 			axios.patch(`${API_URL}/api/v1/padbox/${id}`, {
 				"address": address,
 				"latitude": latitude,

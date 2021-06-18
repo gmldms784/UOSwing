@@ -4,6 +4,7 @@ import {
 } from 'react-native';
 import { MapComponent } from '../Component';
 
+// 맵 페이지
 const MapScreen = () => {
 	return (
 		<View>

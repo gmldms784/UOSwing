@@ -1,13 +1,13 @@
-import React, { ReactElement, ReactNode } from 'react';
+import React from 'react';
 
 import {
-	View,
-	Text
+	View
 } from 'react-native';
 import { borderColor } from '../CommonVariable';
 
 type Props = {};
 
+// Box 모양 리스트의 컴포넌트
 const BoxLayout : React.FC<Props> = ({ children }) => {
 	return(
 		<View

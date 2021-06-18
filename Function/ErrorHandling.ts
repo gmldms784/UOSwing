@@ -6,6 +6,7 @@ import { Alert } from "react-native";
 // 401 : 인증 오류
 // 404 : 리소스 없음
 
+// 통신 오류를 다루는 클래스
 export class ErrorHandle{
 	private static _callNum: number;
 
